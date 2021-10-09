@@ -1,0 +1,29 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+// Fontawesome
+@import "~@fortawesome/fontawesome-free/css/all";
+
+// Bootstrap
+@import '~bootstrap';
+
+// Start Bootstrap - SB Admin
+
+// Import Custom Variables
+@import "~startbootstrap-sb-admin/src/scss/variables.scss";
+
+// Import Custom SCSS
+@import "~startbootstrap-sb-admin/src/scss/global";
+
+// Layout
+@import "~startbootstrap-sb-admin/src/scss/layout/authentication.scss";
+@import "~startbootstrap-sb-admin/src/scss/layout/dashboard-default.scss";
+@import "~startbootstrap-sb-admin/src/scss/layout/dashboard-fixed.scss";
+@import "~startbootstrap-sb-admin/src/scss/layout/error.scss";
+
+// Navigation
+@import "~startbootstrap-sb-admin/src/scss/navigation/nav.scss";
+@import "~startbootstrap-sb-admin/src/scss/navigation/topnav.scss";
+@import "~startbootstrap-sb-admin/src/scss/navigation/sidenav/sidenav.scss";
+@import "~startbootstrap-sb-admin/src/scss/navigation/sidenav/sidenav-dark.scss";
+@import "~startbootstrap-sb-admin/src/scss/navigation/sidenav/sidenav-light.scss";
