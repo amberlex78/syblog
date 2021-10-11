@@ -5,7 +5,7 @@ namespace App\Controller\Front\Auth;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use App\Security\Front\EmailVerifier;
+use App\Security\Front\Verifier\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

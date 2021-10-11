@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security\Front;
+namespace App\Security\Front\Verifier;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
