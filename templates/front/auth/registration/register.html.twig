@@ -1,21 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/layouts/auth.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Sign up{% endblock %}
 
-{% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+{% block content %}
 
-    <h1>Register</h1>
+    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
+    <p>Sign up for your account</p>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+    <div class="form-floating mb-3">
+        {{ form_widget(registrationForm.email) }}
+        {{ form_label(registrationForm.email) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+
+    <div class="form-floating mb-3">
+        {{ form_widget(registrationForm.plainPassword) }}
+        {{ form_label(registrationForm.plainPassword) }}
+        {{ form_errors(registrationForm.plainPassword) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary d-inline">Sign up</button>
+
     {{ form_end(registrationForm) }}
 {% endblock %}

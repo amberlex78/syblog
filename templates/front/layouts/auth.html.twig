@@ -1,0 +1,27 @@
+{% extends 'front/layouts/base.html.twig' %}
+
+{% block body %}
+    <header>
+            {% include 'front/_embed/_header.html.twig' %}
+    </header>
+    <main class="flex-shrink-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-6 col-xl-5 mt-5">
+                    {% include 'front/_embed/_flash_message.html.twig' %}
+                    <div class="card mt-4 shadow-sm">
+                        <div class="card-header bg-primary border-primary text-center text-white">
+                            <h3>{% block title %}{% endblock %}</h3>
+                        </div>
+                        <div class="card-body">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-light">
+        {% include 'front/_embed/_footer.html.twig' %}
+    </footer>
+{% endblock %}

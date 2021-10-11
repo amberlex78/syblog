@@ -3,5 +3,12 @@
 {% block title %}{{ controller_name }}{% endblock %}
 
 {% block content %}
-    <h1>Hello {{ controller_name }}!</h1>
+    <div class="card mt-2">
+        <div class="card-header">
+            <h3>Home Page</h3>
+        </div>
+        <div class="card-body">
+            <p class="lead">Hello from {{ controller_name }}</p>
+        </div>
+    </div>
 {% endblock %}
