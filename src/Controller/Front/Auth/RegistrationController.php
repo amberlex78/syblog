@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front\Auth;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use App\Security\EmailVerifier;
+use App\Security\Front\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'front_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface): Response
     {
         $user = new User();
@@ -45,36 +45,36 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation('front_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('robot@example.com', 'Robot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('front/auth/registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('front_home');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('front/auth/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
+    #[Route('/verify/email', name: 'front_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
         $id = $request->get('id');
 
         if (null === $id) {
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('front_register');
         }
 
         $user = $userRepository->find($id);
 
         if (null === $user) {
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('front_register');
         }
 
         // validate email confirmation link, sets User::isVerified=true and persists
@@ -83,12 +83,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('front_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('front_login');
     }
 }

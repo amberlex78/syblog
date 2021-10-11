@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Security;
+namespace App\Security\Front;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'front_login';
 
     private UrlGeneratorInterface $urlGenerator;
 
