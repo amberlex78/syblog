@@ -1,0 +1,20 @@
+{% extends 'front/layouts/base.html.twig' %}
+
+{% block body %}
+    <header>
+        {% include 'front/_embed/_header.html.twig' %}
+    </header>
+    <main class="flex-shrink-0">
+        <div class="container my-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    {% include 'front/_embed/_flash_message.html.twig' %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-light">
+        {% include 'front/_embed/_footer.html.twig' %}
+    </footer>
+{% endblock %}
