@@ -9,9 +9,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-7 col-lg-6 col-xl-5 mt-5">
                     {% include 'front/_embed/_flash_message.html.twig' %}
-                    <div class="card mt-4 shadow-sm">
-                        <div class="card-header bg-primary border-primary text-center text-white">
-                            <h3>{% block title %}{% endblock %}</h3>
+                    <div class="card mt-4 border-0 shadow">
+                        <div class="card-header bg-primary text-center text-white">
+                            <h3 class="mt-2">{% block title %}{% endblock %}</h3>
                         </div>
                         <div class="card-body">
                             {% block content %}{% endblock %}
