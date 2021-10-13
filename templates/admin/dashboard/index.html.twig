@@ -3,5 +3,58 @@
 {% block title %}{{ controller_name }}{% endblock %}
 
 {% block content %}
-    <h1>Hello {{ controller_name }}!</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-1"></i>
+                    System info
+                </div>
+                <div class="card-body">
+                    <span>PHP v{{ phpVersion() }}</span><br>
+                    <span>Symfony v{{ symfonyVersion() }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-1"></i>
+                    About SB Admin Template
+                </div>
+                <div class="card-body">
+                    <p>
+                        <a href="https://startbootstrap.com/template/sb-admin">SB Admin</a>
+                        is an open source, admin dashboard template for
+                        <a href="https://getbootstrap.com" target="_blank">Bootstrap</a>
+                        created by <a href="https://startbootstrap.com" target="_blank">Start Bootstrap.</a>
+                    </p>
+                    <p>
+                        Start Bootstrap is an open source library of free Bootstrap templates and themes. All
+                        of the free templates and themes on Start Bootstrap are released under the MIT
+                        license, which means you can use them for any purpose, even for commercial
+                        projects.
+                    </p>
+                    <p>
+                        <a href="https://github.com/StartBootstrap/startbootstrap-sb-admin" target="_blank">
+                            Start Bootstrap - SB Admin
+                            <small><i class="fas fa-fw fa-external-link-alt"></i></small>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://startbootstrap.github.io/startbootstrap-sb-admin" target="_blank">
+                            Start Bootstrap - Dashboard Example
+                            <small><i class="fas fa-fw fa-external-link-alt"></i></small>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="https://fontawesome.com/v5.15/icons?d=gallery&p=2&m=free" target="_blank">
+                            Font Awesome Icons
+                            <small><i class="fas fa-fw fa-external-link-alt"></i></small>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

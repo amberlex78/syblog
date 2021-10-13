@@ -1,5 +1,21 @@
 {% extends 'admin/layouts/base.html.twig' %}
 
 {% block body %}
-    {% block content %}{% endblock %}
+    {% include 'admin/_embed/_navbar.html.twig' %}
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            {% include 'admin/_embed/_sidebar.html.twig' %}
+        </div>
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4 mt-4 mb-4">
+                {% include 'admin/_embed/_flash_message.html.twig' %}
+                {% block content %}{% endblock %}
+            </main>
+            <footer class="mt-auto py-4 bg-light">
+                <div class="container-fluid px-4">
+                    {% include 'admin/_embed/_footer.html.twig' %}
+                </div>
+            </footer>
+        </div>
+    </div>
 {% endblock %}
