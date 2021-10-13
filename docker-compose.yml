@@ -14,3 +14,9 @@ services:
       MYSQL_PASSWORD: secret
     volumes:
       - ./var/mysql:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
