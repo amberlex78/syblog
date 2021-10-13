@@ -18,8 +18,8 @@
             <label class="form-check-label" for="inputRememberMe">Remember Me</label>
         </div>
         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-            <a class="small" href="#">Forgot Password?</a>
             <button type="submit" class="btn btn-primary d-inline">Login</button>
+            <a class="small" href="#">Forgot Password?</a>
         </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     </form>

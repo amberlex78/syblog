@@ -4,6 +4,7 @@ namespace App\Security\Front\Auth;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -24,10 +25,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'front_login';
 
     private UrlGeneratorInterface $urlGenerator;
+    private RequestStack $requestStack;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, RequestStack $requestStack)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->requestStack = $requestStack;
     }
 
     public function authenticate(Request $request): PassportInterface
@@ -51,6 +54,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+
+        $this->requestStack->getSession()->getFlashBag()->add('success', 'You are logged in!');
 
         return new RedirectResponse($this->urlGenerator->generate('front_home'));
     }

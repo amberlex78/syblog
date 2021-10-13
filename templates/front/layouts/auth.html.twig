@@ -2,14 +2,14 @@
 
 {% block body %}
     <header>
-            {% include 'front/_embed/_header.html.twig' %}
+        {% include 'front/_embed/_header.html.twig' %}
     </header>
     <main class="flex-shrink-0">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-7 col-lg-6 col-xl-5 mt-5">
+                <div class="col-lg-5 mt-5 mb-5">
                     {% include 'front/_embed/_flash_message.html.twig' %}
-                    <div class="card mt-4 border-0 shadow">
+                    <div class="card border-0 shadow">
                         <div class="card-header bg-primary text-center text-white">
                             <h3 class="mt-2">{% block title %}{% endblock %}</h3>
                         </div>
