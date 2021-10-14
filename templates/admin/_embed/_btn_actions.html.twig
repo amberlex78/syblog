@@ -20,13 +20,4 @@
     <i class="fa fa-eye fa-fw"></i>
 </a>
 
-<form action="{{ path(prefix ~ 'delete', {'id': entity.id}) }}" id="form{{ entity.id }}" method="post" class="d-inline">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
-    <button class="btn btn-outline-danger btn-sm btn-trash"
-            data-bs-toggle="modal"
-            data-bs-target="#approveDeleteModal"
-            data-record-id="{{ entity.id }}"
-            data-record-title="{{ deleteTitle }}">
-        <i class="fa fa-trash fa-fw"></i>
-    </button>
-</form>
+{% include 'admin/_embed/_form/_btn_delete.html.twig' with {'entity': entity, 'deleteTitle': deleteTitle} %}

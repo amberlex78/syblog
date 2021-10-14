@@ -47,16 +47,7 @@
                 <a href="{{ path(prefix ~ 'edit', {'id': entity.id}) }}" class="btn btn-outline-primary btn-sm shadow-sm">
                     <i class="fas fa-pen fa-sm fa-fw"></i>
                 </a>
-                <form action="{{ path(prefix ~ 'delete', {'id': entity.id}) }}" id="form{{ entity.id }}" method="post" class="d-inline">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
-                    <button class="btn btn-outline-danger btn-sm btn-trash"
-                            data-bs-toggle="modal"
-                            data-bs-target="#approveDeleteModal"
-                            data-record-id="{{ entity.id }}"
-                            data-record-title="{{ deleteTitle }}">
-                        <i class="fa fa-trash fa-sm fa-fw"></i>
-                    </button>
-                </form>
+                {% include 'admin/_embed/_form/_btn_delete.html.twig' with {'entity': entity, 'deleteTitle': deleteTitle} %}
                 {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
             {% endif %}
 
@@ -68,16 +59,7 @@
                 <a href="{{ path(prefix ~ 'show', {'id': entity.id}) }}" class="btn btn-outline-secondary btn-sm shadow-sm">
                     <i class="fas fa-eye fa-sm fa-fw"></i>
                 </a>
-                <form action="{{ path(prefix ~ 'delete', {'id': entity.id}) }}" id="form{{ entity.id }}" method="post" class="d-inline">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
-                    <button class="btn btn-outline-danger btn-sm btn-trash"
-                            data-bs-toggle="modal"
-                            data-bs-target="#approveDeleteModal"
-                            data-record-id="{{ entity.id }}"
-                            data-record-title="{{ deleteTitle }}">
-                        <i class="fa fa-trash fa-sm fa-fw"></i>
-                    </button>
-                </form>
+                {% include 'admin/_embed/_form/_btn_delete.html.twig' with {'entity': entity, 'deleteTitle': deleteTitle} %}
                 {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
             {% endif %}
         </div>
