@@ -1,0 +1,28 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Users - Edit' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': user, 'deleteTitle': user.email} %}
+                </div>
+                <div class="card-body">
+                    {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="mb-3 row">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button class="btn btn-primary"><i class="far fa-fw fa-save"></i> Save</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
