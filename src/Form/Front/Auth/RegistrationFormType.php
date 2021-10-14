@@ -6,9 +6,9 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,36 +21,26 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Email Address',
                 'required' => true,
                 'attr' => [
-                    'class' => 'form-control',
                     'placeholder' => 'Email Address',
-                    'autofocus' => 'autofocus',
-                ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please fill the field',
-                    ]),
-                    new Email([
-                        'message' => 'Please enter a valid email',
-                    ])
+                    'autofocus' => true,
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'Password',
-                'required' => true,
+            ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Password',
+                'required' => true,
+                'type' => PasswordType::class,
+                'invalid_message' => 'The passwords do not match.',
+                'first_options' => [
+                    'label' => 'Password',
+                    'attr' => ['placeholder' => 'Password'],
+                    'constraints' => [
+                        new NotBlank(['message' => 'Please enter a password.']),
+                        new Length(['min' => 6, 'max' => 128]),
+                    ],
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                'second_options' => [
+                    'label' => 'Confirm Password',
+                    'attr' => ['placeholder' => 'Confirm Password']
                 ],
             ])
         ;

@@ -23,8 +23,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    #[Assert\Email]
-    #[Assert\NotBlank]
+    #[Assert\Email(message: 'Please enter a valid email address.')]
+    #[Assert\NotBlank(message: 'Please enter a email address.')]
     private string $email;
 
     #[ORM\Column(type: 'json')]

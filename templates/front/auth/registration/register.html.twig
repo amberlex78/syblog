@@ -4,25 +4,39 @@
 
 {% block content %}
 
-    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+    {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
     <p>Sign up for your account</p>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(form) }}
 
     <div class="form-floating mb-3">
-        {{ form_widget(registrationForm.email) }}
-        {{ form_label(registrationForm.email) }}
-        {{ form_errors(registrationForm.email) }}
+        {% if form.plainPassword.first.vars.errors|length %}
+            {{ form_widget(form.email, {'attr': {'autofocus': false}}) }}
+        {% else %}
+            {{ form_widget(form.email) }}
+        {% endif %}
+        {{ form_label(form.email) }}
+        {{ form_errors(form.email) }}
     </div>
 
     <div class="form-floating mb-3">
-        {{ form_widget(registrationForm.plainPassword) }}
-        {{ form_label(registrationForm.plainPassword) }}
-        {{ form_errors(registrationForm.plainPassword) }}
+        {% if form.plainPassword.first.vars.errors|length %}
+            {{ form_widget(form.plainPassword.first, {'attr': {'autofocus': true}}) }}
+        {% else %}
+            {{ form_widget(form.plainPassword.first) }}
+        {% endif %}
+        {{ form_label(form.plainPassword.first) }}
+        {{ form_errors(form.plainPassword.first) }}
+    </div>
+
+    <div class="form-floating mb-3">
+        {{ form_widget(form.plainPassword.second) }}
+        {{ form_label(form.plainPassword.second) }}
+        {{ form_errors(form.plainPassword.second) }}
     </div>
 
     <button type="submit" class="btn btn-primary d-inline">Sign up</button>
 
-    {{ form_end(registrationForm) }}
+    {{ form_end(form) }}
 {% endblock %}
