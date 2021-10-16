@@ -7,6 +7,10 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
+            <a class="nav-link{{ _r starts with 'admin_page' ? ' active' : '' }}" href="{{ path('admin_page_index') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-copy"></i></div>
+                Pages
+            </a>
             <a class="nav-link{{ _r starts with 'admin_user' ? ' active' : '' }}" href="{{ path('admin_user_index') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-users"></i></div>
                 Users
