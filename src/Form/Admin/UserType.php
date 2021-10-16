@@ -20,6 +20,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'empty_data' => '',
                 'attr' => ['autofocus' => true],
             ]);
 
