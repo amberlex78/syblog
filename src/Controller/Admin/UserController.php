@@ -77,7 +77,7 @@ class UserController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', 'Your changes have been saved.');
+            $this->addFlash('success', 'Changes saved.');
 
             return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -95,8 +95,9 @@ class UserController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
-
             $this->addFlash('success', 'User deleted.');
+        } else {
+            $this->addFlash('warning', 'Something went wrong! Try again.');
         }
 
         return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);

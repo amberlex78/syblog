@@ -33,6 +33,8 @@ class PageController extends AbstractController
             $entityManager->persist($page);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Page added.');
+
             return $this->redirectToRoute('admin_page_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -59,6 +61,8 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Changes saved.');
+
             return $this->redirectToRoute('admin_page_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -75,6 +79,9 @@ class PageController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($page);
             $entityManager->flush();
+            $this->addFlash('success', 'Page deleted.');
+        } else {
+            $this->addFlash('warning', 'Something went wrong! Try again.');
         }
 
         return $this->redirectToRoute('admin_page_index', [], Response::HTTP_SEE_OTHER);
