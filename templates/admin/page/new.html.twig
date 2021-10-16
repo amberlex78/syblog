@@ -5,16 +5,12 @@
 {% block title %}{{ headerTitle }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page} %}
-                </div>
-                <div class="card-body">
-                    {% include'admin/page/_form.html.twig' %}
-                </div>
-            </div>
+    <div class="card shadow-sm">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page} %}
+        </div>
+        <div class="card-body">
+            {% include'admin/page/_form.html.twig' %}
         </div>
     </div>
 {% endblock %}

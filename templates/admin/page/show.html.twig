@@ -5,59 +5,55 @@
 {% block title %}{{ headerTitle }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg">
-            <div class="card my">
-                <div class="card-header">
-                    {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page, 'deleteTitle': page.title} %}
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped table-hover">
-                        <tbody>
-                        <tr>
-                            <th>Id</th>
-                            <td>{{ page.id }}</td>
-                        </tr>
-                        <tr>
-                            <th>Title</th>
-                            <td>{{ page.title }}</td>
-                        </tr>
-                        <tr>
-                            <th>Slug</th>
-                            <td>{{ page.slug }}</td>
-                        </tr>
-                        <tr>
-                            <th>Content</th>
-                            <td>{{ page.content }}</td>
-                        </tr>
-                        <tr>
-                            <th>Is active</th>
-                            <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Seo title</th>
-                            <td>{{ page.seoTitle }}</td>
-                        </tr>
-                        <tr>
-                            <th>Seo keywords</th>
-                            <td>{{ page.seoKeywords }}</td>
-                        </tr>
-                        <tr>
-                            <th>Seo description</th>
-                            <td>{{ page.seoDescription }}</td>
-                        </tr>
-                        <tr>
-                            <th>Create at</th>
-                            <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                        </tr>
-                        <tr>
-                            <th>Updated at</th>
-                            <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="card my">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page, 'deleteTitle': page.title} %}
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ page.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ page.title }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ page.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ page.content }}</td>
+                </tr>
+                <tr>
+                    <th>Is active</th>
+                    <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>Seo title</th>
+                    <td>{{ page.seoTitle }}</td>
+                </tr>
+                <tr>
+                    <th>Seo keywords</th>
+                    <td>{{ page.seoKeywords }}</td>
+                </tr>
+                <tr>
+                    <th>Seo description</th>
+                    <td>{{ page.seoDescription }}</td>
+                </tr>
+                <tr>
+                    <th>Create at</th>
+                    <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated at</th>
+                    <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
