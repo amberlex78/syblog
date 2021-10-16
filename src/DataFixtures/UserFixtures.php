@@ -33,7 +33,7 @@ class UserFixtures extends BaseFixture
             $object->setIsVerified(1);
             $object->setFirstName($this->faker->firstName());
             $object->setLastName($this->faker->lastName());
-            $object->setPassword($this->hasher->hashPassword($object,'password'));
+            $object->setPassword($this->hasher->hashPassword($object, 'password'));
 
             $this->entityManager->persist($object);
         }

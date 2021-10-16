@@ -22,6 +22,7 @@ class PageFixtures extends BaseFixture
         $object = new Page();
         $object->setTitle('About');
         $object->setSlug('about');
+        $object->setContent($this->faker->realText(500));
         $object->setIsActive(true);
 
         $this->entityManager->persist($object);
