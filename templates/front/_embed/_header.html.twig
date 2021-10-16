@@ -23,6 +23,14 @@
                                     Profile
                                 </a>
                             </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a href="{{ path('admin_dashboard') }}" class="dropdown-item">
+                                        <i class="fas fa-fw fa-tachometer-alt me-1"></i>
+                                        Admin Panel
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a href="{{ path('front_logout') }}" class="dropdown-item">
