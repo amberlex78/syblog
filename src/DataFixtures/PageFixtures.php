@@ -3,45 +3,40 @@
 namespace App\DataFixtures;
 
 use App\Entity\Page;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
-class PageFixtures extends Fixture
+class PageFixtures extends BaseFixture
 {
-    private EntityManagerInterface $em;
+    private SluggerInterface $slugger;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
-        $this->em = $entityManager;
+        parent::__construct($entityManager);
+        $this->slugger = $slugger;
     }
 
     public function load(ObjectManager $manager): void
     {
-        $data = [
-            [
-                'title' => 'About',
-                'slug' => 'about',
-                'is_active' => true,
-            ],
-            [
-                'title' => 'Payment',
-                'slug' => 'payment',
-            ],
-            [
-                'title' => 'Delivery',
-                'slug' => 'delivery',
-            ],
-        ];
+        $object = new Page();
+        $object->setTitle('About');
+        $object->setSlug('about');
+        $object->setIsActive(true);
 
-        foreach ($data as $item) {
-            $newUser = new Page();
+        $this->entityManager->persist($object);
 
-            $newUser->setTitle($item['title']);
-            $newUser->setSlug($item['slug']);
-            $newUser->setIsActive($item['is_active'] ?? false);
+        // Fake data
+        for ($i = 0; $i < 5; $i++) {
+            $title = $this->faker->sentence(2);
 
-            $this->em->persist($newUser);
+            $object = new Page();
+            $object->setTitle($title);
+            $object->setSlug($this->slugger->slug($title));
+            $object->setContent($this->faker->realText(500));
+            $object->setIsActive($this->faker->numberBetween(0, 1));
+
+            $this->entityManager->persist($object);
         }
 
         $manager->flush();
