@@ -3,6 +3,7 @@
 namespace App\Form\Admin;
 
 use App\Entity\Page;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,11 +22,8 @@ class PageType extends AbstractType
             ->add('slug', TextType::class, [
                 'empty_data' => '',
             ])
-            ->add('content', TextareaType::class, [
-                'required' => false,
-                'attr' => [
-                    'rows' => 5,
-                ],
+            ->add('content', CKEditorType::class, [
+                'required' => true,
             ])
             ->add('isActive')
             ->add('seoTitle')

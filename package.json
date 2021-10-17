@@ -22,6 +22,7 @@
         "@fortawesome/fontawesome-free": "^5.15.4",
         "@popperjs/core": "^2.10.2",
         "bootstrap": "^5.1.2",
+        "ckeditor": "^4.12.1",
         "jquery": "^3.6.0",
         "startbootstrap-sb-admin": "^7.0.3"
     }
