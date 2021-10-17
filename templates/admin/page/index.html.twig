@@ -38,6 +38,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {{ knp_pagination_render(pages) }}
         </div>
     </div>
     {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Page;
 use App\Form\Admin\PageType;
 use App\Repository\PageRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     #[Route('/', name: 'admin_page_index', methods: ['GET'])]
-    public function index(PageRepository $pageRepository): Response
+    public function index(PageRepository $pageRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $pages = $paginator->paginate(
+            $pageRepository->findAll(),
+            $request->query->getInt('page', 1)
+        );
+
         return $this->render('admin/page/index.html.twig', [
-            'pages' => $pageRepository->findAll(),
+            'pages' => $pages,
         ]);
     }
 
