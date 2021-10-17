@@ -15,6 +15,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Title</th>
+                    <th>Parent</th>
                     <th>Slug</th>
                     <th>Is active</th>
                     <th>Created at</th>
@@ -26,6 +27,7 @@
                     <tr>
                         <td>{{ page.id }}</td>
                         <td>{{ page.title }}</td>
+                        <td>{{ page.parent ?? '-' }}</td>
                         <td>{{ page.slug }}</td>
                         <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
                         <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i') : '' }}</td>

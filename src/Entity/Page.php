@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use App\Repository\PageRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,6 +21,13 @@ class Page
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
+
+    #[ORM\ManyToOne(targetEntity: Page::class, inversedBy: 'pages')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    private ?Page $parent;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Page::class)]
+    private Collection $pages;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a title.')]
@@ -47,6 +57,12 @@ class Page
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $updatedAt;
+
+    #[Pure]
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -172,5 +188,54 @@ class Page
     public function preUpdate()
     {
         $this->setUpdatedAt(new DateTimeImmutable());
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getIndentedName()
+    {
+        return str_repeat($this->parent." > ", 1) . $this->title;
+    }
+
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            // set the owning side to null (unless already changed)
+            if ($page->getParent() === $this) {
+                $page->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }
