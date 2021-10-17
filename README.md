@@ -1,6 +1,6 @@
 # Symfony CMS
 
-### Install
+## Install
 ```
 git clone git@github.com:amberlex78/sf-cms.git
 cd sf-cms
@@ -11,23 +11,23 @@ yarn encore dev
 symfony server:start -d
 ```
 
-### Create DB container
+## Create DB container
 If you don't have `MySQL` server installed, you can `docker up` the `MySQL` container.
 
 Database connection see in `docker-compose.yml` and config in `.env` files.
-#### Up
+### Up
 Docker up: `docker-compose up -d` or:
 ```
 make init
 ```
-#### Down
+### Down
 Docker down: `docker-compose down --remove-orphans` or:
 ```
 make down
 ```
 See all command in `Makefile` file.
 
-### Init DB after container up
+## Init DB after container up
 Drop tables `doctrine:schema:drop`
 ```
 symfony console d:s:d --full-database --force
@@ -41,7 +41,7 @@ Fill tables: `doctrine:fixtures:load`
 symfony console d:f:l
 ```
 
-### Access to site
+## Access to site
 
 Front:
 ```
