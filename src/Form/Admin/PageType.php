@@ -3,7 +3,6 @@
 namespace App\Form\Admin;
 
 use App\Entity\Page;
-use App\Repository\PageRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,18 +15,17 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('parent', EntityType::class, [
-                'class' => Page::class,
-                'expanded' => false ,
-                //'group_by' => 'parent',
-                'query_builder' => function (PageRepository $r) {
-                    $queryBuilder = $r->createQueryBuilder('c');
-                    return $queryBuilder->where($queryBuilder->expr()->isNotNull('c.parent'));
-                },
-            ])
             ->add('title', TextType::class, [
                 'empty_data' => '',
                 'attr' => ['autofocus' => true],
+            ])
+            ->add('parent', EntityType::class, [
+                'class' => Page::class,
+//                'group_by' => 'parent',
+//                'query_builder' => function (PageRepository $r) {
+//                    $queryBuilder = $r->createQueryBuilder('c');
+//                    return $queryBuilder->where($queryBuilder->expr()->isNotNull('c.parent'));
+//                },
             ])
             ->add('slug', TextType::class, [
                 'empty_data' => '',
