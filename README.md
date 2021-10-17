@@ -1,4 +1,23 @@
-# Symfony CMS
+# Symfony Blog
+
+I started to get familiar with the `Symfony` framework. 
+As a starting point, I decided to create a system for a simple website.
+
+## Approximate plan
+
+Implementation steps:
+- Install the framework `Symfony` and start the server
+- Separation front and admin, each with its own a skeleton template
+- Make registration, authentication, authorization (separate form for front and admin)
+- Users with roles: `user`, `admin`, `superadmin`
+
+In the admin area:
+- Admin dashboard
+- User management
+- Pages management
+- Blog management
+
+---
 
 ## Install
 ```
