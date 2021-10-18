@@ -1,8 +1,21 @@
+# https://github.com/helios-ag/FMElfinderBundle#basic-configuration
 fm_elfinder:
+    #assets_path: / # default is /assets, this is where css/js elfinder files are
     instances:
         default:
+            #locale: '%locale%' # defaults to current request locale
+            editor: ckeditor # other options are tinymce, tinymce4, fm_tinymce, form, simple, custom
+            #editor_template: custom template for your editor # default null
+            #path_prefix: / # for setting custom assets path prefix, useful for non vhost configurations, i.e. http://127.0.0.1/mysite/
+            #fullscreen: true|false # default is true, applies to simple and ckeditor editors
+            theme: smoothness # jquery theme, default is 'smoothness'
+            #visible_mime_types: ['image/png', 'image/jpg', 'image/jpeg'] # only show these mime types, defaults to show all
             connector:
                 roots:
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads
+                        path: uploads/images
+                        show_hidden: false
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 2M # also file upload sizes restricted in php.ini

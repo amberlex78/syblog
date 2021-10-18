@@ -4,6 +4,12 @@ twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
+# https://github.com/helios-ag/FMElfinderBundle/blob/master/docs/ckeditor-integration.md#step-2-configure-ckeditor-setting-via-settingsyml-or-through-form-builder
 fos_ck_editor:
     base_path: "build/ckeditor"
     js_path:   "build/ckeditor/ckeditor.js"
+    default_config: default
+    configs:
+        default:
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []

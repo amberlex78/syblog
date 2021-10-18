@@ -13,7 +13,7 @@
             <table class="table table-striped table-hover">
                 <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th class="w-25">Id</th>
                     <td>{{ page.id }}</td>
                 </tr>
                 <tr>
@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <th>Content</th>
-                    <td>{{ page.content }}</td>
+                    <td>{{ page.content|raw }}</td>
                 </tr>
                 <tr>
                     <th>Is active</th>
