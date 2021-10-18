@@ -4,20 +4,23 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-lg-6">
-            <div class="card">
+        <div class="col-lg-5">
+            <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-info-circle me-1"></i>
-                    System info
+                    <p class="lead mb-0"><i class="fas fa-fw fa-copy fa-fw me-1"></i> Pages</p>
                 </div>
                 <div class="card-body">
-                    <span>PHP v{{ phpVersion() }}</span><br>
-                    <span>Symfony v{{ symfonyVersion() }}</span>
+                    <a href="{{ path('admin_page_new') }}" class="btn btn-outline-success btn-block btn-sm">
+                        <i class="fas fa-plus fa-sm fa-fw me-1"></i> Add Page
+                    </a>
+                    <a href="{{ path('admin_page_index') }}" class="btn btn-outline-secondary btn-block btn-sm">
+                        <i class="fas fa-list fa-sm fa-fw me-1"></i> List Pages
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="card">
+        <div class="col-lg-7">
+            <div class="card shadow-sm mb-4">
                 <div class="card-header">
                     <i class="fas fa-info-circle me-1"></i>
                     About SB Admin Template
@@ -53,6 +56,16 @@
                             <small><i class="fas fa-fw fa-external-link-alt"></i></small>
                         </a>
                     </p>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-1"></i>
+                    System info
+                </div>
+                <div class="card-body">
+                    <p>Symfony v{{ symfonyVersion() }}</p>
+                    <span>PHP v{{ phpVersion() }}</span>
                 </div>
             </div>
         </div>
