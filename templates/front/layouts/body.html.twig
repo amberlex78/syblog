@@ -7,7 +7,14 @@
     <main class="flex-shrink-0">
         <div class="container my-4">
             {% include 'front/_embed/_flash_message.html.twig' %}
-            {% block content %}{% endblock %}
+            <div class="row">
+                <div class="col-9">
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="col-3">
+                    {% include 'front/_embed/_sidebar.html.twig' %}
+                </div>
+            </div>
         </div>
     </main>
     <footer class="footer mt-auto py-3 bg-light">
