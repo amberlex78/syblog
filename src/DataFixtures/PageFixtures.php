@@ -33,7 +33,7 @@ class PageFixtures extends BaseFixture
 
             $object = new Page();
             $object->setTitle($title);
-            $object->setSlug($this->slugger->slug($title));
+            $object->setSlug($this->slugger->slug($title)->lower());
             $object->setContent($this->faker->realText(500));
             $object->setIsActive($this->faker->numberBetween(0, 1));
 
