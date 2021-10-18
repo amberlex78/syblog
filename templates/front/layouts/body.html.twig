@@ -5,13 +5,13 @@
         {% include 'front/_embed/_header.html.twig' %}
     </header>
     <main class="flex-shrink-0">
-        <div class="container my-4">
+        <div class="container mt-4">
             {% include 'front/_embed/_flash_message.html.twig' %}
             <div class="row">
-                <div class="col-9">
+                <div class="col-lg-9">
                     {% block content %}{% endblock %}
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3">
                     {% include 'front/_embed/_sidebar.html.twig' %}
                 </div>
             </div>
