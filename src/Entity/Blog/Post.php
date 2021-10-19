@@ -2,6 +2,7 @@
 
 namespace App\Entity\Blog;
 
+use App\Entity\User;
 use App\Repository\Blog\PostRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,6 +19,9 @@ class Post
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
+    private User $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     private Category $category;
@@ -215,6 +219,18 @@ class Post
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
