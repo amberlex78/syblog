@@ -21,21 +21,21 @@ class UserFixtures extends BaseFixture
     public function load(ObjectManager $manager): void
     {
         $users = [
-            ['email' => 'user@example.com', 'role' => [UserRolesStorage::ROLE_USER]],
-            ['email' => 'admin@example.com', 'role' => [UserRolesStorage::ROLE_ADMIN]],
-            ['email' => 'sadmin@example.com', 'role' => [UserRolesStorage::ROLE_SUPER_ADMIN]],
+            1 => ['email' => 'user@example.com', 'role' => [UserRolesStorage::ROLE_USER]],
+            2 => ['email' => 'admin@example.com', 'role' => [UserRolesStorage::ROLE_ADMIN]],
+            3 => ['email' => 'sadmin@example.com', 'role' => [UserRolesStorage::ROLE_SUPER_ADMIN]],
         ];
 
-        foreach ($users as $user) {
-            $object = new User();
-            $object->setEmail($user['email']);
-            $object->setRoles($user['role']);
-            $object->setIsVerified(1);
-            $object->setFirstName($this->faker->firstName());
-            $object->setLastName($this->faker->lastName());
-            $object->setPassword($this->hasher->hashPassword($object, 'password'));
-
-            $this->entityManager->persist($object);
+        foreach ($users as $id => $user) {
+            $newUser = new User();
+            $newUser->setEmail($user['email']);
+            $newUser->setRoles($user['role']);
+            $newUser->setIsVerified(1);
+            $newUser->setFirstName($this->faker->firstName());
+            $newUser->setLastName($this->faker->lastName());
+            $newUser->setPassword($this->hasher->hashPassword($newUser, 'password'));
+            $this->entityManager->persist($newUser);
+            $this->addReference('user_' . $id, $newUser);
         }
 
         $manager->flush();
