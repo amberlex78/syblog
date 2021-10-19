@@ -6,7 +6,14 @@
     prefix    = admin_user_  // prefx:
 #}
 {% set _route = app.request.get('_route')|split('_') %}
-{% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' %}
+
+{% if _route|length == 3 %}
+    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' %}
+{% endif %}
+
+{% if _route|length == 4 %}
+    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' ~ _route[2] ~ '_' %}
+{% endif %}
 
 {% if deleteTitle is not defined %}
     {% set deleteTitle = 'Delete this record?' %}

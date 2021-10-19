@@ -6,7 +6,16 @@
     prefix    = admin_user_  // prefx:
 #}
 {% set _route = app.request.get('_route')|split('_') %}
-{% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' %}
+
+{% if _route|length == 3 %}
+    {% set action = _route[2] %}
+    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' %}
+{% endif %}
+
+{% if _route|length == 4 %}
+    {% set action = _route[3] %}
+    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' ~ _route[2] ~ '_' %}
+{% endif %}
 
 {% if deleteTitle is not defined %}
     {% set deleteTitle = 'Delete this record?' %}
@@ -17,7 +26,7 @@
 <div class="d-flex justify-content-between my-0">
     <nav class="mt-1" aria-label="breadcrumb">
         <ol class="breadcrumb d-inline-flex m-0">
-            {% if _route[2] is defined and breadcrumb[1] is defined %}
+            {% if action is defined and breadcrumb[1] is defined %}
                 <li class="breadcrumb-item"><a href="{{ path(prefix ~ 'index') }}">{{ breadcrumb[0] }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb[1] }}</li>
             {% elseif breadcrumb[0] is defined %}
@@ -28,19 +37,19 @@
         </ol>
     </nav>
 
-    {% if (_route[2] is defined) %}
+    {% if (action is defined) %}
         <div class="my-auto">
-            {% if (_route[2] == 'index') %}
+            {% if (action == 'index') %}
                 <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
                     <i class="fas fa-plus fa-sm fa-fw"></i> Add New
                 </a>
             {% endif %}
 
-            {% if (_route[2] == 'new') %}
+            {% if (action == 'new') %}
                 <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
             {% endif %}
 
-            {% if (_route[2] == 'show') %}
+            {% if (action == 'show') %}
                 <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
                     <i class="fas fa-plus fa-sm fa-fw"></i>
                 </a>
@@ -51,7 +60,7 @@
                 {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
             {% endif %}
 
-            {% if (_route[2] == 'edit') %}
+            {% if (action == 'edit') %}
                 <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
                 <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
                     <i class="fas fa-plus fa-sm fa-fw"></i>
