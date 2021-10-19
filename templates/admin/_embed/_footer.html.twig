@@ -1,8 +1,18 @@
 <div class="d-flex align-items-center justify-content-between small">
-    <div class="text-muted">Copyright &copy; Your Website 2021</div>
+    <div class="text-muted">
+        Copyright &copy; SF-CMS
+        {% set currentYear = 'now'|date('Y') %}
+        {% if currentYear == '2021' %}
+            {{ currentYear }}
+        {% else %}
+            2021 - {{ currentYear }}
+        {% endif %}
+    </div>
     <div>
-        <a href="#">Privacy Policy</a>
-        &middot;
-        <a href="#">Terms &amp; Conditions</a>
+        <i class="fab fa-github fa-fw"></i>
+        <a href="https://github.com/amberlex78/sf-cms" target="_blank">GitHub</a>
+
+        <i class="far fa-file-alt fa-fw"></i>
+        <a href="https://github.com/amberlex78/sf-cms/blob/main/LICENSE" target="_blank">License</a>
     </div>
 </div>
