@@ -91,6 +91,12 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
+        if ($user->getPosts()->count()) {
+            $this->addFlash('warning', 'User has posts!');
+
+            return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
