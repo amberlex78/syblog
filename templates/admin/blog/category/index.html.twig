@@ -1,0 +1,44 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Blog Categories' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle} %}
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Image</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.id }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>{{ category.slug }}</td>
+                        <td>{{ category.image }}</td>
+                        <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i') : '' }}</td>
+                        <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': category, 'deleteTitle': category.name} %}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
+{% endblock %}

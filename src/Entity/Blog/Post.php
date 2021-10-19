@@ -21,10 +21,10 @@ class Post
     private int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
-    private User $user;
+    private ?User $user;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
-    private Category $category;
+    private ?Category $category;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a title.')]
@@ -223,12 +223,12 @@ class Post
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

@@ -7,13 +7,36 @@
         <div class="col-lg-5">
             <div class="card mb-4">
                 <div class="card-header">
+                    <p class="lead mb-0"><i class="fas fa-fw fa-book fa-fw me-1"></i> Blog</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <a href="{{ path('admin_blog_post_new') }}" class="btn btn-outline-success btn-block btn-sm my-1">
+                            <i class="fas fa-plus fa-sm fa-fw me-1"></i> Add Post
+                        </a>
+                        <a href="{{ path('admin_blog_post_index') }}" class="btn btn-outline-secondary btn-block btn-sm my-1">
+                            <i class="fas fa-list fa-sm fa-fw me-1"></i> List Posts
+                        </a>
+                    </div>
+                    <div>
+                        <a href="{{ path('admin_blog_category_new') }}" class="btn btn-outline-success btn-block btn-sm my-1">
+                            <i class="fas fa-plus fa-sm fa-fw me-1"></i> Add Category
+                        </a>
+                        <a href="{{ path('admin_blog_category_index') }}" class="btn btn-outline-secondary btn-block btn-sm my-1">
+                            <i class="fas fa-th-list fa-sm fa-fw me-1"></i> List Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
                     <p class="lead mb-0"><i class="fas fa-fw fa-copy fa-fw me-1"></i> Pages</p>
                 </div>
                 <div class="card-body">
-                    <a href="{{ path('admin_page_new') }}" class="btn btn-outline-success btn-block btn-sm">
+                    <a href="{{ path('admin_page_new') }}" class="btn btn-outline-success btn-block btn-sm my-1">
                         <i class="fas fa-plus fa-sm fa-fw me-1"></i> Add Page
                     </a>
-                    <a href="{{ path('admin_page_index') }}" class="btn btn-outline-secondary btn-block btn-sm">
+                    <a href="{{ path('admin_page_index') }}" class="btn btn-outline-secondary btn-block btn-sm my-1">
                         <i class="fas fa-list fa-sm fa-fw me-1"></i> List Pages
                     </a>
                 </div>

@@ -1,0 +1,59 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Blog Categories - Category' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card my">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': category, 'deleteTitle': category.name} %}
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ category.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ category.name }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ category.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ category.description }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>{{ category.image }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_title</th>
+                    <td>{{ category.seoTitle }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_keywords</th>
+                    <td>{{ category.seoKeywords }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_description</th>
+                    <td>{{ category.seoDescription }}</td>
+                </tr>
+                <tr>
+                    <th>Created_at</th>
+                    <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated_at</th>
+                    <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

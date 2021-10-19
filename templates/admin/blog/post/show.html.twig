@@ -1,0 +1,75 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Blog Posts - Post' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card my">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': post, 'deleteTitle': post.title} %}
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ post.id }}</td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td>{{ post.category }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ post.title }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ post.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Preview</th>
+                    <td>{{ post.preview }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ post.content }}</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>{{ post.image }}</td>
+                </tr>
+                <tr>
+                    <th>Is_draft</th>
+                    <td>{{ post.isDraft ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_title</th>
+                    <td>{{ post.seoTitle }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_keywords</th>
+                    <td>{{ post.seoKeywords }}</td>
+                </tr>
+                <tr>
+                    <th>Seo_description</th>
+                    <td>{{ post.seoDescription }}</td>
+                </tr>
+                <tr>
+                    <th>Created_at</th>
+                    <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated_at</th>
+                    <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Created by user</th>
+                    <td>{{ post.user }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

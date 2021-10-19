@@ -7,10 +7,28 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
+
+            <a class="nav-link{{ _r starts with 'admin_blog' ? '' : ' collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+               aria-expanded="{{ _r starts with 'admin_blog' ? 'true' : 'false' }}" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-book"></i></div>
+                Blog <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse{{ _r starts with 'admin_blog' ? ' show' : '' }}" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="nav-link{{ _r starts with 'admin_blog_category' ? ' active' : '' }}" href="{{ path('admin_blog_category_index') }}">
+                        <i class="fas fa-th-list fa-sm fa-fw me-1"></i> Categories
+                    </a>
+                    <a class="nav-link{{ _r starts with 'admin_blog_post' ? ' active' : '' }}" href="{{ path('admin_blog_post_index') }}">
+                        <i class="fas fa-list fa-sm fa-fw me-1"></i> Posts
+                    </a>
+                </nav>
+            </div>
+
             <a class="nav-link{{ _r starts with 'admin_page' ? ' active' : '' }}" href="{{ path('admin_page_index') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-copy"></i></div>
                 Pages
             </a>
+
             <a class="nav-link{{ _r starts with 'admin_user' ? ' active' : '' }}" href="{{ path('admin_user_index') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-users"></i></div>
                 Users

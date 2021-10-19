@@ -1,0 +1,47 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Blog Posts' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle} %}
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Is Draft</th>
+                    <th>Image</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.category }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.isDraft ? 'Yes' : 'No' }}</td>
+                        <td>{{ post.image }}</td>
+                        <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i') : '' }}</td>
+                        <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': post, 'deleteTitle': post.title} %}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(posts) }}
+        </div>
+    </div>
+    {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
+{% endblock %}
