@@ -20,7 +20,7 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     private ?User $user;
@@ -43,7 +43,7 @@ class Post
     private ?string $content;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $image;
+    private ?string $image = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $is_draft;
@@ -63,7 +63,7 @@ class Post
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $updated_at;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
