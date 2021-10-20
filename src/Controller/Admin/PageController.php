@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Page;
 use App\Form\Admin\PageType;
 use App\Repository\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,16 +29,15 @@ class PageController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_page_new', methods: ['GET','POST'])]
-    public function new(Request $request): Response
+    public function new(EntityManagerInterface $em, Request $request): Response
     {
         $page = new Page();
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
+            $em->persist($page);
+            $em->flush();
 
             $this->addFlash('success', 'Page added.');
 
@@ -59,13 +59,13 @@ class PageController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'admin_page_edit', methods: ['GET','POST'])]
-    public function edit(Request $request, Page $page): Response
+    public function edit(EntityManagerInterface $em, Request $request, Page $page): Response
     {
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             $this->addFlash('success', 'Changes saved.');
 
@@ -79,12 +79,12 @@ class PageController extends AbstractController
     }
 
     #[Route('/{id}', name: 'admin_page_delete', methods: ['POST'])]
-    public function delete(Request $request, Page $page): Response
+    public function delete(EntityManagerInterface $em, Request $request, Page $page): Response
     {
         if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($page);
-            $entityManager->flush();
+            $em->remove($page);
+            $em->flush();
+
             $this->addFlash('success', 'Page deleted.');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');
