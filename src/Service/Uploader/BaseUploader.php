@@ -2,6 +2,7 @@
 
 namespace App\Service\Uploader;
 
+use Symfony\Component\Asset\Context\RequestStackContext;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -11,16 +12,19 @@ class BaseUploader
 {
     protected string $uploadPath;
     protected Filesystem $filesystem;
+    private RequestStackContext $requestStackContext;
 
-    public function __construct(string $uploadPath, Filesystem $filesystem)
+    public function __construct(string $uploadPath, Filesystem $filesystem, RequestStackContext $requestStackContext)
     {
         $this->uploadPath = $uploadPath;
         $this->filesystem = $filesystem;
+        $this->requestStackContext = $requestStackContext;
     }
 
     public function getPublicPath(string $path): string
     {
-        return '/uploads/' . $path;
+        // Needed if you deploy under a subdirectory
+        return $this->requestStackContext->getBasePath() . '/uploads/' . $path;
     }
 
     protected function baseUploadFile(string $filesDir, UploadedFile $uploadedFile): string
