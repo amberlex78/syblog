@@ -2,7 +2,6 @@
 
 namespace App\Form\Admin;
 
-use App\Controller\Admin\UserController;
 use App\Entity\StaticStorage\UserRolesStorage;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -18,18 +17,38 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $user = $options['data'] ?? null;
+        $isEdit = $user && $user->getId();
+
         $builder
             ->add('email', EmailType::class, [
                 'empty_data' => '',
                 'attr' => ['autofocus' => true],
             ]);
 
-        match ($builder->getOption('action_type')) {
-            UserController::ACTION_TYPE_NEW => $this->addPlainPasswordNew($builder),
-            UserController::ACTION_TYPE_EDIT => $this->addPlainPasswordEdit($builder),
-        };
+        if ($isEdit) {
+            $builder->add('plainPassword', PasswordType::class, [
+                'label' => 'Password',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Length(['min' => 6, 'max' => 128]),
+                ],
+            ]);
+        } else {
+            $builder->add('plainPassword', PasswordType::class, [
+                'label' => 'Password',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(['message' => 'Please enter a password.']),
+                    new Length(['min' => 6, 'max' => 128]),
+                ],
+            ]);
+        }
 
-        $builder->add('first_name')
+        $builder
+            ->add('first_name')
             ->add('last_name')
             ->add('roles', ChoiceType::class, [
                 'label' => 'Roles',
@@ -44,32 +63,6 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'action_type' => UserController::ACTION_TYPE_NEW,
-        ]);
-    }
-
-    private function addPlainPasswordNew(FormBuilderInterface $builder): FormBuilderInterface
-    {
-        return $builder->add('plainPassword', PasswordType::class, [
-            'label' => 'Password',
-            'required' => true,
-            'mapped' => false,
-            'constraints' => [
-                new NotBlank(['message' => 'Please enter a password.']),
-                new Length(['min' => 6, 'max' => 128]),
-            ],
-        ]);
-    }
-
-    private function addPlainPasswordEdit(FormBuilderInterface $builder): FormBuilderInterface
-    {
-        return $builder->add('plainPassword', PasswordType::class, [
-            'label' => 'Password',
-            'required' => false,
-            'mapped' => false,
-            'constraints' => [
-                new Length(['min' => 6, 'max' => 128]),
-            ],
         ]);
     }
 }

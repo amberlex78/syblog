@@ -14,9 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/user', name: 'admin_user_')]
 class UserController extends AbstractController
 {
-    public const ACTION_TYPE_NEW = 'new';
-    public const ACTION_TYPE_EDIT = 'edit';
-
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -65,7 +62,7 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user, ['action_type' => self::ACTION_TYPE_EDIT]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
