@@ -5,6 +5,8 @@ namespace App\Controller\Admin\Blog;
 use App\Entity\Blog\Post;
 use App\Form\Admin\Blog\PostType;
 use App\Repository\Blog\PostRepository;
+use App\Service\Uploader\BlogUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,16 +30,19 @@ class PostController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_blog_post_new', methods: ['GET','POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
+            if ($image = $form->get('image')->getData()) {
+                $filename = $uploader->uploadPostImage($image);
+                $post->setImage($filename);
+            }
+            $em->persist($post);
+            $em->flush();
 
             $this->addFlash('success', 'Post added.');
 
@@ -59,13 +64,18 @@ class PostController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'admin_blog_post_edit', methods: ['GET','POST'])]
-    public function edit(Request $request, Post $post): Response
+    public function edit(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($image = $form->get('image')->getData()) {
+                $uploader->removePostImage($post->getImage());
+                $filename = $uploader->uploadPostImage($image);
+                $post->setImage($filename);
+            }
+            $em->flush();
 
             $this->addFlash('success', 'Changes saved.');
 
@@ -79,12 +89,13 @@ class PostController extends AbstractController
     }
 
     #[Route('/{id}', name: 'admin_blog_post_delete', methods: ['POST'])]
-    public function delete(Request $request, Post $post): Response
+    public function delete(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($post);
-            $entityManager->flush();
+            $uploader->removePostImage($post->getImage());
+            $em->remove($post);
+            $em->flush();
+
             $this->addFlash('success', 'Post deleted.');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');

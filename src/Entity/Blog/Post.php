@@ -4,8 +4,10 @@ namespace App\Entity\Blog;
 
 use App\Entity\User;
 use App\Repository\Blog\PostRepository;
+use App\Service\Uploader\BlogUploader;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -124,6 +126,12 @@ class Post
         $this->image = $image;
 
         return $this;
+    }
+
+    #[Pure]
+    public function getImagePath(): string
+    {
+        return BlogUploader::IMAGES_DIR . '/' . $this->getImage();
     }
 
     public function getIsDraft(): bool

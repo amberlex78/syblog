@@ -29,7 +29,7 @@
                         <td>{{ post.category }}</td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.isDraft ? 'Yes' : 'No' }}</td>
-                        <td>{{ post.image }}</td>
+                        <td><img class="img" src="{{ asset_uploaded(post.imagePath) }}" alt=""></td>
                         <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i') : '' }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': post, 'deleteTitle': post.title} %}</td>
                     </tr>

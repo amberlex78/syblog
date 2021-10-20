@@ -6,7 +6,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class UtilsExtension extends AbstractExtension
+class InfoExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
