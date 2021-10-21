@@ -1,10 +1,12 @@
 {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="mb-3 row">
-        <div class="col-sm-10 offset-sm-2">
-            <button class="btn btn-primary"><i class="far fa-fw fa-save"></i> Save</button>
-        </div>
-    </div>
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.slug) }}
+    {{ form_row(form.content) }}
+    {{ form_row(form.isActive) }}
+    {% include 'admin/_embed/_form/_seo_fields.html.twig' %}
+
+    {% include 'admin/_embed/_form/_btn_save.html.twig' %}
 {{ form_end(form) }}

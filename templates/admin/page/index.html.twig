@@ -28,7 +28,7 @@
                         <td>{{ page.title }}</td>
                         <td>{{ page.slug }}</td>
                         <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
-                        <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i') : '' }}</td>
+                        <td><small>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i') : '' }}</small></td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': page, 'deleteTitle': page.title} %}</td>
                     </tr>
                 {% else %}
