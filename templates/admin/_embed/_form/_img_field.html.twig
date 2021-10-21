@@ -1,0 +1,24 @@
+{% if form.vars.data.image %}
+    <div class="mb-3 row">
+        <div class="col-sm-10 offset-sm-2">
+            <div class="card shadow-sm" style="max-width: 184px;">
+                <div class="card-body">
+                    <img src="{{ asset_uploaded(form.vars.data.imagePath)|imagine_filter('squared_thumbnail_form') }}" alt="">
+                </div>
+                <div class="card-footer text-end">
+                    <a href="{{ asset_uploaded(form.vars.data.imagePath) }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+                        <i class="fa fa-eye fa-fw"></i>
+                    </a>
+                    <a href="{{ path('admin_ajax_image_delete', {
+                        'id': form.vars.data.id,
+                        '_model': get_class(form.vars.data),
+                        '_token': csrf_token('delete' ~ form.vars.data.id)
+                    }) }}" class="btn btn-outline-danger btn-sm delete-img">
+                        <i class="fa fa-trash fa-fw"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{{ form_row(form.image) }}

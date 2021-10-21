@@ -21,7 +21,13 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
     {
         return [
             new TwigFunction('asset_uploaded', [$this, 'getAssetUploadedPath']),
+            new TwigFunction('get_class', [$this, 'getClass']),
         ];
+    }
+
+    public function getClass($object): string
+    {
+        return get_class($object);
     }
 
     public function getAssetUploadedPath(string $path): string

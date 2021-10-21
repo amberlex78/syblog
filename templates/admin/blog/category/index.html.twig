@@ -27,7 +27,7 @@
                         <td>{{ category.id }}</td>
                         <td>{{ category.name }}</td>
                         <td>{{ category.slug }}</td>
-                        <td><img class="img" src="{{ asset_uploaded(category.imagePath)|imagine_filter('squared_thumbnail_tiny') }}" alt=""></td>
+                        <td><img class="img" src="{{ category.image ? asset_uploaded(category.imagePath)|imagine_filter('squared_thumbnail_tiny') : '#' }}" alt=""></td>
                         <td><small>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i') : '' }}</small></td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': category, 'deleteTitle': category.name} %}</td>
                     </tr>

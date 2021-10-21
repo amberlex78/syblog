@@ -15,4 +15,18 @@ $(function () {
         $(e.delegateTarget).modal('hide');
     });
 
+    // Delete image on the edit form
+    $('.delete-img').on('click', function (e) {
+        e.preventDefault();
+        $.post({
+            type: 'PATCH',
+            url: $(this).attr('href')
+        }).done(function (data) {
+            if (data.status === true) {
+                location.reload();
+            } else {
+            }
+            console.log(data.message);
+        });
+    });
 });
