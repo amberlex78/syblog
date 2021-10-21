@@ -23,7 +23,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_blog_category_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'admin_blog_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $category = new Category();
@@ -57,7 +57,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_blog_category_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'admin_blog_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -91,7 +91,7 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
             $uploader->removeCategoryImage($category->getImage());
             $em->remove($category);
             $em->flush();

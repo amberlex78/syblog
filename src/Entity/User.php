@@ -41,13 +41,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $password;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $firstName;
+    private ?string $firstName = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $lastName;
+    private ?string $lastName = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $avatar;
+    private ?string $avatar = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;

@@ -17,7 +17,7 @@ class Page
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a title.')]
@@ -31,16 +31,16 @@ class Page
     private bool $isActive = false;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $content;
+    private ?string $content = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoTitle;
+    private ?string $seoTitle = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoKeywords;
+    private ?string $seoKeywords = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoDescription;
+    private ?string $seoDescription = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
@@ -48,7 +48,7 @@ class Page
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $updatedAt;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -113,12 +113,12 @@ class Page
         return $this;
     }
 
-    public function getseoKeywords(): ?string
+    public function getSeoKeywords(): ?string
     {
         return $this->seoKeywords;
     }
 
-    public function setseoKeywords(?string $seoKeywords): self
+    public function setSeoKeywords(?string $seoKeywords): self
     {
         $this->seoKeywords = $seoKeywords;
 

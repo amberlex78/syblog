@@ -37,10 +37,10 @@ class Post
     private string $slug;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $preview;
+    private ?string $preview = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $content;
+    private ?string $content = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
@@ -49,13 +49,13 @@ class Post
     private bool $isDraft;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoTitle;
+    private ?string $seoTitle = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoKeywords;
+    private ?string $seoKeywords = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seoDescription;
+    private ?string $seoDescription = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $created_at;
@@ -158,12 +158,12 @@ class Post
         return $this;
     }
 
-    public function getseoKeywords(): ?string
+    public function getSeoKeywords(): ?string
     {
         return $this->seoKeywords;
     }
 
-    public function setseoKeywords(?string $seoKeywords): self
+    public function setSeoKeywords(?string $seoKeywords): self
     {
         $this->seoKeywords = $seoKeywords;
 

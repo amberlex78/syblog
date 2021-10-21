@@ -28,7 +28,7 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_page_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'admin_page_new', methods: ['GET', 'POST'])]
     public function new(EntityManagerInterface $em, Request $request): Response
     {
         $page = new Page();
@@ -58,7 +58,7 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_page_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'admin_page_edit', methods: ['GET', 'POST'])]
     public function edit(EntityManagerInterface $em, Request $request, Page $page): Response
     {
         $form = $this->createForm(PageType::class, $page);
@@ -81,7 +81,7 @@ class PageController extends AbstractController
     #[Route('/{id}', name: 'admin_page_delete', methods: ['POST'])]
     public function delete(EntityManagerInterface $em, Request $request, Page $page): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $page->getId(), $request->request->get('_token'))) {
             $em->remove($page);
             $em->flush();
 

@@ -29,7 +29,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_blog_post_new', methods: ['GET','POST'])]
+    #[Route('/new', name: 'admin_blog_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $post = new Post();
@@ -63,7 +63,7 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_blog_post_edit', methods: ['GET','POST'])]
+    #[Route('/{id}/edit', name: 'admin_blog_post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $form = $this->createForm(PostType::class, $post);
@@ -91,7 +91,7 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'admin_blog_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
             $uploader->removePostImage($post->getImage());
             $em->remove($post);
             $em->flush();
