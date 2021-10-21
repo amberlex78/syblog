@@ -41,27 +41,27 @@
                     <td><img class="img-fluid" src="{{ asset_uploaded(post.imagePath) }}" alt=""></td>
                 </tr>
                 <tr>
-                    <th>IsDraft</th>
+                    <th>Is draft</th>
                     <td>{{ post.isDraft ? 'Yes' : 'No' }}</td>
                 </tr>
                 <tr>
-                    <th>SeoTitle</th>
+                    <th>Seo title</th>
                     <td>{{ post.seoTitle }}</td>
                 </tr>
                 <tr>
-                    <th>SeoKeywords</th>
+                    <th>Seo keywords</th>
                     <td>{{ post.seoKeywords }}</td>
                 </tr>
                 <tr>
-                    <th>SeoDescription</th>
+                    <th>Seo description</th>
                     <td>{{ post.seoDescription }}</td>
                 </tr>
                 <tr>
-                    <th>CreatedAt</th>
+                    <th>Created at</th>
                     <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>UpdatedAt</th>
+                    <th>Updated at</th>
                     <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>

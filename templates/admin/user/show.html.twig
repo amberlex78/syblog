@@ -25,23 +25,23 @@
                     <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>FirstName</th>
+                    <th>First name</th>
                     <td>{{ user.firstName }}</td>
                 </tr>
                 <tr>
-                    <th>LastName</th>
+                    <th>Last name</th>
                     <td>{{ user.lastName }}</td>
                 </tr>
                 <tr>
-                    <th>CreatedAt</th>
+                    <th>Created at</th>
                     <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>UpdatedAt</th>
+                    <th>Updated at</th>
                     <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>IsVerified</th>
+                    <th>Is verified</th>
                     <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 </tr>
                 </tbody>
