@@ -34,9 +34,9 @@ class CategoryType extends AbstractType
                     new Image(['maxSize' => '2M'])
                 ]
             ))
-            ->add('seo_title')
-            ->add('seo_keywords')
-            ->add('seo_description', TextareaType::class, [
+            ->add('seoTitle')
+            ->add('seoKeywords')
+            ->add('seoDescription', TextareaType::class, [
                 'required' => false,
                 'attr' => [
                     'rows' => 2,

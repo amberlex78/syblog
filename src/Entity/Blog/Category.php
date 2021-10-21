@@ -41,13 +41,13 @@ class Category
     private ?string $image = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seo_title;
+    private ?string $seoTitle;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seo_keywords;
+    private ?string $seoKeywords;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $seo_description;
+    private ?string $seoDescription;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $created_at;
@@ -127,36 +127,36 @@ class Category
 
     public function getSeoTitle(): ?string
     {
-        return $this->seo_title;
+        return $this->seoTitle;
     }
 
-    public function setSeoTitle(?string $seo_title): self
+    public function setSeoTitle(?string $seoTitle): self
     {
-        $this->seo_title = $seo_title;
+        $this->seoTitle = $seoTitle;
 
         return $this;
     }
 
-    public function getSeoKeywords(): ?string
+    public function getseoKeywords(): ?string
     {
-        return $this->seo_keywords;
+        return $this->seoKeywords;
     }
 
-    public function setSeoKeywords(?string $seo_keywords): self
+    public function setseoKeywords(?string $seoKeywords): self
     {
-        $this->seo_keywords = $seo_keywords;
+        $this->seoKeywords = $seoKeywords;
 
         return $this;
     }
 
     public function getSeoDescription(): ?string
     {
-        return $this->seo_description;
+        return $this->seoDescription;
     }
 
-    public function setSeoDescription(?string $seo_description): self
+    public function setSeoDescription(?string $seoDescription): self
     {
-        $this->seo_description = $seo_description;
+        $this->seoDescription = $seoDescription;
 
         return $this;
     }

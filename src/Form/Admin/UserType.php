@@ -48,8 +48,8 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('first_name')
-            ->add('last_name')
+            ->add('firstName')
+            ->add('lastName')
             ->add('roles', ChoiceType::class, [
                 'label' => 'Roles',
                 'required' => false,
