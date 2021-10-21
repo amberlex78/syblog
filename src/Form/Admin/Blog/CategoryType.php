@@ -5,10 +5,12 @@ namespace App\Form\Admin\Blog;
 use App\Entity\Blog\Category;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class CategoryType extends AbstractType
 {
@@ -25,7 +27,13 @@ class CategoryType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'required' => false,
             ])
-            ->add('image')
+            ->add('image', FileType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image(['maxSize' => '2M'])
+                ]
+            ))
             ->add('seo_title')
             ->add('seo_keywords')
             ->add('seo_description', TextareaType::class, [

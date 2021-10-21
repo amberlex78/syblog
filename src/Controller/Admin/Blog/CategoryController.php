@@ -5,6 +5,8 @@ namespace App\Controller\Admin\Blog;
 use App\Entity\Blog\Category;
 use App\Form\Admin\Blog\CategoryType;
 use App\Repository\Blog\CategoryRepository;
+use App\Service\Uploader\BlogUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,16 +24,19 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'admin_blog_category_new', methods: ['GET','POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
+            if ($image = $form->get('image')->getData()) {
+                $filename = $uploader->uploadCategoryImage($image);
+                $category->setImage($filename);
+            }
+            $em->persist($category);
+            $em->flush();
 
             $this->addFlash('success', 'Category added.');
 
@@ -53,13 +58,18 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'admin_blog_category_edit', methods: ['GET','POST'])]
-    public function edit(Request $request, Category $category): Response
+    public function edit(Request $request, Category $category, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($image = $form->get('image')->getData()) {
+                $uploader->removeCategoryImage($category->getImage());
+                $filename = $uploader->uploadCategoryImage($image);
+                $category->setImage($filename);
+            }
+            $em->flush();
 
             $this->addFlash('success', 'Changes saved.');
 
@@ -73,7 +83,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'admin_blog_category_delete', methods: ['POST'])]
-    public function delete(Request $request, Category $category): Response
+    public function delete(Request $request, Category $category, EntityManagerInterface $em, BlogUploader $uploader): Response
     {
         if ($category->getPosts()->count()) {
             $this->addFlash('warning', 'Category is not empty!');
@@ -82,9 +92,10 @@ class CategoryController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
+            $uploader->removeCategoryImage($category->getImage());
+            $em->remove($category);
+            $em->flush();
+
             $this->addFlash('success', 'Category deleted.');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');

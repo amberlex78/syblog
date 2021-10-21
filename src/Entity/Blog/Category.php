@@ -3,6 +3,7 @@
 namespace App\Entity\Blog;
 
 use App\Repository\Blog\CategoryRepository;
+use App\Service\Uploader\BlogUploader;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +21,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
     private Collection $posts;
@@ -37,7 +38,7 @@ class Category
     private ?string $description;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $image;
+    private ?string $image = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $seo_title;
@@ -65,7 +66,7 @@ class Category
         return $this->name;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -116,6 +117,12 @@ class Category
         $this->image = $image;
 
         return $this;
+    }
+
+    #[Pure]
+    public function getImagePath(): string
+    {
+        return BlogUploader::CATEGORY_IMAGES_DIR . '/' . $this->getImage();
     }
 
     public function getSeoTitle(): ?string
