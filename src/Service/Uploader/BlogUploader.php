@@ -4,6 +4,7 @@ namespace App\Service\Uploader;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+// todo: refactoring
 class BlogUploader extends BaseUploader
 {
     public const IMAGES_DIR = 'blog/post_images';

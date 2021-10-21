@@ -22,6 +22,8 @@ class AjaxController extends AbstractController
 
         if ($request->isXmlHttpRequest() && $this->isCsrfTokenValid('delete' . $object->getId(), $token)) {
             $image = $object->getImage();
+            // todo: refactoring for any images
+            $uploader->removePostImage($image);
             $uploader->removeCategoryImage($image);
             $object->setImage(null);
             $em->flush();
