@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Welcome!{% endblock %} - SB Admin SFCMS</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}" />
-    {{ encore_entry_link_tags('admin') }}
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('admin') }}
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('admin') }}
+    {% endblock %}
 </head>
 <body class="sb-nav-fixed">
 {% block body %}{% endblock %}
-{{ encore_entry_script_tags('admin') }}
-{% block javascripts %}{% endblock %}
 </body>
 </html>
