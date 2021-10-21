@@ -21,11 +21,11 @@ class Page
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a title.')]
-    private string $title;
+    private ?string $title = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a slug.')]
-    private string $slug;
+    private ?string $slug = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isActive = false;
@@ -53,24 +53,24 @@ class Page
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 

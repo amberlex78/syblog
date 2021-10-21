@@ -18,12 +18,9 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'empty_data' => '',
                 'attr' => ['autofocus' => true],
             ])
-            ->add('slug', TextType::class, [
-                'empty_data' => '',
-            ])
+            ->add('slug', TextType::class)
             ->add('description', CKEditorType::class, [
                 'required' => false,
             ])

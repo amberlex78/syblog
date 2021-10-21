@@ -16,12 +16,9 @@ class PageType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'empty_data' => '',
                 'attr' => ['autofocus' => true],
             ])
-            ->add('slug', TextType::class, [
-                'empty_data' => '',
-            ])
+            ->add('slug', TextType::class)
             ->add('content', CKEditorType::class, [
                 'required' => false,
             ])

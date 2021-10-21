@@ -25,12 +25,9 @@ class PostType extends AbstractType
                 'class' => Category::class,
             ])
             ->add('title', TextType::class, [
-                'empty_data' => '',
                 'attr' => ['autofocus' => true],
             ])
-            ->add('slug', TextType::class, [
-                'empty_data' => '',
-            ])
+            ->add('slug', TextType::class)
             ->add('preview', TextareaType::class, [
                 'required' => false,
                 'attr' => [
