@@ -16,6 +16,7 @@
         "helios-ag/fm-elfinder-bundle": "^10.1",
         "knplabs/knp-paginator-bundle": "^5.7",
         "liip/imagine-bundle": "^2.6",
+        "oneup/flysystem-bundle": "^4.1",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/asset": "5.3.*",
