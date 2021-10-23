@@ -23,10 +23,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Pages
-        PageFactory::createOne(['title' => 'About', 'slug' => 'about', 'isActive' => true]);
+        PageFactory::createOne([
+            'title' => 'About',
+            'slug' => 'about',
+            'isActive' => true,
+            'seoTitle' => 'Seo Title About',
+            'seoKeywords' => 'Seo Keywords About',
+            'seoDescription' => 'Seo Description About ',
+        ]);
 
         // Random pages
         PageFactory::createMany(4);
+
 
         // Users
         foreach ([
@@ -39,6 +47,7 @@ class AppFixtures extends Fixture
 
         // Random users
         UserFactory::createMany(7);
+
 
         // Blog categories
         $names = ['Linux', 'Symfony', 'Laravel', 'Slim', 'Python', 'Django',];

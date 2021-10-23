@@ -42,13 +42,15 @@ final class PageFactory extends ModelFactory
     ])]
     protected function getDefaults(): array
     {
+        $text = '';
+        for ($i = 0; $i < 5; $i++) {
+            $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
+        }
+
         return [
             'title' => self::faker()->sentence(),
             'slug' => self::faker()->slug(4),
-            'content' => self::faker()->paragraphs(
-                self::faker()->numberBetween(3, 10),
-                true
-            ),
+            'content' => $text,
             'isActive' => self::faker()->boolean(),
         ];
     }

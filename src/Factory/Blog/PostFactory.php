@@ -42,17 +42,16 @@ final class PostFactory extends ModelFactory
         'isDraft' => "bool"
     ])] protected function getDefaults(): array
     {
+        $text = '';
+        for ($i = 0; $i < 5; $i++) {
+            $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
+        }
+
         return [
             'title' => self::faker()->sentence(),
             'slug' => self::faker()->slug(4),
-            'preview' => self::faker()->paragraphs(
-                self::faker()->numberBetween(3, 6),
-                true
-            ),
-            'content' => self::faker()->paragraphs(
-                self::faker()->numberBetween(3, 20),
-                true
-            ),
+            'preview' => self::faker()->paragraph(),
+            'content' => $text,
             'isDraft' => self::faker()->boolean(),
         ];
     }
