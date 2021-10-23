@@ -5,6 +5,7 @@ namespace App\Factory\Blog;
 use App\Entity\Blog\Category;
 use App\Repository\Blog\CategoryRepository;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -29,6 +30,15 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class CategoryFactory extends ModelFactory
 {
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        parent::__construct();
+
+        $this->slugger = $slugger;
+    }
+
     protected static function getClass(): string
     {
         return Category::class;
@@ -41,9 +51,10 @@ final class CategoryFactory extends ModelFactory
     ])]
     protected function getDefaults(): array
     {
+        $name = self::faker()->word();
         return [
-            'name' => self::faker()->word(),
-            'slug' => self::faker()->slug(2),
+            'name' => ucfirst($name),
+            'slug' => $this->slugger->slug($name),
             'description' => self::faker()->text(500),
         ];
     }
@@ -51,7 +62,8 @@ final class CategoryFactory extends ModelFactory
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this// ->afterInstantiate(function(Category $category) {})
-            ;
+        return $this
+            // ->afterInstantiate(function(Category $category) {})
+        ;
     }
 }

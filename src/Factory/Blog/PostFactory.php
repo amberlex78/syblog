@@ -5,6 +5,7 @@ namespace App\Factory\Blog;
 use App\Entity\Blog\Post;
 use App\Repository\Blog\PostRepository;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -29,6 +30,15 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class PostFactory extends ModelFactory
 {
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        parent::__construct();
+
+        $this->slugger = $slugger;
+    }
+
     protected static function getClass(): string
     {
         return Post::class;
@@ -47,9 +57,10 @@ final class PostFactory extends ModelFactory
             $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
         }
 
+        $title = self::faker()->sentence();
         return [
-            'title' => self::faker()->sentence(),
-            'slug' => self::faker()->slug(4),
+            'title' => $title,
+            'slug' => $this->slugger->slug($title)->lower(),
             'preview' => self::faker()->paragraph(),
             'content' => $text,
             'isDraft' => self::faker()->boolean(),
@@ -59,7 +70,8 @@ final class PostFactory extends ModelFactory
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this// ->afterInstantiate(function(Post $post) {})
-            ;
+        return $this
+            // ->afterInstantiate(function(Post $post) {})
+        ;
     }
 }

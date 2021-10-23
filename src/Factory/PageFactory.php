@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Page;
 use App\Repository\PageRepository;
 use JetBrains\PhpStorm\ArrayShape;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -29,6 +30,15 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class PageFactory extends ModelFactory
 {
+    private SluggerInterface $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        parent::__construct();
+
+        $this->slugger = $slugger;
+    }
+
     protected static function getClass(): string
     {
         return Page::class;
@@ -47,9 +57,10 @@ final class PageFactory extends ModelFactory
             $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
         }
 
+        $title = self::faker()->sentence();
         return [
-            'title' => self::faker()->sentence(),
-            'slug' => self::faker()->slug(4),
+            'title' => $title,
+            'slug' => $this->slugger->slug($title)->lower(),
             'content' => $text,
             'isActive' => self::faker()->boolean(),
         ];
