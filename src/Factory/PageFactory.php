@@ -56,7 +56,8 @@ final class PageFactory extends ModelFactory
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this->afterInstantiate(function(Page $page) {})
-            ;
+        return $this
+            // ->afterInstantiate(function(Page $page) {})
+        ;
     }
 }

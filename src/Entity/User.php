@@ -40,6 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $firstName = null;
 
@@ -54,9 +57,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $updatedAt;
-
-    #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
 
     #[Pure]
     public function __construct()
@@ -157,6 +157,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function getIsVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -226,23 +238,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function preUpdate()
     {
         $this->setUpdatedAt(new DateTimeImmutable());
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    public function getIsVerified(): bool
-    {
-        return $this->isVerified;
     }
 
     public function getPosts(): Collection
