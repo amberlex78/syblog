@@ -30,6 +30,13 @@ class Post
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     private ?Category $category;
 
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
+    #[ORM\JoinTable('blog_post_tag')]
+    private Collection $tags;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
+    private Collection $comments;
+
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Please enter a title.')]
     private ?string $title = null;
@@ -65,14 +72,11 @@ class Post
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $updated_at;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
-    #[ORM\JoinTable('blog_post_tag')]
-    private Collection $tags;
-
     #[Pure]
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -273,6 +277,33 @@ class Post
     public function removeTag(Tag $tag): self
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
 
         return $this;
     }
