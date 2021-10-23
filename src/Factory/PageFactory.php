@@ -29,22 +29,20 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class PageFactory extends ModelFactory
 {
-    public function __construct()
-    {
-        parent::__construct();
-        // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
-    }
-
     protected static function getClass(): string
     {
         return Page::class;
     }
 
-    #[ArrayShape(['title' => "string", 'slug' => "string", 'content' => "string", 'isActive' => "bool"])]
+    #[ArrayShape([
+        'title' => "string",
+        'slug' => "string",
+        'content' => "string",
+        'isActive' => "bool"
+    ])]
     protected function getDefaults(): array
     {
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'title' => self::faker()->sentence(),
             'slug' => self::faker()->slug(4),
             'content' => self::faker()->paragraphs(

@@ -10,11 +10,7 @@ class PageFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        PageFactory::createOne([
-            'title' => 'About',
-            'slug' => 'about',
-            'isActive' => true,
-        ]);
+        PageFactory::createOne(['title' => 'About', 'slug' => 'about', 'isActive' => true]);
 
         PageFactory::createMany(5);
 
