@@ -2,43 +2,21 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Page;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Factory\PageFactory;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
-class PageFixtures extends BaseFixture
+class PageFixtures extends Fixture
 {
-    private SluggerInterface $slugger;
-
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger)
-    {
-        parent::__construct($entityManager);
-        $this->slugger = $slugger;
-    }
-
     public function load(ObjectManager $manager): void
     {
-        $object = new Page();
-        $object->setTitle('About');
-        $object->setSlug('about');
-        $object->setContent($this->faker->realText(500));
-        $object->setIsActive(true);
+        PageFactory::createOne([
+            'title' => 'About',
+            'slug' => 'about',
+            'isActive' => true,
+        ]);
 
-        $this->entityManager->persist($object);
-
-        // Fake data
-        for ($i = 0; $i < 5; $i++) {
-            $title = $this->faker->sentence(2);
-
-            $object = new Page();
-            $object->setTitle($title);
-            $object->setSlug($this->slugger->slug($title)->lower());
-            $object->setContent($this->faker->realText(500));
-            $object->setIsActive($this->faker->numberBetween(0, 1));
-
-            $this->entityManager->persist($object);
-        }
+        PageFactory::createMany(5);
 
         $manager->flush();
     }
