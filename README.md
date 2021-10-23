@@ -47,6 +47,12 @@ make down
 See all command in `Makefile` file.
 
 ## Init DB after container up
+Fill tables: `doctrine:fixtures:load`
+```
+symfony console d:f:l
+```
+
+### Before loading fixtures again, you should drop and update schema
 Drop tables `doctrine:schema:drop`
 ```
 symfony console d:s:d --full-database --force
@@ -54,10 +60,6 @@ symfony console d:s:d --full-database --force
 Update tables: `doctrine:schema:update`
 ```
 symfony console d:s:u --force
-```
-Fill tables: `doctrine:fixtures:load`
-```
-symfony console d:f:l
 ```
 
 ## Access to site
