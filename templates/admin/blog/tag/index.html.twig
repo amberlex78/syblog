@@ -1,0 +1,41 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Tags' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle} %}
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tag in tags %}
+                    <tr>
+                        <td>{{ tag.id }}</td>
+                        <td>{{ tag.name }}</td>
+                        <td>{{ tag.slug }}</td>
+                        <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': tag, 'deleteTitle': tag.name} %}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(tags) }}
+        </div>
+    </div>
+    {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Tags - Edit Tag' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': tag, 'deleteTitle': tag.name} %}
+        </div>
+        <div class="card-body">
+            {% include'admin/blog/tag/_form.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

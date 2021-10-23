@@ -1,0 +1,31 @@
+{% extends 'admin/layouts/body.html.twig' %}
+
+{% set headerTitle = 'Tags - Tag' %}
+
+{% block title %}{{ headerTitle }}{% endblock %}
+
+{% block content %}
+    <div class="card my">
+        <div class="card-header">
+            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': tag, 'deleteTitle': tag.name} %}
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ tag.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ tag.name }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ tag.slug }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {% include 'admin/_embed/_form/_btn_save.html.twig' %}
+{{ form_end(form) }}
