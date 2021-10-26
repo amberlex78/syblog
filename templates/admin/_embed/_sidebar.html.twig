@@ -15,11 +15,11 @@
             </a>
             <div class="collapse{{ _r starts with 'admin_blog' ? ' show' : '' }}" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link{{ _r starts with 'admin_blog_category' ? ' active' : '' }}" href="{{ path('admin_blog_category_index') }}">
-                        <i class="fas fa-th-list fa-sm fa-fw me-1"></i> Categories
-                    </a>
                     <a class="nav-link{{ _r starts with 'admin_blog_post' ? ' active' : '' }}" href="{{ path('admin_blog_post_index') }}">
                         <i class="fas fa-list fa-sm fa-fw me-1"></i> Posts
+                    </a>
+                    <a class="nav-link{{ _r starts with 'admin_blog_category' ? ' active' : '' }}" href="{{ path('admin_blog_category_index') }}">
+                        <i class="fas fa-th-list fa-sm fa-fw me-1"></i> Categories
                     </a>
                     <a class="nav-link{{ _r starts with 'admin_blog_tag' ? ' active' : '' }}" href="{{ path('admin_blog_tag_index') }}">
                         <i class="fas fa-tags fa-sm fa-fw me-1"></i> Tags
