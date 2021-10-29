@@ -1,23 +1,59 @@
 {% extends 'front/layouts/base.html.twig' %}
 
 {% block body %}
-    <header>
-        {% include 'front/_embed/_header.html.twig' %}
-    </header>
-    <main class="flex-shrink-0">
-        <div class="container mt-4">
-            {% include 'front/_embed/_flash_message.html.twig' %}
-            <div class="row">
-                <div class="col-lg-9">
-                    {% block content %}{% endblock %}
+    <header class="blog-header py-3">
+        <div class="container">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="link-secondary" href="{{ path('front_page', {slug: 'about'}) }}">About</a> |
+                    <a class="link-secondary" href="#">Contacts</a>
                 </div>
-                <div class="col-lg-3">
-                    {% include 'front/_embed/_sidebar.html.twig' %}
+                <div class="col-4 text-center">
+                    {% if app.request.get('_route') == 'front_home' %}
+                        <span class="blog-header-logo text-dark">AlexeyDev &ndash; Blog</span>
+                    {% else %}
+                        <a class="blog-header-logo text-dark" href="{{ path('front_home') }}">AlexeyDev &ndash; Blog</a>
+                    {% endif %}
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    {% if app.user %}
+                        <a href="{{ path('front_logout') }}"  class="btn btn-sm btn-outline-secondary">
+                            <i class="fas fa-sign-out-alt fa-fw me-1"></i>
+                            Logout
+                        </a>
+                    {% else %}
+                        <a class="btn btn-sm btn-outline-secondary" href="#">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+    </header>
+    <nav class="navbar sticky-top navbar-dark bg-dark bg-gradient mb-4">
+        <div class="container">
+            <a class="p-2 link-light" href="#">World</a>
+            <a class="p-2 link-light" href="#">Technology</a>
+            <a class="p-2 link-light" href="#">Design</a>
+            <a class="p-2 link-light" href="#">Culture</a>
+            <a class="p-2 link-light" href="#">Business</a>
+            <a class="p-2 link-light" href="#">Politics</a>
+            <a class="p-2 link-light" href="#">Opinion</a>
+            <a class="p-2 link-light" href="#">Science</a>
+            <a class="p-2 link-light" href="#">Health</a>
+            <a class="p-2 link-light" href="#">Style</a>
+            <a class="p-2 link-light" href="#">Travel</a>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="row g-5">
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-3">
+                {% include 'front/_embed/_sidebar.html.twig' %}
+            </div>
+        </div>
     </main>
-    <footer class="footer mt-auto py-3 bg-light">
+    <footer class="blog-footer">
         {% include 'front/_embed/_footer.html.twig' %}
     </footer>
 {% endblock %}

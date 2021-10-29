@@ -1,12 +1,17 @@
 {% extends 'front/layouts/body.html.twig' %}
 
-{% block title %}{{ controller_name }}{% endblock %}
-
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <h1 class="display-6">Home</h1>
-            <p class="lead">Hello from {{ controller_name }}</p>
-        </div>
+
+    {% for post in posts %}
+        <article class="blog-post">
+            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <p class="blog-post-meta">{{ post.createdAt|date('Y-m-d H:i') }}</p>
+            <p>{{ post.preview }}</p>
+            <p><a href="#">Читать далее...</a></p>
+        </article>
+    {% endfor %}
+    <div class="blog-pagination">
+    {{ knp_pagination_render(posts) }}
     </div>
+
 {% endblock %}
