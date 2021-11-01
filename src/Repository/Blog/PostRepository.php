@@ -37,8 +37,9 @@ class PostRepository extends ServiceEntityRepository
     public function findAllActive()
     {
         return $this->createQueryBuilder('p')
-            ->select('p', 'c')
+            ->select('p', 'c', 't')
             ->leftJoin('p.category', 'c')
+            ->leftJoin('p.tags', 't')
             ->where('p.isActive = true')
             ->andWhere('c.isActive = true')
             ->orderBy('p.createdAt', 'DESC')
@@ -49,6 +50,8 @@ class PostRepository extends ServiceEntityRepository
     public function findAllActiveInCategory(Category $category)
     {
         return $this->createQueryBuilder('p')
+            ->select('p', 't')
+            ->leftJoin('p.tags', 't')
             ->where('p.category = :category')
             ->setParameter('category', $category)
             ->andWhere('p.isActive = true')

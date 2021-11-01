@@ -8,12 +8,28 @@
             {% for post in posts %}
                 <h2 class="display-6">{{ post.title }}</h2>
                 <p>{{ post.preview }}</p>
-                <p class="mb-5">
-                    Category:
-                    <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}"> {{ post.category.name }}</a>
-                    | {{ post.createdAt|format_date('medium') }}
-                    | <a href="{{ path('front_blog_post', {'slug': post.slug}) }}">Read more...</a>
-                </p>
+                <div class="d-flex justify-content-between">
+                    <p class="small">
+                        <i class="fa fa-calendar-alt fa-fw text-muted"></i>
+                        {{ post.createdAt|format_date('medium') }}
+
+                        <i class="fa fa-book fa-fw text-muted"></i>
+                        <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}"> {{ post.category.name }}</a>
+
+                        {% if post.tags|length > 0 %}
+                            <i class="fa fa-tags fa-fw text-muted"></i>
+                            {% for tag in post.tags %}
+                                <a href="#">{{ tag.name }}</a>,
+                            {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p class="small">
+                        <a href="{{ path('front_blog_post', {'slug': post.slug}) }}">Read more...</a>
+                    </p>
+                </div>
+                {% if not loop.last %}
+                    <hr>
+                {% endif %}
             {% else %}
                 <p>No posts</p>
             {% endfor %}
