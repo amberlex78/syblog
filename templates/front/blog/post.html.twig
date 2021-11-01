@@ -1,0 +1,17 @@
+{% extends 'front/layouts/body.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="display-6">{{ post.title }}</h1>
+            <p>
+                Category:
+                <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}">{{ post.category.name }}</a>
+            </p>
+            <p>{{ post.preview }}</p>
+            {{ post.content|raw }}
+        </div>
+    </div>
+{% endblock %}

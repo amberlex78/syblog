@@ -1,0 +1,27 @@
+{% extends 'front/layouts/body.html.twig' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="display-6">{{ category.name }}</h1>
+            {{ category.description|raw }}
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            {% for post in posts %}
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.createdAt|format_date('medium') }}</p>
+                <p>{{ post.preview }}</p>
+                <p class="mb-4"><a href="{{ path('front_blog_post', {'slug': post.slug}) }}">Read more...</a></p>
+            {% else %}
+                No posts
+            {% endfor %}
+            <div class="d-flex justify-content-end">
+            {{ knp_pagination_render(posts) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

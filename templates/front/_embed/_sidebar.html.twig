@@ -2,10 +2,15 @@
     <div class="card-header">
         <h3 class="lead mb-0">Categories</h3>
     </div>
-    <div class="card-body">
-        {% for menuCategory in menuCategories %}
-            <p><a href="#" class="card-text">{{ menuCategory.name }}</a></p>
-        {% endfor %}
+    <div class="card-body p-0">
+        <div class="list-group">
+            {% for menuCategory in menuCategories %}
+                <a href="{{ path('front_blog_category', {'slug': menuCategory.slug}) }}"
+                   class="list-group-item list-group-item-action border-0{{ (app.request.get('slug') == menuCategory.slug or (categorySlug is defined and categorySlug == menuCategory.slug)) ? ' active' : '' }}">
+                    {{ menuCategory.name }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 <div class="card mb-4">
@@ -14,7 +19,7 @@
     </div>
     <div class="card-body">
         {% for recentPost in recentPosts %}
-            <p><a href="#" class="card-text">{{ recentPost.title }}</a></p>
+            <p><a href="{{ path('front_blog_post', {'slug': recentPost.slug}) }}" class="card-text">{{ recentPost.title }}</a></p>
         {% endfor %}
     </div>
 </div>
