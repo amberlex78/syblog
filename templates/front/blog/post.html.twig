@@ -5,11 +5,15 @@
 {% block content %}
     <div class="card mb-4">
         <div class="card-body">
-            <h1 class="display-6">{{ post.title }}</h1>
+            <h1 class="display-5">{{ post.title }}</h1>
+            <hr>
             <p>
                 Category:
-                <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}">{{ post.category.name }}</a>
+                <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}"> {{ post.category.name }}</a>
+                | {{ post.createdAt|format_date('medium') }}
             </p>
+            <hr>
+            <p>{{ post.preview }}</p>
             <p>{{ post.preview }}</p>
             {{ post.content|raw }}
         </div>

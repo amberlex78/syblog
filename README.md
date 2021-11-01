@@ -1,7 +1,8 @@
 # Symfony Blog
 
-I started to get familiar with the `Symfony` framework. 
-As a starting point, I decided to create a system for a simple website.
+I started to get familiar with the `Symfony` framework.
+
+As a starting point, I decided to create a simple blog.
 
 ## Approximate plan
 

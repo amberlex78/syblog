@@ -28,7 +28,7 @@ class CategoryController extends AbstractController
         }
 
         $posts = $this->paginator->paginate(
-            $this->postRepository->findAllActiveInCategory($category->getId()),
+            $this->postRepository->findAllActiveInCategory($category),
             $request->query->getInt('page', 1)
         );
 

@@ -19,7 +19,10 @@
     </div>
     <div class="card-body">
         {% for recentPost in recentPosts %}
-            <p><a href="{{ path('front_blog_post', {'slug': recentPost.slug}) }}" class="card-text">{{ recentPost.title }}</a></p>
+            <p>
+                <a href="{{ path('front_blog_post', {'slug': recentPost.slug}) }}" class="card-text">{{ recentPost.title }}</a>
+                <small>[{{ recentPost.name }}]</small>
+            </p>
         {% endfor %}
     </div>
 </div>

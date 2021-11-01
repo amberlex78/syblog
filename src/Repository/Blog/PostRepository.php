@@ -2,6 +2,7 @@
 
 namespace App\Repository\Blog;
 
+use App\Entity\Blog\Category;
 use App\Entity\Blog\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,18 +23,22 @@ class PostRepository extends ServiceEntityRepository
     public function findOneActiveBySlug(string $slug): ?Post
     {
         return $this->createQueryBuilder('p')
+            ->select('p', 'c')
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
-            ->andWhere('p.isActive = true')
+            ->leftJoin('p.category', 'c')
+            ->andwhere('p.isActive = true')
+            ->andWhere('c.isActive = true')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
-    public function findAllActiveInCategory(int $categoryId)
+    public function findAllActiveInCategory(Category $category)
     {
         return $this->createQueryBuilder('p')
-            ->where('p.category = :categoryId')
-            ->setParameter('categoryId', $categoryId)
+            ->where('p.category = :category')
+            ->setParameter('category', $category)
             ->andWhere('p.isActive = true')
             ->orderBy('p.id', 'DESC')
             ->getQuery()
@@ -43,8 +48,10 @@ class PostRepository extends ServiceEntityRepository
     public function findRecentActiveSlugTitle(int $num = 5)
     {
         return $this->createQueryBuilder('p')
-            ->select('p.slug', 'p.title')
+            ->select('p.slug', 'p.title', 'c.name')
+            ->leftJoin('p.category', 'c')
             ->where('p.isActive = true')
+            ->andWhere('c.isActive = true')
             ->orderBy('p.created_at', 'DESC')
             ->setMaxResults($num)
             ->getQuery()
