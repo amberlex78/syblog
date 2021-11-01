@@ -29,3 +29,8 @@ run-dev:
 	docker-compose run --rm php-cli yarn encore dev
 run-watch:
 	docker-compose run --rm php-cli yarn encore dev --watch
+
+seed:
+	docker-compose exec php-cli bin/console doctrine:schema:drop --full-database --force
+	docker-compose exec php-cli bin/console doctrine:schema:update --force
+	docker-compose exec php-cli bin/console doctrine:fixtures:load -n
