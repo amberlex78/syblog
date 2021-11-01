@@ -34,6 +34,18 @@ class PostRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findAllActive()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p', 'c')
+            ->leftJoin('p.category', 'c')
+            ->where('p.isActive = true')
+            ->andWhere('c.isActive = true')
+            ->orderBy('p.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllActiveInCategory(Category $category)
     {
         return $this->createQueryBuilder('p')
