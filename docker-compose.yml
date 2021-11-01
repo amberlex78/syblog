@@ -1,6 +1,14 @@
 version: "3.8"
 services:
 
+  proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - "80:80"
+
   mysql:
     image: mysql:8.0
     restart: always
@@ -14,3 +22,49 @@ services:
       MYSQL_PASSWORD: secret
     volumes:
       - ./var/mysql:/var/lib/mysql
+
+  php-cli:
+    build:
+      context: ./docker/development/php-cli
+    restart: always
+    volumes:
+      - ./:/app
+      - composer:/root/.composer/cache
+    tty: true
+    depends_on:
+      - mysql
+
+  php-fpm:
+    build:
+      context: ./docker/development/php-fpm
+    restart: always
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+
+  nginx:
+    build:
+      context: ./docker/development/nginx
+    restart: always
+    volumes:
+      - ./:/app
+    environment:
+      VIRTUAL_HOST: sf-blog.test
+    depends_on:
+      - php-fpm
+      - proxy
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      VIRTUAL_HOST: adminer.test
+    depends_on:
+      - proxy
+
+volumes:
+  composer:
+

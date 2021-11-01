@@ -21,8 +21,8 @@ In the admin area:
 
 ## Install
 ```
-git clone git@github.com:amberlex78/sf-cms.git
-cd sf-cms
+git clone git@github.com:amberlex78/sf-blog.git
+cd sf-blog
 cp .env.example .env
 composer install
 yarn install
