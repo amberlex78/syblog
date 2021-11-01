@@ -8,7 +8,7 @@
             {% for post in posts %}
                 <h2 class="display-6">{{ post.title }}</h2>
                 <p>{{ post.preview }}</p>
-                <p class="mb-4">
+                <p class="mb-5">
                     Category:
                     <a href="{{ path('front_blog_category', {'slug': post.category.slug}) }}"> {{ post.category.name }}</a>
                     | {{ post.createdAt|format_date('medium') }}

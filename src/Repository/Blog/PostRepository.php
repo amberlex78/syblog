@@ -41,7 +41,7 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin('p.category', 'c')
             ->where('p.isActive = true')
             ->andWhere('c.isActive = true')
-            ->orderBy('p.created_at', 'DESC')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -52,7 +52,7 @@ class PostRepository extends ServiceEntityRepository
             ->where('p.category = :category')
             ->setParameter('category', $category)
             ->andWhere('p.isActive = true')
-            ->orderBy('p.id', 'DESC')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -64,7 +64,7 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin('p.category', 'c')
             ->where('p.isActive = true')
             ->andWhere('c.isActive = true')
-            ->orderBy('p.created_at', 'DESC')
+            ->orderBy('p.createdAt', 'DESC')
             ->setMaxResults($num)
             ->getQuery()
             ->getResult();

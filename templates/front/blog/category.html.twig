@@ -13,9 +13,11 @@
         <div class="card-body">
             {% for post in posts %}
                 <h2 class="display-6">{{ post.title }}</h2>
-                <p>{{ post.createdAt|format_date('medium') }}</p>
                 <p>{{ post.preview }}</p>
-                <p class="mb-4"><a href="{{ path('front_blog_post', {'slug': post.slug}) }}">Read more...</a></p>
+                <p class="mb-5">
+                    {{ post.createdAt|format_date('medium') }}
+                    | <a href="{{ path('front_blog_post', {'slug': post.slug}) }}">Read more...</a>
+                </p>
             {% else %}
                 <p>No posts</p>
             {% endfor %}

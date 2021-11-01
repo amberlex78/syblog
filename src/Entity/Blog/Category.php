@@ -53,10 +53,10 @@ class Category
     private ?string $seoDescription = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $created_at;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $updated_at;
+    private DateTimeImmutable $updatedAt;
 
     #[Pure]
     public function __construct()
@@ -178,24 +178,24 @@ class Category
 
     public function getCreatedAt(): DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeImmutable $created_at): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
