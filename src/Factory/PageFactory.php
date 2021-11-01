@@ -57,7 +57,7 @@ final class PageFactory extends ModelFactory
             $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
         }
 
-        $title = self::faker()->sentence();
+        $title = trim(self::faker()->sentence(2), '.');
         return [
             'title' => $title,
             'slug' => $this->slugger->slug($title)->lower(),

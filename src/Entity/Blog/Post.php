@@ -55,7 +55,7 @@ class Post
     private ?string $image = null;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $isDraft;
+    private bool $isActive;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $seoTitle = null;
@@ -150,14 +150,14 @@ class Post
         return BlogUploader::IMAGES_DIR . '/' . $this->getImage();
     }
 
-    public function getIsDraft(): bool
+    public function getIsActive(): bool
     {
-        return $this->isDraft;
+        return $this->isActive;
     }
 
-    public function setIsDraft(bool $isDraft): self
+    public function setIsActive(bool $isActive): self
     {
-        $this->isDraft = $isDraft;
+        $this->isActive = $isActive;
 
         return $this;
     }

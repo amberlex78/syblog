@@ -49,7 +49,7 @@ final class PostFactory extends ModelFactory
         'slug' => "string",
         'preview' => "array|string",
         'content' => "array|string",
-        'isDraft' => "bool"
+        'isActive' => "bool"
     ])] protected function getDefaults(): array
     {
         $text = '';
@@ -63,7 +63,7 @@ final class PostFactory extends ModelFactory
             'slug' => $this->slugger->slug($title)->lower(),
             'preview' => self::faker()->paragraph(),
             'content' => $text,
-            'isDraft' => self::faker()->boolean(),
+            'isActive' => self::faker()->boolean(),
         ];
     }
 

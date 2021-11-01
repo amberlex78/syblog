@@ -44,7 +44,7 @@ class PostType extends AbstractType
                     new Image(['maxSize' => '2M'])
                 ]
             ))
-            ->add('isDraft')
+            ->add('isActive')
             ->add('seoTitle')
             ->add('seoKeywords')
             ->add('seoDescription', TextareaType::class, [
