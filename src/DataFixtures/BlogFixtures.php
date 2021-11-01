@@ -28,7 +28,7 @@ class BlogFixtures extends Fixture implements DependentFixtureInterface
             'python' => 'Python',
             'django' => 'Django',
         ] as $slug => $name) {
-            CategoryFactory::createOne(['name' => $name, 'slug' => $slug]);
+            CategoryFactory::createOne(['name' => $name, 'slug' => $slug, 'isActive' => true]);
         }
 
         CategoryFactory::createMany(4);

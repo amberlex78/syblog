@@ -47,7 +47,8 @@ final class CategoryFactory extends ModelFactory
     #[ArrayShape([
         'name' => "string",
         'slug' => "string",
-        'description' => "string"
+        'description' => "string",
+        'isActive' => "bool"
     ])]
     protected function getDefaults(): array
     {
@@ -56,6 +57,7 @@ final class CategoryFactory extends ModelFactory
             'name' => ucfirst($name),
             'slug' => $this->slugger->slug($name),
             'description' => self::faker()->text(500),
+            'isActive' => self::faker()->boolean(),
         ];
     }
 

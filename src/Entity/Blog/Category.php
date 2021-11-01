@@ -40,6 +40,9 @@ class Category
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $isActive;
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $seoTitle = null;
 
@@ -123,6 +126,18 @@ class Category
     public function getImagePath(): string
     {
         return BlogUploader::CATEGORY_IMAGES_DIR . '/' . $this->getImage();
+    }
+
+    public function getIsActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 
     public function getSeoTitle(): ?string

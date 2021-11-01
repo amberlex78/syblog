@@ -19,32 +19,35 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    // /**
-    //  * @return Post[] Returns an array of Post objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findOneActiveBySlug(string $slug): ?Post
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->andWhere('p.isActive = true')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Post
+    public function findAllActiveInCategory(int $categoryId)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('p.category = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->andWhere('p.isActive = true')
+            ->orderBy('p.id', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    public function findRecentActiveSlugTitle(int $num = 5)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.slug', 'p.title')
+            ->where('p.isActive = true')
+            ->orderBy('p.created_at', 'DESC')
+            ->setMaxResults($num)
+            ->getQuery()
+            ->getResult();
+    }
 }

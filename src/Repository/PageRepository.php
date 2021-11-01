@@ -19,6 +19,16 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
+    public function findAllActiveSlugTitle()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.slug', 'p.title')
+            ->where('p.isActive = true')
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Page[] Returns an array of Page objects
     //  */
