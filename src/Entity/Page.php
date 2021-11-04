@@ -25,7 +25,7 @@ class Page
     private ?string $title = null;
 
     /**
-     * @Gedmo\Slug(fields={"title"})
+     * @Gedmo\Slug(fields={"title"}, updatable=false)
      */
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $slug = null;

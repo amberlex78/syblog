@@ -32,7 +32,7 @@ class Category
     private ?string $name = null;
 
     /**
-     * @Gedmo\Slug(fields={"name"})
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      */
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $slug = null;
