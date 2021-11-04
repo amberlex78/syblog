@@ -20,11 +20,11 @@
 {% endif %}
 
 <a class="btn btn-outline-primary btn-sm" href="{{ path(prefix ~ 'edit', {'id': entity.id}) }}">
-    <i class="fa fa-pen fa-fw"></i>
+    <i class="fa fa-pen fa-fw fa-sm"></i>
 </a>
 
 <a class="btn btn-outline-secondary btn-sm" href="{{ path(prefix ~ 'show', {'id': entity.id}) }}">
-    <i class="fa fa-eye fa-fw"></i>
+    <i class="fa fa-eye fa-fw fa-sm"></i>
 </a>
 
 {% include 'admin/_embed/_form/_btn_delete.html.twig' with {'entity': entity, 'deleteTitle': deleteTitle} %}
