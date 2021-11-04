@@ -20,7 +20,7 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $posts = $paginator->paginate(
-            $postRepository->findBy([], ['id' => 'desc']),
+            $postRepository->findAllOrderedByNewest(),
             $request->query->getInt('page', 1)
         );
 

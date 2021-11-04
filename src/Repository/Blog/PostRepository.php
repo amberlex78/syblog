@@ -20,6 +20,32 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function findAllOrderedByNewest()
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->addSelect('c')
+            ->leftJoin('p.tags', 't')
+            ->addSelect('t')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllActiveOrderedByNewest()
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->addSelect('c')
+            ->leftJoin('p.tags', 't')
+            ->addSelect('t')
+            ->andWhere('p.isActive = true')
+            ->andWhere('c.isActive = true')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findOneActiveBySlug(string $slug): ?Post
     {
         return $this->createQueryBuilder('p')
@@ -32,19 +58,6 @@ class PostRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    public function findAllActive()
-    {
-        return $this->createQueryBuilder('p')
-            ->select('p', 'c', 't')
-            ->leftJoin('p.category', 'c')
-            ->leftJoin('p.tags', 't')
-            ->where('p.isActive = true')
-            ->andWhere('c.isActive = true')
-            ->orderBy('p.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
     }
 
     public function findAllActiveInCategory(Category $category)

@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     public function index(Request $request, PostRepository $postRepository, PaginatorInterface $paginator): Response
     {
         $posts = $paginator->paginate(
-            $postRepository->findAllActive(),
+            $postRepository->findAllActiveOrderedByNewest(),
             $request->query->getInt('page', 1)
         );
 
