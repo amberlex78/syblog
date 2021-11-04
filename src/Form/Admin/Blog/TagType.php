@@ -4,6 +4,7 @@ namespace App\Form\Admin\Blog;
 
 use App\Entity\Blog\Tag;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,10 @@ class TagType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('slug')
+            ->add('slug', TextType::class, [
+                'required' => false,
+                'help' => 'The "slug" is the URL-friendly version of the title. Leave blank to generate automatically by name.',
+            ])
         ;
     }
 

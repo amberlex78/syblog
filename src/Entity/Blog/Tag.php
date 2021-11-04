@@ -6,6 +6,7 @@ use App\Repository\Blog\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,8 +25,10 @@ class Tag
     #[Assert\NotBlank(message: 'Please enter a name.')]
     private ?string $name = null;
 
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     */
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: 'Please enter a slug.')]
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'tags')]

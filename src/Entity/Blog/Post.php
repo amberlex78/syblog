@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table('blog_posts')]
-#[UniqueEntity(fields: ['slug'], message: 'There is already an page with this slug')]
+#[UniqueEntity(fields: ['slug'], message: 'There is already a post with this slug')]
 class Post
 {
     #[ORM\Id]
@@ -41,8 +42,10 @@ class Post
     #[Assert\NotBlank(message: 'Please enter a title.')]
     private ?string $title = null;
 
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     */
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: 'Please enter a slug.')]
     private ?string $slug = null;
 
     #[ORM\Column(type: 'text', nullable: true)]

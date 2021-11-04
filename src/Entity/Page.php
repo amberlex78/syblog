@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table('pages')]
-#[UniqueEntity(fields: ['slug'], message: 'There is already an page with this slug')]
+#[UniqueEntity(fields: ['slug'], message: 'There is already a page with this slug')]
 class Page
 {
     #[ORM\Id]

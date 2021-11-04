@@ -4,8 +4,6 @@ namespace App\Factory\Blog;
 
 use App\Entity\Blog\Category;
 use App\Repository\Blog\CategoryRepository;
-use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -30,32 +28,16 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class CategoryFactory extends ModelFactory
 {
-    private SluggerInterface $slugger;
-
-    public function __construct(SluggerInterface $slugger)
-    {
-        parent::__construct();
-
-        $this->slugger = $slugger;
-    }
-
     protected static function getClass(): string
     {
         return Category::class;
     }
 
-    #[ArrayShape([
-        'name' => "string",
-        'slug' => "string",
-        'description' => "string",
-        'isActive' => "bool"
-    ])]
+    /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
     protected function getDefaults(): array
     {
-        $name = self::faker()->word();
         return [
-            'name' => ucfirst($name),
-            'slug' => $this->slugger->slug($name),
+            'name' => ucfirst(self::faker()->word()),
             'description' => self::faker()->text(500),
             'isActive' => self::faker()->boolean(),
         ];

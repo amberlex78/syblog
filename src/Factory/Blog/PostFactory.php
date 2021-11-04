@@ -4,8 +4,6 @@ namespace App\Factory\Blog;
 
 use App\Entity\Blog\Post;
 use App\Repository\Blog\PostRepository;
-use JetBrains\PhpStorm\ArrayShape;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -30,39 +28,24 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class PostFactory extends ModelFactory
 {
-    private SluggerInterface $slugger;
-
-    public function __construct(SluggerInterface $slugger)
-    {
-        parent::__construct();
-
-        $this->slugger = $slugger;
-    }
-
     protected static function getClass(): string
     {
         return Post::class;
     }
 
-    #[ArrayShape([
-        'title' => "string",
-        'slug' => "string",
-        'preview' => "array|string",
-        'content' => "array|string",
-        'isActive' => "bool"
-    ])] protected function getDefaults(): array
+    /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+    protected function getDefaults(): array
     {
-        $text = '';
-        for ($i = 0; $i < 5; $i++) {
-            $text .= '<p>' . self::faker()->paragraphs(self::faker()->numberBetween(1, 5), true) . '</p>';
-        }
-
-        $title = self::faker()->sentence();
         return [
-            'title' => $title,
-            'slug' => $this->slugger->slug($title)->lower(),
+            'title' => rtrim(self::faker()->sentence(), '.'),
             'preview' => self::faker()->paragraph(),
-            'content' => $text,
+            'content' => implode(
+                "\r\n",
+                array_map(
+                    fn($paragraph) => '<p>' . $paragraph . '</p>',
+                    self::faker()->paragraphs(rand(5, 10))
+                )
+            ),
             'isActive' => self::faker()->boolean(),
         ];
     }

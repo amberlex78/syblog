@@ -20,9 +20,16 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class, [
                 'attr' => ['autofocus' => true],
             ])
-            ->add('slug', TextType::class)
-            ->add('description', CKEditorType::class, [
+            ->add('slug', TextType::class, [
                 'required' => false,
+                'help' => 'The "slug" is the URL-friendly version of the title. Leave blank to generate automatically by name.',
+            ])
+            ->add('isActive')
+            ->add('description', TextareaType::class, [
+                'required' => false,
+                'attr' => [
+                    'rows' => 3,
+                ],
             ])
             ->add('image', FileType::class, array(
                 'required' => false,
