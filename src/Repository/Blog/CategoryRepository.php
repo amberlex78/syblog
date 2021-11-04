@@ -19,6 +19,16 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findAllOrdered()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.posts', 'p')
+            ->addSelect('p')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findOneActiveBySlug(string $slug): ?Category
     {
         return $this->createQueryBuilder('p')
