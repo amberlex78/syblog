@@ -10,7 +10,7 @@
             {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': user, 'deleteTitle': user.email} %}
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-hover">
                 <tbody>
                 <tr>
                     <th>Id</th>
@@ -34,11 +34,11 @@
                 </tr>
                 <tr>
                     <th>Created at</th>
-                    <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
                     <th>Updated at</th>
-                    <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ user.updatedAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
                     <th>Is verified</th>

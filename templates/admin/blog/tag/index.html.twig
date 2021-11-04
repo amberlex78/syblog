@@ -16,6 +16,8 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Slug</th>
+                    <th>Articles</th>
+                    <th>Created at</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -25,6 +27,8 @@
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.name }}</td>
                         <td>{{ tag.slug }}</td>
+                        <td><a href="#">{{ tag.posts|length }} posts</a></td>
+                        <td>{{ tag.createdAt|format_date('medium') }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': tag, 'deleteTitle': tag.name} %}</td>
                     </tr>
                 {% else %}

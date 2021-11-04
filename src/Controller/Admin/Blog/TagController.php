@@ -18,7 +18,7 @@ class TagController extends AbstractController
     public function index(TagRepository $tagRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $tags = $paginator->paginate(
-            $tagRepository->findBy([], ['id' => 'desc']),
+            $tagRepository->findAllOrderedByNewest(),
             $request->query->getInt('page', 1)
         );
 

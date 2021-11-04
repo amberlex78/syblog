@@ -18,4 +18,14 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
+
+    public function findAllOrderedByNewest()
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.posts', 'p')
+            ->addSelect('p')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

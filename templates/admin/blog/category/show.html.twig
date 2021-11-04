@@ -10,7 +10,7 @@
             {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': category, 'deleteTitle': category.name} %}
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-hover">
                 <tbody>
                 <tr>
                     <th>Id</th>
@@ -46,11 +46,11 @@
                 </tr>
                 <tr>
                     <th>Created at</th>
-                    <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ category.createdAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
                     <th>Updated at</th>
-                    <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ category.updatedAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 </tbody>
             </table>
