@@ -18,7 +18,10 @@ class PageType extends AbstractType
             ->add('title', TextType::class, [
                 'attr' => ['autofocus' => true],
             ])
-            ->add('slug', TextType::class)
+            ->add('slug', TextType::class, [
+                'required' => false,
+                'help' => 'The "slug" is the URL-friendly version of the title. Leave blank to generate automatically by title.',
+            ])
             ->add('content', CKEditorType::class, [
                 'required' => false,
             ])

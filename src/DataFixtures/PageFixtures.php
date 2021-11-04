@@ -12,7 +12,6 @@ class PageFixtures extends Fixture
     {
         PageFactory::createOne([
             'title' => 'About',
-            'slug' => 'about',
             'isActive' => true,
             'seoTitle' => 'Seo Title About',
             'seoKeywords' => 'Seo Keywords About',

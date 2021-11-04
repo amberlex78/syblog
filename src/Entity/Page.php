@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PageRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,8 +24,10 @@ class Page
     #[Assert\NotBlank(message: 'Please enter a title.')]
     private ?string $title = null;
 
+    /**
+     * @Gedmo\Slug(fields={"title"})
+     */
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(message: 'Please enter a slug.')]
     private ?string $slug = null;
 
     #[ORM\Column(type: 'boolean')]
