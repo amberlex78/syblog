@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
@@ -117,6 +120,9 @@
         "files": [
             "config/packages/fos_ckeditor.yaml"
         ]
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.1.0"
     },
     "helios-ag/fm-elfinder-bundle": {
         "version": "10.0",
@@ -303,6 +309,18 @@
         },
         "files": [
             "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "studio-42/elfinder": {
