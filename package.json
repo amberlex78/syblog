@@ -24,6 +24,8 @@
         "bootstrap": "^5.1.2",
         "ckeditor": "^4.12.1",
         "jquery": "^3.6.0",
+        "select2": "^4.1.0-rc.0",
+        "select2-bootstrap-5-theme": "^1.2.0",
         "startbootstrap-sb-admin": "^7.0.3"
     }
 }

@@ -4,6 +4,7 @@ namespace App\Form\Admin\Blog;
 
 use App\Entity\Blog\Category;
 use App\Entity\Blog\Post;
+use App\Entity\Blog\Tag;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -47,6 +48,16 @@ class PostType extends AbstractType
                     new Image(['maxSize' => '2M'])
                 ]
             ))
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'required' => false,
+                'by_reference' => false,
+                'attr' => [
+                    'class' => 'select-tags'
+                ]
+            ])
             ->add('isActive')
             ->add('seoTitle')
             ->add('seoKeywords')

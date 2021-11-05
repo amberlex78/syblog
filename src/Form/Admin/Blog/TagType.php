@@ -13,7 +13,9 @@ class TagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
+            ->add('name', TextType::class, [
+                'attr' => ['autofocus' => true],
+            ])
             ->add('slug', TextType::class, [
                 'required' => false,
                 'help' => 'The "slug" is the URL-friendly version of the title. Leave blank to generate automatically by name.',

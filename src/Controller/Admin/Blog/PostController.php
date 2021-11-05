@@ -3,12 +3,15 @@
 namespace App\Controller\Admin\Blog;
 
 use App\Entity\Blog\Post;
+use App\Entity\Blog\Tag;
 use App\Form\Admin\Blog\PostType;
+use App\Form\Admin\Blog\TagType;
 use App\Repository\Blog\PostRepository;
 use App\Service\Uploader\BlogUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,6 +55,7 @@ class PostController extends AbstractController
         return $this->renderForm('admin/blog/post/new.html.twig', [
             'post' => $post,
             'form' => $form,
+            'formTag' => $this->createForm(TagType::class, new Tag()),
         ]);
     }
 
@@ -85,6 +89,7 @@ class PostController extends AbstractController
         return $this->renderForm('admin/blog/post/edit.html.twig', [
             'post' => $post,
             'form' => $form,
+            'formTag' => $this->createForm(TagType::class, new Tag()),
         ]);
     }
 
@@ -102,5 +107,34 @@ class PostController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/tag/new', name: 'admin_blog_post_tag_new', methods: ['POST'])]
+    public function tagNew(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($tag);
+            $em->flush();
+            $data = [
+                'status' => true,
+                'message' => 'Tag added.',
+                'tag' => [
+                    'id' => $tag->getId(),
+                    'text' => $tag->getName(),
+                ],
+            ];
+        } else {
+            $data = [
+                'status' => false,
+                'message' => 'Something went wrong!',
+                'err' => $form->getErrors(),
+            ];
+        }
+
+        return $this->json($data);
     }
 }

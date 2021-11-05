@@ -9,8 +9,11 @@
     {{ form_row(form.preview) }}
     {{ form_row(form.content) }}
     {% include 'admin/_embed/_form/_img_field.html.twig' %}
+    {% include 'admin/_embed/_form/_tag_field.html.twig' %}
     {% include 'admin/_embed/_form/_seo_fields.html.twig' %}
 
     {% include 'admin/_embed/_form/_btn_save.html.twig' %}
 
 {{ form_end(form) }}
+
+{% include 'admin/_embed/_modal/_add_tag.html.twig' %}
