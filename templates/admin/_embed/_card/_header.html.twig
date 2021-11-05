@@ -45,9 +45,9 @@
                 </a>
             {% endif %}
 
-            {% if (action == 'new') %}
-                <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
-            {% endif %}
+{#            {% if (action == 'new') %}#}
+{#                <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>#}
+{#            {% endif %}#}
 
             {% if (action == 'show') %}
                 <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
@@ -61,7 +61,7 @@
             {% endif %}
 
             {% if (action == 'edit') %}
-                <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
+{#                <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>#}
                 <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
                     <i class="fas fa-plus fa-sm fa-fw"></i>
                 </a>
