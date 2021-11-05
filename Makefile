@@ -1,3 +1,8 @@
+db-seed:
+	bin/console doctrine:schema:drop --force
+	bin/console doctrine:schema:update --force
+	bin/console doctrine:fixtures:load -n
+
 #-----------------------------------------------------------
 # docker (only DB)
 init: docker-pull docker-build docker-up #composer-install yarn-install run-dev
