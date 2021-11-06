@@ -24,20 +24,20 @@ docker-down:
 #-----------------------------------------------------------
 # composer
 composer-install:
-	docker-compose exec php-cli composer install
+	docker-compose exec php composer install
 composer-update:
-	docker-compose exec php-cli composer update
+	docker-compose exec php composer update
 
 #-----------------------------------------------------------
 # yarn
 yarn-install:
-	docker-compose exec php-cli yarn install
+	docker-compose exec php yarn install
 run-dev:
-	docker-compose exec php-cli yarn encore dev
+	docker-compose exec php yarn encore dev
 run-watch:
-	docker-compose exec php-cli yarn encore dev --watch
+	docker-compose exec php yarn encore dev --watch
 
 seed:
-	docker-compose exec php-cli bin/console doctrine:schema:drop --full-database --force
-	docker-compose exec php-cli bin/console doctrine:schema:update --force
-	docker-compose exec php-cli bin/console doctrine:fixtures:load -n
+	docker-compose exec php bin/console doctrine:schema:drop --full-database --force
+	docker-compose exec php bin/console doctrine:schema:update --force
+	docker-compose exec php bin/console doctrine:fixtures:load -n

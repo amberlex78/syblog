@@ -1,20 +1,8 @@
-FROM php:8.0-cli
+FROM php:8.0-fpm
 
 RUN export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update && apt-get -y install dialog apt-utils libpq-dev zip unzip && \
     echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-
-ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer -q
-
-# Versions: https://xdebug.org/download/historical
-ENV XDEBUG_VERSION 3.0.4
-RUN pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
-
-# NodeJS with NPM, Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get update && apt-get install -y nodejs
-RUN npm i -g yarn
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -51,10 +39,7 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
     xsl \
     zip
 
-# Install GD (need for ImagineBundle commands)
-# liip
-#   liip:imagine:cache:remove
-#   liip:imagine:cache:resolve
+# GD
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libfreetype6-dev \
@@ -63,6 +48,26 @@ RUN apt-get update && \
     libgmp-dev && \
     docker-php-ext-configure gd --with-freetype=/usr/include && \
     docker-php-ext-install gd
+
+# Imagick
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends  \
+    libmagickwand-dev \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
+# Versions: https://xdebug.org/download/historical
+ENV XDEBUG_VERSION 3.0.4
+RUN pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer -q
+
+# NodeJS with NPM, Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get update && apt-get install -y nodejs
+RUN npm i -g yarn
+
 
 RUN cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 COPY ./conf.d $PHP_INI_DIR/conf.d

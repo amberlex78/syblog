@@ -23,23 +23,14 @@ services:
     volumes:
       - ./var/mysql:/var/lib/mysql
 
-  php-cli:
+  php:
     build:
-      context: ./docker/development/php-cli
+      context: ./docker/development/php
     restart: always
     volumes:
       - ./:/app
       - composer:/root/.composer/cache
     tty: true
-    depends_on:
-      - mysql
-
-  php-fpm:
-    build:
-      context: ./docker/development/php-fpm
-    restart: always
-    volumes:
-      - ./:/app
     depends_on:
       - mysql
 
@@ -52,7 +43,7 @@ services:
     environment:
       VIRTUAL_HOST: syblog.test
     depends_on:
-      - php-fpm
+      - php
       - proxy
 
   adminer:
