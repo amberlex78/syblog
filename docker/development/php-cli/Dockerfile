@@ -9,7 +9,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Versions: https://xdebug.org/download/historical
 ENV XDEBUG_VERSION 3.0.4
-RUN pecl install xdebug-$XDEBUG_VERSION docker-php-ext-enable xdebug
+RUN pecl install xdebug-$XDEBUG_VERSION && docker-php-ext-enable xdebug
 
 # NodeJS with NPM, Yarn
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
