@@ -2,44 +2,64 @@
 
 I started to get familiar with the `Symfony` framework.
 
-As a starting point, I decided to create a simple blog.
+As a starting point, I decided to create a simple blog starting from scratch.
+
+I will be using the latest MySQL, PHP, Symfony for now.
 
 ## Approximate plan
 
 Implementation steps:
 - Install the framework `Symfony` and start the server
-- Separation front and admin, each with its own a skeleton template
-- Make registration, authentication, authorization (separate form for front and admin)
-- Users with roles: `user`, `admin`, `superadmin`
+- Separation front and admin area, each with its own a skeleton template
+  - front: Bootstrap 5
+  - admin: SB Admin
+- Registration, authentication, authorization (separate forms for front and admin areas)
+- Users with roles: `ROLE_USER`, `ROLE_ADMIN`, `ROLE_SUPER_ADMIN`
 
-In the admin area:
-- Admin dashboard
-- User management
-- Pages management
+### In the admin area
+- Dashboard
 - Blog management
+  - Posts
+  - Categories
+  - Tags
+- Page management
+- User management
 
 ---
 
 ## Install
+
+You have locally installed: php8, mysql, composer, nodejs, npm, yarn, symfony
 ```
-git clone git@github.com:amberlex78/sf-blog.git
-cd sf-blog
+git clone git@github.com:amberlex78/syBlog.git my-project-name
+cd my-project-name
 cp .env.example .env
 composer install
 yarn install
 yarn encore dev
+make db-seed
 symfony server:start -d
 ```
 
-## Create DB container
-If you don't have `MySQL` server installed, you can `docker up` the `MySQL` container.
+## Install via Docker
 
-Database connection see in `docker-compose.yml` and config in `.env` files.
+```
+git clone git@github.com:amberlex78/syBlog.git
+cd syBlog
+cp .env.example .env
+```
+
 ### Up
 Docker up: `docker-compose up -d` or:
 ```
 make init
 ```
+
+Seeding data:
+```
+make seed
+```
+
 ### Down
 Docker down: `docker-compose down --remove-orphans` or:
 ```
@@ -47,21 +67,7 @@ make down
 ```
 See all command in `Makefile` file.
 
-## Init DB after container up
-Fill tables: `doctrine:fixtures:load`
-```
-symfony console d:f:l
-```
-
-### Before loading fixtures again, you should drop and update schema
-Drop tables `doctrine:schema:drop`
-```
-symfony console d:s:d --full-database --force
-```
-Update tables: `doctrine:schema:update`
-```
-symfony console d:s:u --force
-```
+See database connection in `docker-compose.yml` and config in `.env` file.
 
 ## Access to site
 

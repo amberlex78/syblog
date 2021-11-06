@@ -1,11 +1,13 @@
+#-----------------------------------------------------------
+# for local
 db-seed:
-	bin/console doctrine:schema:drop --force
+	bin/console doctrine:schema:drop --full-database --force
 	bin/console doctrine:schema:update --force
 	bin/console doctrine:fixtures:load -n
 
 #-----------------------------------------------------------
-# docker (only DB)
-init: docker-pull docker-build docker-up #composer-install yarn-install run-dev
+# docker
+init: docker-pull docker-build docker-up composer-install yarn-install run-dev
 up: docker-up
 down: docker-down
 restart: down up
@@ -22,18 +24,18 @@ docker-down:
 #-----------------------------------------------------------
 # composer
 composer-install:
-	docker-compose run --rm php-cli composer install
+	docker-compose exec php-cli composer install
 composer-update:
-	docker-compose run --rm php-cli composer update
+	docker-compose exec php-cli composer update
 
 #-----------------------------------------------------------
 # yarn
 yarn-install:
-	docker-compose run --rm php-cli yarn install
+	docker-compose exec php-cli yarn install
 run-dev:
-	docker-compose run --rm php-cli yarn encore dev
+	docker-compose exec php-cl yarn encore dev
 run-watch:
-	docker-compose run --rm php-cli yarn encore dev --watch
+	docker-compose exec php-cl yarn encore dev --watch
 
 seed:
 	docker-compose exec php-cli bin/console doctrine:schema:drop --full-database --force
