@@ -16,16 +16,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y nodejs
 RUN npm i -g yarn
 
-# GD (need for bin/console)
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libgmp-dev && \
-    docker-php-ext-configure gd --with-freetype=/usr/include && \
-    docker-php-ext-install gd
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libbz2-dev \
@@ -60,6 +50,19 @@ RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd && \
     sockets \
     xsl \
     zip
+
+# Install GD (need for ImagineBundle commands)
+# liip
+#   liip:imagine:cache:remove
+#   liip:imagine:cache:resolve
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libgmp-dev && \
+    docker-php-ext-configure gd --with-freetype=/usr/include && \
+    docker-php-ext-install gd
 
 RUN cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 COPY ./conf.d $PHP_INI_DIR/conf.d
