@@ -33,9 +33,9 @@ composer-update:
 yarn-install:
 	docker-compose exec php-cli yarn install
 run-dev:
-	docker-compose exec php-cl yarn encore dev
+	docker-compose exec php-cli yarn encore dev
 run-watch:
-	docker-compose exec php-cl yarn encore dev --watch
+	docker-compose exec php-cli yarn encore dev --watch
 
 seed:
 	docker-compose exec php-cli bin/console doctrine:schema:drop --full-database --force
