@@ -31,8 +31,8 @@ Implementation steps:
 
 You have locally installed: php8, mysql, composer, nodejs, npm, yarn, symfony
 ```
-git clone git@github.com:amberlex78/syBlog.git my-project-name
-cd my-project-name
+git clone git@github.com:amberlex78/syBlog.git
+cd syBlog
 cp .env.example .env
 composer install
 yarn install
@@ -42,6 +42,8 @@ symfony server:start -d
 ```
 
 ## Install via Docker
+
+Add to `/etc/hosts` file line `127.0.0.1 syblog.test`
 
 ```
 git clone git@github.com:amberlex78/syBlog.git
@@ -75,13 +77,21 @@ Front:
 ```
 https://127.0.0.1:8000
 ```
+Front for Docker:
+```
+http://syblog.test
+```
 
 Admin:
 ```
 https://127.0.0.1:8000/admin
 ```
+Admin for Docker:
+```
+http://syblog.test/admin
+```
 
-Users:
+### Users
 ```
 user@example.com   - User
 admin@example.com  - Admin
