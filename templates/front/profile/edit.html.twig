@@ -16,8 +16,18 @@
                         <input type="text" class="form-control-plaintext" id="userEmail" value="{{ app.user.email }}" readonly>
                     </div>
                 </div>
+                <hr>
+
+                <div class="col-sm-10 offset-sm-2 pt-2 px-1">
+                    <p class="lead">Personal</p>
+                </div>
                 {{ form_row(form.firstName) }}
                 {{ form_row(form.lastName) }}
+
+                <div class="col-sm-10 offset-sm-2 pt-2 px-1">
+                    <p class="lead">Change password</p>
+                </div>
+                {{ form_row(form.plainPassword) }}
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-between my-2">
