@@ -1,6 +1,9 @@
 {% extends 'front/layouts/body.html.twig' %}
+{% set title = page.seoTitle ?: page.title %}
 
-{% block title %}{{ page.title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+{% block meta_title %}{{ title }}{% endblock %}
+{% block meta_description %}{{ page.seoDescription ?: title }}{% endblock %}
 
 {% block content %}
     <div class="card mb-4">

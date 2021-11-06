@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}Welcome!{% endblock %} - SyBlog</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('build/images/favicon.ico') }}" />
+    <meta name="title" content="{% block meta_title %}{% endblock %} - SyBlog">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
     {% block stylesheets %}
         {{ encore_entry_link_tags('front') }}
     {% endblock %}
