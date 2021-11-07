@@ -1,5 +1,14 @@
 $(function () {
 
+    $('.js-checkbox-status').on('click', function (e) {
+        let data = $(e.currentTarget).data();
+        $.ajax({
+            method: 'PATCH',
+            url: data.path,
+            data: data
+        });
+    });
+
     // Approve Delete Modal (for list records)
     let approveDeleteModal = $('#approveDeleteModal');
     $('.btn-trash').on('click', function (e) {
