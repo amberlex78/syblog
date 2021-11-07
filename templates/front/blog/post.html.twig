@@ -24,9 +24,10 @@
             {% if post.tags|length > 0 %}
                 <hr>
                 <p class="small">
-                    <i class="fa fa-tags fa-fw text-muted"></i>
                     {% for tag in post.tags %}
-                        <a href="#">{{ tag.name }}</a>,
+                        <span class="badge bg-secondary bg-opacity-10">
+                            <a href="#"><i class="fa fa-tag fa-fw text-muted"></i>{{ tag.name }}</a>
+                        </span>
                     {% endfor %}
                 </p>
             {% endif %}
