@@ -9,12 +9,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/ajax')]
+#[Route('/admin/ajax', name: 'admin_ajax_')]
 class AjaxController extends AbstractController
 {
+    const FIELD_IS_ACTIVE = 'isActive';
+
     private array $response = [
         'success' => false,
-        'message' => 'HTTP 400 Bad Request!',
+        'message' => 'Bad Request!',
     ];
 
     public function __construct(
@@ -22,17 +24,33 @@ class AjaxController extends AbstractController
     ) {
     }
 
-    #[Route('/change/{id<\d+>}/status', name: 'admin_ajax_change_status', methods: ['PATCH'])]
-    public function changeStatus(int $id, Request $request): JsonResponse
+    private static function getAllowedFields(): array
     {
-        $entity = $this->em->getRepository($request->get('model'))->findOneBy(['id' => $id]);
+        return [
+            self::FIELD_IS_ACTIVE,
+        ];
+    }
 
+    #[Route('/change/{id<\d+>}/boolean', name: 'change_boolean', methods: ['PATCH'])]
+    public function changeBoolean(int $id, Request $request): JsonResponse
+    {
+        $field = $request->get('field') ?? self::FIELD_IS_ACTIVE;
+        if (in_array($field, self::getAllowedFields())) {
+            $fieldSet = 'set' . $field;
+            $fieldGet = 'get' . $field;
+        } else {
+            $this->response['message'] = 'Invalid field to change!';
+            return $this->json($this->response, 500);
+        }
+
+        $entity = $this->em->getRepository($request->get('entity'))->findOneBy(['id' => $id]);
         if (!$entity) {
-            return $this->json($this->response = ['message' => 'HTTP 404 Not Found!'], 404);
+            $this->response['message'] = 'Not Found!';
+            return $this->json($this->response, 404);
         }
 
         if ($request->isXmlHttpRequest()) {
-            $entity->setIsActive(!$entity->getIsActive());
+            $entity->$fieldSet(!$entity->$fieldGet());
             $this->em->flush();
 
             return $this->json($this->response = [
@@ -44,7 +62,7 @@ class AjaxController extends AbstractController
         return $this->json($this->response, 400);
     }
 
-    #[Route('/image_delete/{id}', name: 'admin_ajax_image_delete', methods: ['PATCH'])]
+    #[Route('/image_delete/{id}', name: 'image_delete', methods: ['PATCH'])]
     public function imageDelete(int $id, Request $request, EntityManagerInterface $em, BlogUploader $uploader): JsonResponse
     {
         $model = $request->query->get('_model');

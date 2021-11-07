@@ -6,6 +6,12 @@ $(function () {
             method: 'PATCH',
             url: data.path,
             data: data
+        }).done(function (data) {
+            if (data.success === true) {
+                // To do something
+            } else {
+                // To do something
+            }
         });
     });
 

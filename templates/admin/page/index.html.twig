@@ -31,8 +31,8 @@
                             <div class="form-check form-switch">
                                 <label>
                                     <input {{ page.isActive ? 'checked' : '' }}
-                                           data-model="{{ get_class(page) }}"
-                                           data-path="{{ path('admin_ajax_change_status', {'id': page.id}) }}"
+                                           data-entity="{{ get_class(page) }}"
+                                           data-path="{{ path('admin_ajax_change_boolean', {'id': page.id}) }}"
                                            class="form-check-input js-checkbox-status"
                                            type="checkbox">
                                 </label>
