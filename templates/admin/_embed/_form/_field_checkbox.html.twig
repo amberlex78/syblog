@@ -1,0 +1,10 @@
+<div class="form-check form-switch">
+    <label>
+        <input {{ value ? 'checked' : '' }}
+                {% if field is defined %}data-field="{{ field }}"{% endif %}
+                data-entity="{{ get_class(entity) }}"
+                data-path="{{ path('admin_ajax_change_boolean', {'id': entity.id}) }}"
+                class="form-check-input js-checkbox-status"
+                type="checkbox" style="cursor: pointer">
+    </label>
+</div>

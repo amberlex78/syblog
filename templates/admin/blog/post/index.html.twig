@@ -34,7 +34,7 @@
                                 <span class="badge bg-secondary bg-opacity-10 text-dark">{{ tag.name }}</span>
                             {% endfor %}
                         </td>
-                        <td>{{ post.isActive ? 'Yes' : 'No' }}</td>
+                        <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': post, 'value': post.isActive } %}</td>
                         <td><img class="img" src="{{ post.image ? asset_uploaded(post.imagePath)|imagine_filter('squared_thumbnail_tiny') : '#' }}" alt=""></td>
                         <td>{{ post.createdAt|format_date('medium') }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': post, 'deleteTitle': post.title} %}</td>

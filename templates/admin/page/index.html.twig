@@ -27,17 +27,7 @@
                         <td>{{ page.id }}</td>
                         <td>{{ page.title }}</td>
                         <td>{{ page.slug }}</td>
-                        <td>
-                            <div class="form-check form-switch">
-                                <label>
-                                    <input {{ page.isActive ? 'checked' : '' }}
-                                           data-entity="{{ get_class(page) }}"
-                                           data-path="{{ path('admin_ajax_change_boolean', {'id': page.id}) }}"
-                                           class="form-check-input js-checkbox-status"
-                                           type="checkbox">
-                                </label>
-                            </div>
-                        </td>
+                        <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': page, 'value': page.isActive } %}</td>
                         <td>{{ page.createdAt|format_date('medium') }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': page, 'deleteTitle': page.title} %}</td>
                     </tr>
