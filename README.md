@@ -11,8 +11,8 @@ I will be using the latest MySQL, PHP, Symfony for now.
 Implementation steps:
 - Install the framework `Symfony` and start the server
 - Separation front and admin area, each with its own a skeleton template
-  - front: Bootstrap 5
-  - admin: SB Admin
+  - front: [Bootstrap 5](https://getbootstrap.com)
+  - admin: [SB Admin](https://startbootstrap.com/template/sb-admin)
 - Registration, authentication, authorization (separate forms for front and admin areas)
 - Users with roles: `ROLE_USER`, `ROLE_ADMIN`, `ROLE_SUPER_ADMIN`
 
