@@ -11,9 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/ajax', name: 'admin_ajax_')]
 class AjaxController extends AbstractController
 {
-    const FIELD_IS_ACTIVE = 'isActive';
+    public const FIELD_IS_ACTIVE = 'isActive';
 
-    const ALLOWED_FIELDS = [
+    public const ALLOWED_FIELDS = [
         self::FIELD_IS_ACTIVE,
     ];
 
