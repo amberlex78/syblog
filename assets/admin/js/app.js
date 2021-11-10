@@ -1,19 +1,27 @@
 $(function () {
 
+    // Change status in the list records
     $('.js-checkbox-status').on('click', function (e) {
-        let data = $(e.currentTarget).data();
         $.ajax({
             method: 'PATCH',
-            url: data.path,
-            data: data
+            url: this.dataset.path,
+            data: this.dataset
+        })
+    })
+
+    // Delete image on the edit form
+    $('.js-delete-image').on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'DELETE',
+            url: $(this).attr('href'),
+            data: this.dataset
         }).done(function (data) {
-            if (data.success === true) {
-                // To do something
-            } else {
-                // To do something
+            if (data.success) {
+                $('.box-image').remove()
             }
-        });
-    });
+        })
+    })
 
     // Approve Delete Modal (for list records)
     let approveDeleteModal = $('#approveDeleteModal');
@@ -28,21 +36,6 @@ $(function () {
     approveDeleteModal.on('click', '.btn-delete', function (e) {
         $('#form' + $(this).data('recordId')).submit();
         $(e.delegateTarget).modal('hide');
-    });
-
-    // Delete image on the edit form
-    $('.delete-img').on('click', function (e) {
-        e.preventDefault();
-        $.post({
-            type: 'PATCH',
-            url: $(this).attr('href')
-        }).done(function (data) {
-            if (data.status === true) {
-                location.reload();
-            } else {
-            }
-            console.log(data.message);
-        });
     });
 
     // Add tags

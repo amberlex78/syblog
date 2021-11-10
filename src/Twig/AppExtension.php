@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use App\Service\Uploader\BaseUploader;
+use App\Service\Uploader\FileUploader;
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
@@ -33,14 +33,14 @@ class AppExtension extends AbstractExtension implements ServiceSubscriberInterfa
     public function getAssetUploadedPath(string $path): string
     {
         return $this->container
-            ->get(BaseUploader::class)
+            ->get(FileUploader::class)
             ->getPublicPath($path);
     }
 
     public static function getSubscribedServices(): array
     {
         return [
-            BaseUploader::class,
+            FileUploader::class,
         ];
     }
 }

@@ -2,33 +2,30 @@
 
 namespace App\Service\Uploader;
 
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Asset\Context\RequestStackContext;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-// todo: improve
-class BaseUploader
+class FileUploader
 {
-    protected string $uploadPath;
-    protected Filesystem $filesystem;
-    private RequestStackContext $requestStackContext;
-
-    public function __construct(string $uploadPath, Filesystem $filesystem, RequestStackContext $requestStackContext)
-    {
-        $this->uploadPath = $uploadPath;
-        $this->filesystem = $filesystem;
-        $this->requestStackContext = $requestStackContext;
+    public function __construct(
+        protected string $uploadPath,
+        protected CacheManager $cacheManager,
+        private Filesystem $filesystem,
+        private RequestStackContext $requestStackContext,
+    ) {
     }
 
     public function getPublicPath(string $path): string
     {
-        // Needed if you deploy under a subdirectory
+        // RequestStackContext needed if you deploy under a subdirectory
         return $this->requestStackContext->getBasePath() . '/uploads/' . $path;
     }
 
-    protected function baseUploadFile(string $filesDir, UploadedFile $uploadedFile): string
+    public function uploadFile(string $filesDir, UploadedFile $uploadedFile): string
     {
         $destination = $this->uploadPath . '/' . $filesDir;
         $newFilename = time() . '_' . uniqid() . '.' . $uploadedFile->guessExtension();
@@ -42,18 +39,26 @@ class BaseUploader
         return $newFilename;
     }
 
-    protected function baseRemoveFile(string $filesDir, ?string $filename)
+    public function removeFile(string $filesDir, ?string $filename)
     {
         if (!$filename) {
             return;
         }
 
-        $fullPathFilename = $this->uploadPath . '/' . $filesDir . '/' . $filename;
+        $fullPathToFile = $this->uploadPath . '/' . $filesDir . '/' . $filename;
 
         try {
-            $this->filesystem->remove($fullPathFilename);
+            $this->filesystem->remove($fullPathToFile);
         } catch (IOException $exception) {
             echo $exception->getMessage();
         }
+    }
+
+    protected function removeCache(string $imgDir, string $filename)
+    {
+        $image = $this->getPublicPath($imgDir . '/' . $filename);
+        $this->cacheManager->remove($image);
+        $this->cacheManager->remove($image . '.webp');
+
     }
 }

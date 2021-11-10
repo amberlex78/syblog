@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'], message: 'There is already a category with this slug')]
 class Category
 {
+    const IMAGES_DIR = 'images/blog/category';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -128,7 +130,7 @@ class Category
     #[Pure]
     public function getImagePath(): string
     {
-        return BlogUploader::CATEGORY_IMAGES_DIR . '/' . $this->getImage();
+        return self::IMAGES_DIR . '/' . $this->getImage();
     }
 
     public function getIsActive(): bool

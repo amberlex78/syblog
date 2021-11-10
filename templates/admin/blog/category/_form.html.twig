@@ -6,9 +6,12 @@
     {{ form_row(form.slug) }}
     {{ form_row(form.isActive) }}
     {{ form_row(form.description) }}
-    {% include 'admin/_embed/_form/_img_field.html.twig' %}
+    {% include 'admin/_embed/_form/_img_field.html.twig' with {
+        'hasImage': form.vars.data.image,
+        'imagePath': form.vars.data.imagePath,
+        'deletePath': path('admin_blog_category_delete_image', {id: form.vars.data.id})
+    } %}
     {% include 'admin/_embed/_form/_seo_fields.html.twig' %}
-
     {% include 'admin/_embed/_form/_btn_save.html.twig' %}
 
 {{ form_end(form) }}

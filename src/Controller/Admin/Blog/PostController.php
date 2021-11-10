@@ -7,7 +7,7 @@ use App\Entity\Blog\Tag;
 use App\Form\Admin\Blog\PostType;
 use App\Form\Admin\Blog\TagType;
 use App\Repository\Blog\PostRepository;
-use App\Service\Uploader\BlogUploader;
+use App\Service\Uploader\Blog\PostImageUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +16,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/blog/post')]
+#[Route('/admin/blog/post', name: 'admin_blog_post_')]
 class PostController extends AbstractController
 {
-    #[Route('/', name: 'admin_blog_post_index', methods: ['GET'])]
+    public function __construct(
+        private EntityManagerInterface $em,
+        private PostImageUploader $uploader,
+    ) {
+    }
+
+    #[Route('/', name: 'index', methods: ['GET'])]
     public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $posts = $paginator->paginate(
@@ -27,13 +33,11 @@ class PostController extends AbstractController
             $request->query->getInt('page', 1)
         );
 
-        return $this->render('admin/blog/post/index.html.twig', [
-            'posts' => $posts,
-        ]);
+        return $this->render('admin/blog/post/index.html.twig', compact('posts'));
     }
 
-    #[Route('/new', name: 'admin_blog_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Request $request): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -41,11 +45,11 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($image = $form->get('image')->getData()) {
-                $filename = $uploader->uploadPostImage($image);
+                $filename = $this->uploader->uploadImage($image);
                 $post->setImage($filename);
             }
-            $em->persist($post);
-            $em->flush();
+            $this->em->persist($post);
+            $this->em->flush();
 
             $this->addFlash('success', 'Post added.');
 
@@ -59,27 +63,25 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_blog_post_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Post $post): Response
     {
-        return $this->render('admin/blog/post/show.html.twig', [
-            'post' => $post,
-        ]);
+        return $this->render('admin/blog/post/show.html.twig', compact('post'));
     }
 
-    #[Route('/{id}/edit', name: 'admin_blog_post_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Post $post, Request $request): Response
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($image = $form->get('image')->getData()) {
-                $uploader->removePostImage($post->getImage());
-                $filename = $uploader->uploadPostImage($image);
+                $this->uploader->removeImage($post->getImage());
+                $filename = $this->uploader->uploadImage($image);
                 $post->setImage($filename);
             }
-            $em->flush();
+            $this->em->flush();
 
             $this->addFlash('success', 'Changes saved.');
 
@@ -93,13 +95,13 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_blog_post_delete', methods: ['POST'])]
-    public function delete(Request $request, Post $post, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Post $post, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
-            $uploader->removePostImage($post->getImage());
-            $em->remove($post);
-            $em->flush();
+            $this->uploader->removeImage($post->getImage());
+            $this->em->remove($post);
+            $this->em->flush();
 
             $this->addFlash('success', 'Post deleted.');
         } else {
@@ -109,16 +111,32 @@ class PostController extends AbstractController
         return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/tag/new', name: 'admin_blog_post_tag_new', methods: ['POST'])]
-    public function tagNew(Request $request, EntityManagerInterface $em): JsonResponse
+    #[Route('/image/{id}', name: 'delete_image', methods: ['DELETE'])]
+    public function deleteImage(Post $post, Request $request): JsonResponse
+    {
+        if ($request->isXmlHttpRequest()
+            && $this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))
+        ) {
+            $this->uploader->removeImage($post->getImage());
+            $post->setImage(null);
+            $this->em->flush();
+
+            return $this->json(['success' => true]);
+        } else {
+            return $this->json(['error' => 'Bad Request!'], 400);
+        }
+    }
+
+    #[Route('/tag/new', name: 'tag_new', methods: ['POST'])]
+    public function tagNew(Request $request): JsonResponse
     {
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($tag);
-            $em->flush();
+            $this->em->persist($tag);
+            $this->em->flush();
             $data = [
                 'status' => true,
                 'message' => 'Tag added.',

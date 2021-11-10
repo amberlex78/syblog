@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'], message: 'There is already a post with this slug')]
 class Post
 {
+    const IMAGES_DIR = 'images/blog/post';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -150,7 +152,7 @@ class Post
     #[Pure]
     public function getImagePath(): string
     {
-        return BlogUploader::IMAGES_DIR . '/' . $this->getImage();
+        return self::IMAGES_DIR . '/' . $this->getImage();
     }
 
     public function getIsActive(): bool

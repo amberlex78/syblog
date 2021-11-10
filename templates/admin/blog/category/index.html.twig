@@ -31,7 +31,7 @@
                         <td>{{ category.slug }}</td>
                         <td><a href="#">{{ category.posts|length }} items</a></td>
                         <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': category, 'value': category.isActive } %}</td>
-                        <td><img class="img" src="{{ category.image ? asset_uploaded(category.imagePath)|imagine_filter('squared_thumbnail_tiny') : '#' }}" alt=""></td>
+                        <td><img class="img" src="{{ category.image ? asset_uploaded(category.imagePath)|imagine_filter('sq_th_tiny') : '#' }}" alt=""></td>
                         <td>{{ category.createdAt|format_date('medium') }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': category, 'deleteTitle': category.name} %}</td>
                     </tr>

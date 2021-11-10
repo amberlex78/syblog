@@ -5,26 +5,33 @@ namespace App\Controller\Admin\Blog;
 use App\Entity\Blog\Category;
 use App\Form\Admin\Blog\CategoryType;
 use App\Repository\Blog\CategoryRepository;
-use App\Service\Uploader\BlogUploader;
+use App\Service\Uploader\Blog\CategoryImageUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/blog/category')]
+#[Route('/admin/blog/category', name: 'admin_blog_category_')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'admin_blog_category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository): Response
-    {
-        return $this->render('admin/blog/category/index.html.twig', [
-            'categories' => $categoryRepository->findAllOrdered(),
-        ]);
+    public function __construct(
+        private EntityManagerInterface $em,
+        private CategoryImageUploader $uploader,
+    ) {
     }
 
-    #[Route('/new', name: 'admin_blog_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->findAllOrdered();
+
+        return $this->render('admin/blog/category/index.html.twig', compact('categories'));
+    }
+
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Request $request): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -32,58 +39,50 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($image = $form->get('image')->getData()) {
-                $filename = $uploader->uploadCategoryImage($image);
+                $filename = $this->uploader->uploadImage($image);
                 $category->setImage($filename);
             }
-            $em->persist($category);
-            $em->flush();
+            $this->em->persist($category);
+            $this->em->flush();
 
             $this->addFlash('success', 'Category added.');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/blog/category/new.html.twig', [
-            'category' => $category,
-            'form' => $form,
-        ]);
+        return $this->renderForm('admin/blog/category/new.html.twig', compact('category', 'form'));
     }
 
-    #[Route('/{id}', name: 'admin_blog_category_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Category $category): Response
     {
-        return $this->render('admin/blog/category/show.html.twig', [
-            'category' => $category,
-        ]);
+        return $this->render('admin/blog/category/show.html.twig', compact('category'));
     }
 
-    #[Route('/{id}/edit', name: 'admin_blog_category_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Category $category, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Category $category, Request $request): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($image = $form->get('image')->getData()) {
-                $uploader->removeCategoryImage($category->getImage());
-                $filename = $uploader->uploadCategoryImage($image);
+                $this->uploader->removeImage($category->getImage());
+                $filename = $this->uploader->uploadImage($image);
                 $category->setImage($filename);
             }
-            $em->flush();
+            $this->em->flush();
 
             $this->addFlash('success', 'Changes saved.');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/blog/category/edit.html.twig', [
-            'category' => $category,
-            'form' => $form,
-        ]);
+        return $this->renderForm('admin/blog/category/edit.html.twig', compact('category', 'form'));
     }
 
-    #[Route('/{id}', name: 'admin_blog_category_delete', methods: ['POST'])]
-    public function delete(Request $request, Category $category, EntityManagerInterface $em, BlogUploader $uploader): Response
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Category $category, Request $request): Response
     {
         if ($category->getPosts()->count()) {
             $this->addFlash('warning', 'Category is not empty!');
@@ -92,9 +91,9 @@ class CategoryController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $uploader->removeCategoryImage($category->getImage());
-            $em->remove($category);
-            $em->flush();
+            $this->uploader->removeImage($category->getImage());
+            $this->em->remove($category);
+            $this->em->flush();
 
             $this->addFlash('success', 'Category deleted.');
         } else {
@@ -102,5 +101,21 @@ class CategoryController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/image/{id}', name: 'delete_image', methods: ['DELETE'])]
+    public function deleteImage(Category $category, Request $request): JsonResponse
+    {
+        if ($request->isXmlHttpRequest()
+            && $this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('token'))
+        ) {
+            $this->uploader->removeImage($category->getImage());
+            $category->setImage(null);
+            $this->em->flush();
+
+            return $this->json(['success' => true]);
+        } else {
+            return $this->json(['error' => 'Bad Request!'], 400);
+        }
     }
 }
