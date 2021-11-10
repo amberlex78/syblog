@@ -4,7 +4,7 @@
 
 liip_imagine:
   # valid drivers options include "gd" or "gmagick" or "imagick"
-  # driver: 'imagick'
+  driver: 'imagick'
   webp:
     generate: true
 
