@@ -102,8 +102,13 @@ Password: `password`
 ## Screenshot
 
 ![](./public/screenshot/login-admin.png)
+
 ![](./public/screenshot/login-front.png)
+
 ![](./public/screenshot/profile-front.png)
+
 ![](./public/screenshot/category-front.png)
+
 ![](./public/screenshot/dashboard-admin.png)
+
 ![](./public/screenshot/category-admin.png)
