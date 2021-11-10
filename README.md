@@ -112,3 +112,7 @@ Password: `password`
 ![](./public/screenshot/dashboard-admin.png)
 
 ![](./public/screenshot/category-admin.png)
+
+![](./public/screenshot/post-admin.png)
+
+![](./public/screenshot/posts-admin.png)
