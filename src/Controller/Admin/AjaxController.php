@@ -29,9 +29,9 @@ class AjaxController extends AbstractController
     #[Route('/change/{id<\d+>}/boolean', name: 'change_boolean', methods: ['PATCH'])]
     public function changeBoolean(int $id, Request $request): JsonResponse
     {
-        $entity = $request->get('entity');
-        $token = $request->request->get('_token');
+        $entity = $request->request->get('entity');
         $field = $request->request->get('field') ?? self::FIELD_IS_ACTIVE;
+        $token = $request->request->get('_token');
 
         if (in_array($field, self::ALLOWED_FIELDS)) {
             $fieldSet = 'set' . $field;
