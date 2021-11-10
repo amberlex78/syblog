@@ -41,8 +41,7 @@ class AjaxController extends AbstractController
             return $this->json($this->response, 500);
         }
 
-        $entity = $this->em->getRepository($entity)->findOneBy(['id' => $id]);
-        if (!$entity) {
+        if (!$entity = $this->em->getRepository($entity)->findOneBy(['id' => $id])) {
             $this->response['message'] = 'Not Found!';
             return $this->json($this->response, 404);
         }
