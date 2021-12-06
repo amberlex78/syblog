@@ -4,7 +4,7 @@ I started to get familiar with the `Symfony` framework.
 
 As a starting point, I decided to create a simple blog starting from scratch.
 
-I will be using the latest MySQL, PHP, Symfony for now.
+I will be using the latest MySQL, PHP, Symfony 5.4 for now.
 
 ## Approximate plan
 
