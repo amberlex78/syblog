@@ -3,7 +3,6 @@
 namespace App\Entity\Blog;
 
 use App\Repository\Blog\CategoryRepository;
-use App\Service\Uploader\BlogUploader;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'], message: 'There is already a category with this slug')]
 class Category
 {
-    const IMAGES_DIR = 'images/blog/category';
+    public const IMAGES_DIR = 'images/blog/category';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

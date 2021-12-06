@@ -11,9 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/ajax', name: 'admin_ajax_')]
 class AjaxController extends AbstractController
 {
-    const FIELD_IS_ACTIVE = 'isActive';
+    public const FIELD_IS_ACTIVE = 'isActive';
 
-    const ALLOWED_FIELDS = [
+    public const ALLOWED_FIELDS = [
         self::FIELD_IS_ACTIVE,
     ];
 
@@ -29,9 +29,9 @@ class AjaxController extends AbstractController
     #[Route('/change/{id<\d+>}/boolean', name: 'change_boolean', methods: ['PATCH'])]
     public function changeBoolean(int $id, Request $request): JsonResponse
     {
-        $entity = $request->get('entity');
-        $token = $request->request->get('_token');
+        $entity = $request->request->get('entity');
         $field = $request->request->get('field') ?? self::FIELD_IS_ACTIVE;
+        $token = $request->request->get('_token');
 
         if (in_array($field, self::ALLOWED_FIELDS)) {
             $fieldSet = 'set' . $field;
@@ -41,8 +41,7 @@ class AjaxController extends AbstractController
             return $this->json($this->response, 500);
         }
 
-        $entity = $this->em->getRepository($entity)->findOneBy(['id' => $id]);
-        if (!$entity) {
+        if (!$entity = $this->em->getRepository($entity)->findOneBy(['id' => $id])) {
             $this->response['message'] = 'Not Found!';
             return $this->json($this->response, 404);
         }

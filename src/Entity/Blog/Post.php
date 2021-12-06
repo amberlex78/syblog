@@ -4,7 +4,6 @@ namespace App\Entity\Blog;
 
 use App\Entity\User;
 use App\Repository\Blog\PostRepository;
-use App\Service\Uploader\BlogUploader;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'], message: 'There is already a post with this slug')]
 class Post
 {
-    const IMAGES_DIR = 'images/blog/post';
+    public const IMAGES_DIR = 'images/blog/post';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
