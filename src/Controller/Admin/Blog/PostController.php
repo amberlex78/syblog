@@ -25,11 +25,13 @@ class PostController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('', name: 'index', methods: ['GET'])]
     public function index(PostRepository $postRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $categoryId = $request->query->get('category_id');
+
         $posts = $paginator->paginate(
-            $postRepository->findAllOrderedByNewest(),
+            $postRepository->findAllOrderedByNewest($categoryId),
             $request->query->getInt('page', 1)
         );
 

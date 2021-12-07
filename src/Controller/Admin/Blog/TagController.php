@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/blog/tag')]
 class TagController extends AbstractController
 {
-    #[Route('/', name: 'admin_blog_tag_index', methods: ['GET'])]
+    #[Route('', name: 'admin_blog_tag_index', methods: ['GET'])]
     public function index(TagRepository $tagRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $tags = $paginator->paginate(

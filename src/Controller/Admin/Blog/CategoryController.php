@@ -22,7 +22,7 @@ class CategoryController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('', name: 'index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
         $categories = $categoryRepository->findAllOrdered();
