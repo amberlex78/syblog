@@ -26,6 +26,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
+    #[ORM\OrderBy(['createdAt' => 'DESC', 'id' => 'DESC'])]
     private Collection $posts;
 
     #[ORM\Column(type: 'string', length: 255)]

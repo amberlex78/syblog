@@ -32,6 +32,7 @@ class Tag
     private ?string $slug = null;
 
     #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'tags')]
+    #[ORM\OrderBy(['createdAt' => 'DESC', 'id' => 'DESC'])]
     private Collection $posts;
 
     #[ORM\Column(type: 'datetime_immutable')]

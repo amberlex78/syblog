@@ -6,9 +6,7 @@ use App\Entity\Blog\Post;
 use App\Entity\Blog\Tag;
 use App\Form\Admin\Blog\PostType;
 use App\Form\Admin\Blog\TagType;
-use App\Repository\Blog\CategoryRepository;
-use App\Repository\Blog\PostRepository;
-use App\Repository\Blog\TagRepository;
+use App\Service\Admin\Blog\PostService;
 use App\Service\Uploader\Blog\PostImageUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,28 +25,13 @@ class PostController extends AbstractController
     ) {
     }
 
-    // todo: refactoring
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(
-        PostRepository $postRepository,
-        CategoryRepository $categoryRepository,
-        TagRepository $tagRepository,
-        Request $request,
-        PaginatorInterface $paginator
-    ): Response {
-        if ($category = $request->query->getInt('category')) {
-            $category = $categoryRepository->find($category);
-            $posts = $category
-                ? $category->getPosts()
-                : $postRepository->findAllOrderedByNewest();
-        } elseif ($tag = $request->query->getInt('tag')) {
-            $tag = $tagRepository->find($tag);
-            $posts = $tag
-                ? $tag->getPosts()
-                : $postRepository->findAllOrderedByNewest();
-        } else {
-            $posts = $postRepository->findAllOrderedByNewest();
-        }
+    public function index(PostService $postService, Request $request, PaginatorInterface $paginator): Response
+    {
+        $posts = $postService->findAllFiltered(
+            $request->query->getInt('category'),
+            $request->query->getInt('tag')
+        );
 
         $posts = $paginator->paginate($posts, $request->query->getInt('page', 1));
 
