@@ -29,7 +29,7 @@
                         <td>{{ category.id }}</td>
                         <td>{{ category.name }}</td>
                         <td>{{ category.slug }}</td>
-                        <td><a href="{{ path('admin_blog_post_index', {'category_id': category.id}) }}">{{ category.posts|length }} items</a></td>
+                        <td><a href="{{ path('admin_blog_post_index', {'category': category.id}) }}">{{ category.posts|length }} items</a></td>
                         <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': category, 'value': category.isActive } %}</td>
                         <td><img class="img" src="{{ category.image ? asset_uploaded(category.imagePath)|imagine_filter('sq_th_tiny') : '#' }}" alt=""></td>
                         <td>{{ category.createdAt|format_date('medium') }}</td>

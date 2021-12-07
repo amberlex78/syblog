@@ -27,7 +27,7 @@
                         <td>{{ tag.id }}</td>
                         <td>{{ tag.name }}</td>
                         <td>{{ tag.slug }}</td>
-                        <td><a href="{{ path('admin_blog_post_index', {'tag_id': tag.id}) }}">{{ tag.posts|length }} posts</a></td>
+                        <td><a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.posts|length }} posts</a></td>
                         <td>{{ tag.createdAt|format_date('medium') }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': tag, 'deleteTitle': tag.name} %}</td>
                     </tr>

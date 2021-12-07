@@ -5,7 +5,6 @@ namespace App\Repository\Blog;
 use App\Entity\Blog\Category;
 use App\Entity\Blog\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,24 +20,16 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findAllOrderedByNewest(?int $categoryId): QueryBuilder
+    public function findAllOrderedByNewest()
     {
-        $query = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
             ->leftJoin('p.category', 'c')
             ->addSelect('c')
             ->leftJoin('p.tags', 't')
-            ->addSelect('t');
-
-        if ($categoryId) {
-            $query->andWhere('p.category = :categoryId')
-                ->setParameter('categoryId', $categoryId);
-        }
-
-        $query->orderBy('p.createdAt', 'DESC')
+            ->addSelect('t')
+            ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
-
-        return $query;
     }
 
     public function findAllActiveOrderedByNewest()
