@@ -15,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/blog/tag', name: 'admin_blog_tag_')]
 class TagController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $em,
+    ) {
+    }
+
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(TagRepository $tagRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -27,14 +32,15 @@ class TagController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(EntityManagerInterface $em, Request $request): Response
+    public function new(Request $request): Response
     {
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($tag);
-            $em->flush();
+            $this->em->persist($tag);
+            $this->em->flush();
 
             $this->addFlash('success', 'Tag added!');
 
@@ -51,12 +57,13 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(EntityManagerInterface $em, Request $request, Tag $tag): Response
+    public function edit(Tag $tag, Request $request): Response
     {
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $this->em->flush();
 
             $this->addFlash('success', 'Your changes have been saved!');
 
@@ -67,11 +74,11 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(EntityManagerInterface $em, Request $request, Tag $tag): Response
+    public function delete(Tag $tag, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete' . $tag->getId(), $request->request->get('_token'))) {
-            $em->remove($tag);
-            $em->flush();
+            $this->em->remove($tag);
+            $this->em->flush();
 
             $this->addFlash('success', 'Tag deleted!');
         } else {
