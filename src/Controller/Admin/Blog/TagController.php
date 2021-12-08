@@ -5,16 +5,17 @@ namespace App\Controller\Admin\Blog;
 use App\Entity\Blog\Tag;
 use App\Form\Admin\Blog\TagType;
 use App\Repository\Blog\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/blog/tag')]
+#[Route('/admin/blog/tag', name: 'admin_blog_tag_')]
 class TagController extends AbstractController
 {
-    #[Route('', name: 'admin_blog_tag_index', methods: ['GET'])]
+    #[Route('', name: 'index', methods: ['GET'])]
     public function index(TagRepository $tagRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $tags = $paginator->paginate(
@@ -22,65 +23,59 @@ class TagController extends AbstractController
             $request->query->getInt('page', 1)
         );
 
-        return $this->render('admin/blog/tag/index.html.twig', [
-            'tags' => $tags,
-        ]);
+        return $this->render('admin/blog/tag/index.html.twig', compact('tags'));
     }
 
-    #[Route('/new', name: 'admin_blog_tag_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(EntityManagerInterface $em, Request $request): Response
     {
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($tag);
-            $entityManager->flush();
+            $em->persist($tag);
+            $em->flush();
+
+            $this->addFlash('success', 'Tag added!');
 
             return $this->redirectToRoute('admin_blog_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/blog/tag/new.html.twig', [
-            'tag' => $tag,
-            'form' => $form,
-        ]);
+        return $this->renderForm('admin/blog/tag/new.html.twig', compact('tag', 'form'));
     }
 
-    #[Route('/{id}', name: 'admin_blog_tag_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Tag $tag): Response
     {
-        return $this->render('admin/blog/tag/show.html.twig', [
-            'tag' => $tag,
-        ]);
+        return $this->render('admin/blog/tag/show.html.twig', compact('tag'));
     }
 
-    #[Route('/{id}/edit', name: 'admin_blog_tag_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Tag $tag): Response
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(EntityManagerInterface $em, Request $request, Tag $tag): Response
     {
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
+
+            $this->addFlash('success', 'Your changes have been saved!');
 
             return $this->redirectToRoute('admin_blog_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/blog/tag/edit.html.twig', [
-            'tag' => $tag,
-            'form' => $form,
-        ]);
+        return $this->renderForm('admin/blog/tag/edit.html.twig', compact('tag', 'form'));
     }
 
-    #[Route('/{id}', name: 'admin_blog_tag_delete', methods: ['POST'])]
-    public function delete(Request $request, Tag $tag): Response
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(EntityManagerInterface $em, Request $request, Tag $tag): Response
     {
         if ($this->isCsrfTokenValid('delete' . $tag->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($tag);
-            $entityManager->flush();
+            $em->remove($tag);
+            $em->flush();
+
+            $this->addFlash('success', 'Tag deleted!');
+        } else {
+            $this->addFlash('warning', 'Something went wrong! Try again.');
         }
 
         return $this->redirectToRoute('admin_blog_tag_index', [], Response::HTTP_SEE_OTHER);
