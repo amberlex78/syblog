@@ -28,17 +28,15 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(EntityManagerInterface $em, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(EntityManagerInterface $em, Request $request, UserPasswordHasherInterface $hasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            if ($plainPassword) {
-                $encodedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($encodedPassword);
+            if ($plainPassword = $form->get('plainPassword')->getData()) {
+                $user->setPassword($hasher->hashPassword($user, $plainPassword));
             }
 
             $em->persist($user);
@@ -59,16 +57,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(EntityManagerInterface $em, Request $request, User $user, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(EntityManagerInterface $em, Request $request, User $user, UserPasswordHasherInterface $hasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            if ($plainPassword) {
-                $encodedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($encodedPassword);
+            if ($plainPassword = $form->get('plainPassword')->getData()) {
+                $user->setPassword($hasher->hashPassword($user, $plainPassword));
             }
 
             $em->flush();
