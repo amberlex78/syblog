@@ -31,7 +31,7 @@
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
-                        <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i') : '' }}</td>
+                        <td>{{ user.createdAt|format_date('medium') }}</td>
                         <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                         <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': user, 'deleteTitle': user.email} %}</td>
                     </tr>
@@ -42,6 +42,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {{ knp_pagination_render(users) }}
         </div>
     </div>
     {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
