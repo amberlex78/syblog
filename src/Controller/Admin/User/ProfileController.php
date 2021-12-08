@@ -11,17 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/user/profile')]
+#[Route('/admin/user/profile', name: 'admin_user_profile_')]
 class ProfileController extends AbstractController
 {
-    #[Route('', name: 'admin_user_profile_show', methods: ['GET'])]
+    #[Route('', name: 'show', methods: ['GET'])]
     public function show(): Response
     {
         return $this->render('admin/user/profile/show.html.twig');
     }
 
-    #[Route('/edit', name: 'admin_user_profile_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    #[Route('/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -29,21 +29,16 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            if ($plainPassword) {
-                $encodedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($encodedPassword);
+            if ($plainPassword = $form->get('plainPassword')->getData()) {
+                $user->setPassword($hasher->hashPassword($user, $plainPassword));
             }
-            $em->flush();
 
+            $em->flush();
             $this->addFlash('success', 'Your changes have been saved!');
 
             return $this->redirectToRoute('admin_user_profile_show', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/user/profile/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+        return $this->renderForm('admin/user/profile/edit.html.twig', compact('user', 'form'));
     }
 }
