@@ -6,11 +6,18 @@
     {{ form_row(form.slug) }}
     {{ form_row(form.isActive) }}
     {{ form_row(form.description) }}
-    {% include 'admin/_embed/_form/_img_field.html.twig' with {
-        'hasImage': form.vars.data.image,
-        'imagePath': form.vars.data.imagePath,
-        'deletePath': path('admin_blog_category_delete_image', {id: form.vars.data.id})
-    } %}
+    {% if form.vars.data.id is null %}
+        {% include 'admin/_embed/_form/_img_field.html.twig' with {
+            'hasImage': form.vars.data.image,
+            'imagePath': form.vars.data.imagePath,
+        } %}
+    {% else %}
+        {% include 'admin/_embed/_form/_img_field.html.twig' with {
+            'hasImage': form.vars.data.image,
+            'imagePath': form.vars.data.imagePath,
+            'deletePath': path('admin_blog_category_delete_image', {id: form.vars.data.id})
+        } %}
+    {% endif %}
     {% include 'admin/_embed/_form/_seo_fields.html.twig' %}
     {% include 'admin/_embed/_form/_btn_save.html.twig' %}
 
