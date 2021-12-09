@@ -36,27 +36,27 @@
                     <td>{{ app.user.roles ? app.user.roles|join(', ') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>FirstName</th>
+                    <th>Is verified</th>
+                    <td>{{ app.user.isVerified ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>First name</th>
                     <td>{{ app.user.firstName }}</td>
                 </tr>
                 <tr>
-                    <th>LastName</th>
+                    <th>Last name</th>
                     <td>{{ app.user.lastName }}</td>
                 </tr>
                 <tr>
                     <th>Avatar</th>
-                    <td>{{ app.user.avatar }}</td>
+                    <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
                 </tr>
                 <tr>
-                    <th>IsVerified</th>
-                    <td>{{ app.user.isVerified ? 'Yes' : 'No' }}</td>
-                </tr>
-                <tr>
-                    <th>CreatedAt</th>
+                    <th>Created at</th>
                     <td>{{ app.user.createdAt ? app.user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>UpdatedAt</th>
+                    <th>Updated at</th>
                     <td>{{ app.user.updatedAt ? app.user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 </tbody>

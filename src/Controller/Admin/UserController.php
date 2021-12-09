@@ -5,9 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Repository\UserRepository;
+use App\Service\Uploader\UserAvatarUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -96,5 +98,21 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/avatar/{id}', name: 'delete_avatar', methods: ['DELETE'])]
+    public function deleteImage(EntityManagerInterface $em, UserAvatarUploader $uploader, Request $request, User $user): JsonResponse
+    {
+        if ($request->isXmlHttpRequest()
+            && $this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))
+        ) {
+            $uploader->removeImage($user->getAvatar());
+            $user->setAvatar(null);
+            $em->flush();
+
+            return $this->json(['success' => true]);
+        } else {
+            return $this->json(['error' => 'Bad Request!'], 400);
+        }
     }
 }

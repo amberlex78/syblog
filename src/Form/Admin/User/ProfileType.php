@@ -4,10 +4,12 @@ namespace App\Form\Admin\User;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 
 class ProfileType extends AbstractType
@@ -18,7 +20,13 @@ class ProfileType extends AbstractType
             ->add('email')
             ->add('firstName')
             ->add('lastName')
-            //->add('avatar')
+            ->add('avatar', FileType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image(['maxSize' => '2M'])
+                ]
+            ))
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
                 'required' => false,

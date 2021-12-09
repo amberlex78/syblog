@@ -22,6 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const IMAGES_DIR = 'images/user';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -206,6 +208,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
+    }
+
+    #[Pure]
+    public function getImagePath(): string
+    {
+        return self::IMAGES_DIR . '/' . $this->getAvatar();
     }
 
     public function getCreatedAt(): DateTimeImmutable

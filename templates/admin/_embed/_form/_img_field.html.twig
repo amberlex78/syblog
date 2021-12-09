@@ -19,4 +19,8 @@
         </div>
     </div>
 {% endif %}
-{{ form_row(form.image) }}
+{% if field is defined %}
+    {{ form_row(field) }}
+{% else %}
+    {{ form_row(form.image) }}
+{% endif %}

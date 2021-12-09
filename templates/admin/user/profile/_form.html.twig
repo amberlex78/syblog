@@ -5,6 +5,12 @@
     {{ form_row(form.email) }}
     {{ form_row(form.firstName) }}
     {{ form_row(form.lastName) }}
+    {% include 'admin/_embed/_form/_img_field.html.twig' with {
+        'field': form.avatar,
+        'hasImage': form.vars.data.avatar,
+        'imagePath': form.vars.data.imagePath,
+        'deletePath': path('admin_user_delete_avatar', {id: form.vars.data.id})
+    } %}
 
     <div class="col-sm-10 offset-sm-2 pt-2 px-1">
         <p class="lead">Change password</p>

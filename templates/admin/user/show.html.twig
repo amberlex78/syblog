@@ -33,6 +33,10 @@
                     <td>{{ user.lastName }}</td>
                 </tr>
                 <tr>
+                    <th>Avatar</th>
+                    <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
+                </tr>
+                <tr>
                     <th>Created at</th>
                     <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
