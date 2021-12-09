@@ -107,7 +107,7 @@ class CategoryController extends AbstractController
     public function deleteImage(Category $category, Request $request): JsonResponse
     {
         if ($request->isXmlHttpRequest()
-            && $this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('token'))
+            && $this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))
         ) {
             $this->uploader->removeImage($category->getImage());
             $category->setImage(null);
