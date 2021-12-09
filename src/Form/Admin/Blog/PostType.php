@@ -21,8 +21,8 @@ class PostType extends AbstractType
     {
         $builder
             ->add('category', EntityType::class, [
-                'placeholder' => 'Without category',
-                'required' => false,
+                'placeholder' => 'Select category',
+                'required' => true,
                 'class' => Category::class,
             ])
             ->add('title', TextType::class, [
