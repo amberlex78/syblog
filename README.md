@@ -101,18 +101,25 @@ Password: `password`
 
 ## Screenshot
 
-![](./public/screenshot/login-admin.png)
+Front
 
 ![](./public/screenshot/login-front.png)
 
-![](./public/screenshot/profile-front.png)
+![](./public/screenshot/front-profile.png)
 
-![](./public/screenshot/category-front.png)
+![](./public/screenshot/front-category.png)
 
-![](./public/screenshot/dashboard-admin.png)
+Admin
 
-![](./public/screenshot/category-admin.png)
+![](./public/screenshot/login-admin.png)
 
-![](./public/screenshot/post-admin.png)
+![](./public/screenshot/admin-dashboard.png)
 
-![](./public/screenshot/posts-admin.png)
+![](./public/screenshot/admin-blog-categories.png)
+
+![](./public/screenshot/admin-blog-posts.png)
+
+![](./public/screenshot/admin-edit-category.png)
+
+![](./public/screenshot/admin-edit-post.png)
+
