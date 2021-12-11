@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front\Auth;
 
+use App\Entity\StaticStorage\UserRolesStorage;
 use App\Entity\User;
 use App\Form\Front\Auth\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -34,7 +35,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $plainPassword = $form->get('plainPassword')->getData();
             $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles([UserRolesStorage::ROLE_USER]);
 
             $em->persist($user);
             $em->flush();

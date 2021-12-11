@@ -1,10 +1,19 @@
 {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="mb-3 row">
-        <div class="col-sm-10 offset-sm-2">
-            <button class="btn btn-primary"><i class="far fa-fw fa-save"></i> Save</button>
-        </div>
+
+    {{ form_row(form.email) }}
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {{ form_row(form.roles) }}
+    {% endif %}
+
+    <div class="col-sm-10 offset-sm-2 pt-2 px-1">
+        <p class="lead">Change password</p>
     </div>
+    {{ form_row(form.plainPassword) }}
+
+    {% include 'admin/_embed/_form/_btn_save.html.twig' %}
 {{ form_end(form) }}

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\StaticStorage\UserRolesStorage;
 use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Repository\UserRepository;
@@ -39,6 +40,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($plainPassword = $form->get('plainPassword')->getData()) {
                 $user->setPassword($hasher->hashPassword($user, $plainPassword));
+            }
+            if (!$this->isGranted(UserRolesStorage::ROLE_SUPER_ADMIN)) {
+                $user->setRoles([UserRolesStorage::ROLE_USER]);
             }
 
             $em->persist($user);
