@@ -36,7 +36,7 @@ class PageController extends AbstractController
             $em->persist($page);
             $em->flush();
 
-            $this->addFlash('success', 'Page added!');
+            $this->addFlash('success', 'Page created!');
 
             return $this->redirectToRoute('admin_page_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,7 +58,7 @@ class PageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            $this->addFlash('success', 'Your changes have been saved!');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_page_index', [], Response::HTTP_SEE_OTHER);
         }

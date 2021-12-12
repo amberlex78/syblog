@@ -48,7 +48,7 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'User added!');
+            $this->addFlash('success', 'User created!');
 
             return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -75,7 +75,7 @@ class UserController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Your changes have been saved!');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_user_index', [], Response::HTTP_SEE_OTHER);
         }

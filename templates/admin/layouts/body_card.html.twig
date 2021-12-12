@@ -1,0 +1,37 @@
+{% extends 'admin/layouts/base.html.twig' %}
+
+{% block body %}
+    {% include 'admin/_embed/_navbar.html.twig' %}
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            {% include 'admin/_embed/_sidebar.html.twig' %}
+        </div>
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4 mt-4 mb-4">
+                <div class="row">
+                    <div class="col-lg">
+                        {% include 'admin/_embed/_flash_message.html.twig' %}
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between my-0">
+                                    {% block breadcrumbs %}{% endblock %}
+                                    <div class="my-auto">
+                                        {% block actions %}{% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% block content %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="mt-auto py-4 bg-light">
+                <div class="container-fluid px-4">
+                    {% include 'admin/_embed/_footer.html.twig' %}
+                </div>
+            </footer>
+        </div>
+    </div>
+{% endblock %}

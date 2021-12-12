@@ -1,35 +1,40 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Tags - Tag' %}
+{% block title %}Show Tag{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_blog_tag_index'), 'indexTitle': 'Blog Tags', 'actionTitle': 'Show'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_blog_tag_new'),
+        'pathEdit': path('admin_blog_tag_edit', {'id': tag.id}),
+        'pathDelete': path('admin_blog_tag_delete', {'id': tag.id}), 'entityTile': tag.name, 'entityId': tag.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': tag, 'deleteTitle': tag.name} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ tag.id }}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ tag.name }}</td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td>{{ tag.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ tag.createdAt|date('Y-m-d H:i:s')}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ tag.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ tag.name }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ tag.slug }}</td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ tag.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

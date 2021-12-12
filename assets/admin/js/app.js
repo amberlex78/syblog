@@ -1,6 +1,6 @@
 $(function () {
 
-    // Change status in the list records
+    // Change status entity in the list
     $('.js-checkbox-status').on('click', function (e) {
         $.ajax({
             method: 'PATCH',
@@ -18,25 +18,21 @@ $(function () {
             data: this.dataset
         }).done(function (data) {
             if (data.success) {
-                $('.box-image').remove()
+                $('.box-image').remove();
             }
         })
     })
 
-    // Approve Delete Modal (for list records)
-    let approveDeleteModal = $('#approveDeleteModal');
-    $('.btn-trash').on('click', function (e) {
-        e.preventDefault();
-    });
-    approveDeleteModal.on('show.bs.modal', function (e) {
+    // Delete entity from the list
+    let modalConfirmDelete = $('#modalConfirmDelete');
+    modalConfirmDelete.on('show.bs.modal', function (e) {
         let data = $(e.relatedTarget).data();
-        $('.delete-record-title', this).text(data.recordTitle);
-        $('.btn-delete', this).data('recordId', data.recordId);
-    });
-    approveDeleteModal.on('click', '.btn-delete', function (e) {
-        $('#form' + $(this).data('recordId')).submit();
-        $(e.delegateTarget).modal('hide');
-    });
+        $('.delete-entity-title', this).text(data.entityTitle);
+        $('.js-btn-delete-entity', this).data('entityId', data.entityId);
+    })
+    modalConfirmDelete.on('click', '.js-btn-delete-entity', function () {
+        $('#form' + $(this).data('entityId')).submit();
+    })
 
     // Add tags
     let tagsSelect2 = $('.select-tags').select2({

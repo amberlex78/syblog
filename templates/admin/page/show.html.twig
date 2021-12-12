@@ -1,59 +1,64 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Pages - Page' %}
+{% block title %}Show Page{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_page_index'), 'indexTitle': 'Pages', 'actionTitle': 'Show'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_page_new'),
+        'pathEdit': path('admin_page_edit', {'id': page.id}),
+        'pathDelete': path('admin_page_delete', {'id': page.id}), 'entityTile': page.title, 'entityId': page.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page, 'deleteTitle': page.title} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th class="w-25">Id</th>
-                    <td>{{ page.id }}</td>
-                </tr>
-                <tr>
-                    <th>Title</th>
-                    <td>{{ page.title }}</td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td>{{ page.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Is active</th>
-                    <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
-                </tr>
-                <tr>
-                    <th>Content</th>
-                    <td>{{ page.content|raw }}</td>
-                </tr>
-                <tr>
-                    <th>Seo title</th>
-                    <td>{{ page.seoTitle }}</td>
-                </tr>
-                <tr>
-                    <th>Seo keywords</th>
-                    <td>{{ page.seoKeywords }}</td>
-                </tr>
-                <tr>
-                    <th>Seo description</th>
-                    <td>{{ page.seoDescription }}</td>
-                </tr>
-                <tr>
-                    <th>Create at</th>
-                    <td>{{ page.createdAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Updated at</th>
-                    <td>{{ page.updatedAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th class="w-25">Id</th>
+            <td>{{ page.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ page.title }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ page.slug }}</td>
+        </tr>
+        <tr>
+            <th>Is active</th>
+            <td>{{ page.isActive ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ page.content|raw }}</td>
+        </tr>
+        <tr>
+            <th>Seo title</th>
+            <td>{{ page.seoTitle }}</td>
+        </tr>
+        <tr>
+            <th>Seo keywords</th>
+            <td>{{ page.seoKeywords }}</td>
+        </tr>
+        <tr>
+            <th>Seo description</th>
+            <td>{{ page.seoDescription }}</td>
+        </tr>
+        <tr>
+            <th>Create at</th>
+            <td>{{ page.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{ page.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

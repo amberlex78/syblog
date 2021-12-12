@@ -26,7 +26,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('success', 'Your changes have been saved!');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('front_profile', [], Response::HTTP_SEE_OTHER);
         }

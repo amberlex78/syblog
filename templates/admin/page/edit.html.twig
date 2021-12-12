@@ -1,16 +1,21 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Pages - Edit' %}
+{% block title %}Edit Page{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_page_index'), 'indexTitle': 'Pages', 'actionTitle': 'Edit'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_page_new'),
+        'pathShow': path('admin_page_show', {'id': page.id}),
+        'pathDelete': path('admin_page_delete', {'id': page.id}), 'entityTile': page.title, 'entityId': page.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': page, 'deleteTitle': page.title} %}
-        </div>
-        <div class="card-body">
-            {% include'admin/page/_form.html.twig' %}
-        </div>
-    </div>
+    {% include'admin/page/_form.html.twig' %}
 {% endblock %}

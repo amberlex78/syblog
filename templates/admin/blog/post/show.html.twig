@@ -1,75 +1,80 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Blog Posts - Post' %}
+{% block title %}Show Post{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_blog_post_index'), 'indexTitle': 'Blog Posts', 'actionTitle': 'Show'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_blog_post_new'),
+        'pathEdit': path('admin_blog_post_edit', {'id': post.id}),
+        'pathDelete': path('admin_blog_post_delete', {'id': post.id}), 'entityTile': post.title, 'entityId': post.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': post, 'deleteTitle': post.title} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ post.id }}</td>
-                </tr>
-                <tr>
-                    <th>Category</th>
-                    <td>{{ post.category }}</td>
-                </tr>
-                <tr>
-                    <th>Title</th>
-                    <td>{{ post.title }}</td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td>{{ post.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Preview</th>
-                    <td>{{ post.preview }}</td>
-                </tr>
-                <tr>
-                    <th>Content</th>
-                    <td>{{ post.content }}</td>
-                </tr>
-                <tr>
-                    <th>Image</th>
-                    <td><img class="img-fluid" src="{{ asset_uploaded(post.imagePath) }}" alt=""></td>
-                </tr>
-                <tr>
-                    <th>Is active</th>
-                    <td>{{ post.isActive ? 'Yes' : 'No' }}</td>
-                </tr>
-                <tr>
-                    <th>Seo title</th>
-                    <td>{{ post.seoTitle }}</td>
-                </tr>
-                <tr>
-                    <th>Seo keywords</th>
-                    <td>{{ post.seoKeywords }}</td>
-                </tr>
-                <tr>
-                    <th>Seo description</th>
-                    <td>{{ post.seoDescription }}</td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ post.createdAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Updated at</th>
-                    <td>{{ post.updatedAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>User</th>
-                    <td>{{ post.user }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ post.id }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ post.category }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ post.title }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ post.slug }}</td>
+        </tr>
+        <tr>
+            <th>Preview</th>
+            <td>{{ post.preview }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ post.content }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td><img class="img-fluid" src="{{ asset_uploaded(post.imagePath) }}" alt=""></td>
+        </tr>
+        <tr>
+            <th>Is active</th>
+            <td>{{ post.isActive ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>Seo title</th>
+            <td>{{ post.seoTitle }}</td>
+        </tr>
+        <tr>
+            <th>Seo keywords</th>
+            <td>{{ post.seoKeywords }}</td>
+        </tr>
+        <tr>
+            <th>Seo description</th>
+            <td>{{ post.seoDescription }}</td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ post.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{ post.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>User</th>
+            <td>{{ post.user }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

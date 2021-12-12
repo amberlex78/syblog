@@ -39,7 +39,7 @@ class ProfileController extends AbstractController
             }
             $em->flush();
 
-            $this->addFlash('success', 'Your changes have been saved!');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_user_profile_show', [], Response::HTTP_SEE_OTHER);
         }

@@ -53,7 +53,7 @@ class PostController extends AbstractController
             $this->em->persist($post);
             $this->em->flush();
 
-            $this->addFlash('success', 'Post added.');
+            $this->addFlash('success', 'Post created!');
 
             return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -85,7 +85,7 @@ class PostController extends AbstractController
             }
             $this->em->flush();
 
-            $this->addFlash('success', 'Changes saved.');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -105,7 +105,7 @@ class PostController extends AbstractController
             $this->em->remove($post);
             $this->em->flush();
 
-            $this->addFlash('success', 'Post deleted.');
+            $this->addFlash('success', 'Post deleted!');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');
         }

@@ -45,7 +45,7 @@ class CategoryController extends AbstractController
             $this->em->persist($category);
             $this->em->flush();
 
-            $this->addFlash('success', 'Category added.');
+            $this->addFlash('success', 'Category created!');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -73,7 +73,7 @@ class CategoryController extends AbstractController
             }
             $this->em->flush();
 
-            $this->addFlash('success', 'Changes saved.');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -95,7 +95,7 @@ class CategoryController extends AbstractController
             $this->em->remove($category);
             $this->em->flush();
 
-            $this->addFlash('success', 'Category deleted.');
+            $this->addFlash('success', 'Category saved!');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');
         }

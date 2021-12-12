@@ -1,66 +1,54 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'User - Profile' %}
+{% block title %}Profile{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {'indexTitle': 'Profile'} %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathEdit': path('admin_user_profile_edit')} %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            <div class="d-flex justify-content-between my-0">
-                <nav class="mt-1" aria-label="breadcrumb">
-                    <ol class="breadcrumb d-inline-flex m-0">
-                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                    </ol>
-                </nav>
-                <div class="my-auto">
-                    <a href="{{ path('admin_user_profile_edit') }}" class="btn btn-outline-primary btn-sm shadow-sm">
-                        <i class="fas fa-pen fa-sm fa-fw"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ app.user.id }}</td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>{{ app.user.email }}</td>
-                </tr>
-                <tr>
-                    <th>Roles</th>
-                    <td>{{ app.user.roles ? app.user.roles|join(', ') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Is verified</th>
-                    <td>{{ app.user.isVerified ? 'Yes' : 'No' }}</td>
-                </tr>
-                <tr>
-                    <th>First name</th>
-                    <td>{{ app.user.firstName }}</td>
-                </tr>
-                <tr>
-                    <th>Last name</th>
-                    <td>{{ app.user.lastName }}</td>
-                </tr>
-                <tr>
-                    <th>Avatar</th>
-                    <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ app.user.createdAt ? app.user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Updated at</th>
-                    <td>{{ app.user.updatedAt ? app.user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ app.user.id }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ app.user.email }}</td>
+        </tr>
+        <tr>
+            <th>Roles</th>
+            <td>{{ app.user.roles ? app.user.roles|join(', ') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Is verified</th>
+            <td>{{ app.user.isVerified ? 'Yes' : 'No' }}</td>
+        </tr>
+        <tr>
+            <th>First name</th>
+            <td>{{ app.user.firstName }}</td>
+        </tr>
+        <tr>
+            <th>Last name</th>
+            <td>{{ app.user.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Avatar</th>
+            <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ app.user.createdAt ? app.user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{ app.user.updatedAt ? app.user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

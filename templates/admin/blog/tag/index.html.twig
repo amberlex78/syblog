@@ -1,45 +1,48 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Tags' %}
+{% block title %}Blog Tags{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {'indexTitle': 'Blog Tags'} %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathAdd': path('admin_blog_tag_new')} %}
+{% endblock %}
 
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Slug</th>
-                    <th>Articles</th>
-                    <th>Created at</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for tag in tags %}
-                    <tr>
-                        <td>{{ tag.id }}</td>
-                        <td>{{ tag.name }}</td>
-                        <td>{{ tag.slug }}</td>
-                        <td><a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.posts|length }} posts</a></td>
-                        <td>{{ tag.createdAt|format_date('medium') }}</td>
-                        <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': tag, 'deleteTitle': tag.name} %}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">No records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ knp_pagination_render(tags) }}
-        </div>
-    </div>
-    {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Articles</th>
+            <th>Created at</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.slug }}</td>
+                <td><a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.posts|length }} posts</a></td>
+                <td>{{ tag.createdAt|format_date('medium') }}</td>
+                <td>
+                    {% include 'admin/_embed/_form/_btn_actions.html.twig' with {
+                        'pathEdit': path('admin_blog_tag_edit', {'id': tag.id}),
+                        'pathShow': path('admin_blog_tag_show', {'id': tag.id}),
+                        'pathDelete': path('admin_blog_tag_delete', {'id': tag.id}), 'entityTile': tag.name, 'entityId': tag.id,
+                    } %}
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="4">No records found</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(tags) }}
+    {% include 'admin/_embed/_modal/_confirm_delete.html.twig' %}
 {% endblock %}

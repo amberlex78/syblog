@@ -1,59 +1,64 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Blog Categories - Category' %}
+{% block title %}Show Category{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_blog_category_index'), 'indexTitle': 'Blog Categories', 'actionTitle': 'Show'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_blog_category_new'),
+        'pathEdit': path('admin_blog_category_edit', {'id': category.id}),
+        'pathDelete': path('admin_blog_category_delete', {'id': category.id}), 'entityTile': category.name, 'entityId': category.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': category, 'deleteTitle': category.name} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ category.id }}</td>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <td>{{ category.name }}</td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td>{{ category.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>{{ category.description }}</td>
-                </tr>
-                <tr>
-                    <th>Image</th>
-                    <td><img class="img-fluid" src="{{ asset_uploaded(category.imagePath) }}" alt=""></td>
-                </tr>
-                <tr>
-                    <th>Seo title</th>
-                    <td>{{ category.seoTitle }}</td>
-                </tr>
-                <tr>
-                    <th>Seo keywords</th>
-                    <td>{{ category.seoKeywords }}</td>
-                </tr>
-                <tr>
-                    <th>Seo description</th>
-                    <td>{{ category.seoDescription }}</td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ category.createdAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Updated at</th>
-                    <td>{{ category.updatedAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ category.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ category.name }}</td>
+        </tr>
+        <tr>
+            <th>Slug</th>
+            <td>{{ category.slug }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ category.description }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td><img class="img-fluid" src="{{ asset_uploaded(category.imagePath) }}" alt=""></td>
+        </tr>
+        <tr>
+            <th>Seo title</th>
+            <td>{{ category.seoTitle }}</td>
+        </tr>
+        <tr>
+            <th>Seo keywords</th>
+            <td>{{ category.seoKeywords }}</td>
+        </tr>
+        <tr>
+            <th>Seo description</th>
+            <td>{{ category.seoDescription }}</td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ category.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{ category.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

@@ -1,55 +1,59 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Blog Posts' %}
+{% block title %}Blog Posts{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {'indexTitle': 'Blog Posts'} %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathAdd': path('admin_blog_post_new')} %}
+{% endblock %}
 
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Category</th>
-                    <th>Title</th>
-                    <th>Tags</th>
-                    <th>Is active</th>
-                    <th>Image</th>
-                    <th>Created at</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for post in posts %}
-                    <tr>
-                        <td>{{ post.id }}</td>
-                        <td><small><a href="{{ path('admin_blog_post_index', {'category': post.category.id}) }}">{{ post.category }}</a></small></td>
-                        <td>{{ post.title }}</td>
-                        <td>
-                            {% for tag in post.tags %}
-                                <span class="badge bg-secondary bg-opacity-10 text-dark">
-                                    <a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.name }}</a>
-                                </span>
-                            {% endfor %}
-                        </td>
-                        <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': post, 'value': post.isActive } %}</td>
-                        <td><img class="img" src="{{ post.image ? asset_uploaded(post.imagePath)|imagine_filter('sq_th_tiny') : '#' }}" alt=""></td>
-                        <td>{{ post.createdAt|format_date('medium') }}</td>
-                        <td>{% include 'admin/_embed/_form/_btn_actions.html.twig' with {'entity': post, 'deleteTitle': post.title} %}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="6">No records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ knp_pagination_render(posts) }}
-        </div>
-    </div>
-    {% include 'admin/_embed/_modal/_confirm_deletes.html.twig' %}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Tags</th>
+            <th>Is active</th>
+            <th>Image</th>
+            <th>Created at</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td><small><a href="{{ path('admin_blog_post_index', {'category': post.category.id}) }}">{{ post.category }}</a></small></td>
+                <td>{{ post.title }}</td>
+                <td>
+                    {% for tag in post.tags %}
+                        <span class="badge bg-secondary bg-opacity-10 text-dark">
+                            <a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.name }}</a>
+                        </span>
+                    {% endfor %}
+                </td>
+                <td>{% include 'admin/_embed/_form/_field_checkbox.html.twig' with {'entity': post, 'value': post.isActive } %}</td>
+                <td><img class="img" src="{{ post.image ? asset_uploaded(post.imagePath)|imagine_filter('sq_th_tiny') : '#' }}" alt=""></td>
+                <td>{{ post.createdAt|format_date('medium') }}</td>
+                <td>
+                    {% include 'admin/_embed/_form/_btn_actions.html.twig' with {
+                        'pathEdit': path('admin_blog_post_edit', {'id': post.id}),
+                        'pathShow': path('admin_blog_post_show', {'id': post.id}),
+                        'pathFront': path('front_blog_post', {'slug': post.slug}),
+                        'pathDelete': path('admin_blog_post_delete', {'id': post.id}), 'entityTile': post.title, 'entityId': post.id,
+                    } %}
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">No records found</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(posts) }}
+    {% include 'admin/_embed/_modal/_confirm_delete.html.twig' %}
 {% endblock %}

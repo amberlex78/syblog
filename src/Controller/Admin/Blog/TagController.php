@@ -42,7 +42,7 @@ class TagController extends AbstractController
             $this->em->persist($tag);
             $this->em->flush();
 
-            $this->addFlash('success', 'Tag added!');
+            $this->addFlash('success', 'Tag created!');
 
             return $this->redirectToRoute('admin_blog_tag_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -65,7 +65,7 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 
-            $this->addFlash('success', 'Your changes have been saved!');
+            $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_blog_tag_index', [], Response::HTTP_SEE_OTHER);
         }

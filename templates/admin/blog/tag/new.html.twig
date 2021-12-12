@@ -1,16 +1,17 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Tags - Add New Tag' %}
+{% block title %}Add Tag{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_blog_tag_index'), 'indexTitle': 'Blog Tags', 'actionTitle': 'Add'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathSave': path('admin_blog_tag_new')} %}
+{% endblock %}
 
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': tag} %}
-        </div>
-        <div class="card-body">
-            {% include'admin/blog/tag/_form.html.twig' %}
-        </div>
-    </div>
+    {% include'admin/blog/tag/_form.html.twig' %}
 {% endblock %}

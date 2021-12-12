@@ -1,30 +1,21 @@
-{# // todo: refactoring
-    Example: route "admin_user_index" split into an array
-    _route[0] = admin
-    _route[1] = user
-    _route[2] = index        // action: [index|new|show|edit|delete]
-    prefix    = admin_user_  // prefx:
-#}
-{% set _route = app.request.get('_route')|split('_') %}
-
-{% if _route|length == 3 %}
-    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' %}
+{% if pathEdit is defined %}
+    <a href="{{ pathEdit }}" class="btn btn-outline-primary btn-sm">
+        <i class="fa fa-pen fa-fw fa-sm"></i>
+    </a>
 {% endif %}
 
-{% if _route|length == 4 %}
-    {% set prefix = _route[0] ~ '_' ~ _route[1] ~ '_' ~ _route[2] ~ '_' %}
+{% if pathShow is defined %}
+    <a href="{{ pathShow }}" class="btn btn-outline-secondary btn-sm">
+        <i class="fa fa-eye fa-fw fa-sm"></i>
+    </a>
 {% endif %}
 
-{% if deleteTitle is not defined %}
-    {% set deleteTitle = 'Delete this record?' %}
+{% if pathFront is defined %}
+    <a href="{{ pathFront }}" class="btn btn-outline-success btn-sm" target="_blank">
+        <i class="fas fa-external-link-alt fa-fw fa-sm"></i>
+    </a>
 {% endif %}
 
-<a class="btn btn-outline-primary btn-sm" href="{{ path(prefix ~ 'edit', {'id': entity.id}) }}">
-    <i class="fa fa-pen fa-fw fa-sm"></i>
-</a>
-
-<a class="btn btn-outline-secondary btn-sm" href="{{ path(prefix ~ 'show', {'id': entity.id}) }}">
-    <i class="fa fa-eye fa-fw fa-sm"></i>
-</a>
-
-{% include 'admin/_embed/_form/_btn_delete.html.twig' with {'entity': entity, 'deleteTitle': deleteTitle} %}
+{% if pathDelete is defined %}
+    {% include 'admin/_embed/_form/_btn_delete.html.twig' with {'pathDelete': pathDelete, 'entityId': entityId, 'entityTile': entityTile} %}
+{% endif %}

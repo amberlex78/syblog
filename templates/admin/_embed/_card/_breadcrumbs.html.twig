@@ -1,0 +1,10 @@
+<nav class="mt-1" aria-label="breadcrumb">
+    <ol class="breadcrumb m-0">
+        {% if indexAction is defined %}
+            <li class="breadcrumb-item"><a href="{{ indexAction }}">{{ indexTitle }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ actionTitle }}</li>
+        {% else %}
+            <li class="breadcrumb-item active" aria-current="page">{{ indexTitle }}</li>
+        {% endif %}
+    </ol>
+</nav>

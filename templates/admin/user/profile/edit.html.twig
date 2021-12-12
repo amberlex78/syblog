@@ -1,28 +1,17 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Users - Edit' %}
+{% block title %}Edit Profile{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_user_profile_show'), 'indexTitle': 'Profile', 'actionTitle': 'Edit'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathShow': path('admin_user_profile_show')} %}
+{% endblock %}
 
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <div class="d-flex justify-content-between my-0">
-                <nav class="mt-1" aria-label="breadcrumb">
-                    <ol class="breadcrumb d-inline-flex m-0">
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{ path('admin_user_profile_show') }}">Profile</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                    </ol>
-                </nav>
-                <div class="my-auto">
-                    <a href="{{ path('admin_user_profile_show') }}" class="btn btn-outline-secondary btn-sm shadow-sm">
-                        <i class="fas fa-eye fa-sm fa-fw"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            {% include'admin/user/profile/_form.html.twig' %}
-        </div>
-    </div>
+    {% include'admin/user/profile/_form.html.twig' %}
 {% endblock %}

@@ -1,55 +1,60 @@
-{% extends 'admin/layouts/body.html.twig' %}
+{% extends 'admin/layouts/body_card.html.twig' %}
 
-{% set headerTitle = 'Users - User' %}
+{% block title %}Show User{% endblock %}
 
-{% block title %}{{ headerTitle }}{% endblock %}
+{% block breadcrumbs %}
+    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
+        'indexAction': path('admin_user_index'), 'indexTitle': 'Users', 'actionTitle': 'Show'
+    } %}
+{% endblock %}
+
+{% block actions %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {
+        'pathAdd': path('admin_user_new'),
+        'pathEdit': path('admin_user_edit', {'id': user.id}),
+        'pathDelete': path('admin_user_delete', {'id': user.id}), 'entityTile': user.email, 'entityId': user.id,
+    } %}
+{% endblock %}
 
 {% block content %}
-    <div class="card my">
-        <div class="card-header">
-            {% include 'admin/_embed/_card/_header.html.twig' with {'headerTitle': headerTitle, 'entity': user, 'deleteTitle': user.email} %}
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ user.id }}</td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>{{ user.email }}</td>
-                </tr>
-                <tr>
-                    <th>Roles</th>
-                    <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>First name</th>
-                    <td>{{ user.firstName }}</td>
-                </tr>
-                <tr>
-                    <th>Last name</th>
-                    <td>{{ user.lastName }}</td>
-                </tr>
-                <tr>
-                    <th>Avatar</th>
-                    <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
-                </tr>
-                <tr>
-                    <th>Created at</th>
-                    <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Updated at</th>
-                    <td>{{ user.updatedAt|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                <tr>
-                    <th>Is verified</th>
-                    <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Roles</th>
+            <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+        </tr>
+        <tr>
+            <th>First name</th>
+            <td>{{ user.firstName }}</td>
+        </tr>
+        <tr>
+            <th>Last name</th>
+            <td>{{ user.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Avatar</th>
+            <td><img class="img-fluid" src="{{ asset_uploaded(app.user.imagePath) }}" alt=""></td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updated at</th>
+            <td>{{ user.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Is verified</th>
+            <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}
