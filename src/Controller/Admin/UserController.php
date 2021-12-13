@@ -23,7 +23,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
         $users = $paginator->paginate(
-            $userRepository->findAll(),
+            $userRepository->findAllOrderedByNewest(),
             $request->query->getInt('page', 1)
         );
 

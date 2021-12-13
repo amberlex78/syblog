@@ -30,7 +30,8 @@ class PostController extends AbstractController
     {
         $posts = $postService->findAllFiltered(
             $request->query->getInt('category'),
-            $request->query->getInt('tag')
+            $request->query->getInt('tag'),
+            $request->query->getInt('user'),
         );
 
         $posts = $paginator->paginate($posts, $request->query->getInt('page', 1));
@@ -50,6 +51,7 @@ class PostController extends AbstractController
                 $filename = $this->uploader->uploadImage($image);
                 $post->setImage($filename);
             }
+            $post->setUser($this->getUser());
             $this->em->persist($post);
             $this->em->flush();
 

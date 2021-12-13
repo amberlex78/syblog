@@ -20,6 +20,7 @@
             <th>Last name</th>
             <th>Roles</th>
             <th>Avatar</th>
+            <th>Posts</th>
             <th>Created at</th>
             <th>Is verified</th>
             <th>Actions</th>
@@ -34,6 +35,7 @@
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                 <td><img class="img" src="{{ user.avatar ? asset_uploaded(user.imagePath)|imagine_filter('sq_th_tiny') : '#' }}" alt=""></td>
+                <td><a href="{{ path('admin_blog_post_index', {'user': user.id}) }}">{{ user.posts|length }} posts</a></td>
                 <td>{{ user.createdAt|format_date('medium') }}</td>
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 <td>
