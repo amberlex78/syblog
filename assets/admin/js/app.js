@@ -45,11 +45,11 @@ $(function () {
                 return null;
             }
         }
-    });
+    })
     let formAddTag = $('form[name="tag"]');
     $('#btnAddTag').on('click', function () {
         formAddTag[0].reset();
-    });
+    })
     $('.btn-add-tag').on('click', function (e) {
         e.preventDefault();
         $.post({
@@ -69,7 +69,6 @@ $(function () {
             } else {
                 console.log('ERROR: ', data);
             }
-        });
-    });
-
-});
+        })
+    })
+})
