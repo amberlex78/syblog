@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Admin\Blog;
+namespace App\Service\Blog;
 
 use App\Entity\Blog\Post;
 use App\Repository\Blog\CategoryRepository;

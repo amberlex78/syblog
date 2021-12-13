@@ -6,7 +6,7 @@ use App\Entity\Blog\Post;
 use App\Entity\Blog\Tag;
 use App\Form\Admin\Blog\PostType;
 use App\Form\Admin\Blog\TagType;
-use App\Service\Admin\Blog\PostService;
+use App\Service\Blog\PostService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
