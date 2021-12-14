@@ -85,4 +85,18 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllActiveByTag(string $slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.tags', 't')->addSelect('t')
+            ->leftJoin('p.user', 'u')->addSelect('u')
+            ->leftJoin('p.category', 'c')->addSelect('c')
+            ->where('t.slug = :slug')->setParameter('slug', $slug)
+            ->andWhere('p.isActive = true')
+            ->andWhere('c.isActive = true')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

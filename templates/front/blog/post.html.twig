@@ -26,7 +26,9 @@
                 <p class="small">
                     {% for tag in post.tags %}
                         <span class="badge bg-secondary bg-opacity-10">
-                            <a href="#"><i class="fa fa-tag fa-fw text-muted"></i>{{ tag.name }}</a>
+                            <a href="{{ path('front_blog_tag', {'slug': tag.slug}) }}">
+                                <i class="fa fa-tag fa-fw text-muted"></i>{{ tag.name }}
+                            </a>
                         </span>
                     {% endfor %}
                 </p>

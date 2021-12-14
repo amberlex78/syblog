@@ -1,15 +1,13 @@
 {% extends 'front/layouts/body.html.twig' %}
-{% set title = category.seoTitle ?: category.name %}
 
-{% block title %}{{ title }}{% endblock %}
-{% block meta_title %}{{ title }}{% endblock %}
-{% block meta_description %}{{ category.seoDescription ?: title }}{% endblock %}
+{% block title %}Tag {{ tag.name }}{% endblock %}
+{% block meta_title %}Tag {{ tag.name }}{% endblock %}
+{% block meta_description %}Posts with tag {{ tag.name }}{% endblock %}
 
 {% block content %}
     <div class="card mb-4">
         <div class="card-body">
-            <h1 class="display-5">{{ category.name }}</h1>
-            {{ category.description|raw }}
+            <h1 class="display-5">Posts with tag "{{ tag.name }}" </h1>
         </div>
     </div>
     <div class="card mb-4">
