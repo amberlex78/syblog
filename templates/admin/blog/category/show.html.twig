@@ -9,11 +9,7 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {
-        'pathAdd': path('admin_blog_category_new'),
-        'pathEdit': path('admin_blog_category_edit', {'id': category.id}),
-        'pathDelete': path('admin_blog_category_delete', {'id': category.id}), 'entityTile': category.name, 'entityId': category.id,
-    } %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'entity': category} %}
 {% endblock %}
 
 {% block content %}

@@ -26,9 +26,7 @@ $(function () {
     // Delete entity from the list
     let modalConfirmDelete = $('#modalConfirmDelete');
     modalConfirmDelete.on('show.bs.modal', function (e) {
-        let data = $(e.relatedTarget).data();
-        $('.delete-entity-title', this).text(data.entityTitle);
-        $('.js-btn-delete-entity', this).data('entityId', data.entityId);
+        $('.js-btn-delete-entity', this).data('entityId', $(e.relatedTarget).data('entityId'));
     })
     modalConfirmDelete.on('click', '.js-btn-delete-entity', function () {
         $('#form' + $(this).data('entityId')).submit();

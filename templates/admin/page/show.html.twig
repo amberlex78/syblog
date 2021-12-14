@@ -9,11 +9,7 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {
-        'pathAdd': path('admin_page_new'),
-        'pathEdit': path('admin_page_edit', {'id': page.id}),
-        'pathDelete': path('admin_page_delete', {'id': page.id}), 'entityTile': page.title, 'entityId': page.id,
-    } %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'entity': page} %}
 {% endblock %}
 
 {% block content %}

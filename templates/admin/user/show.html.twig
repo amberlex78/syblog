@@ -9,11 +9,7 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {
-        'pathAdd': path('admin_user_new'),
-        'pathEdit': path('admin_user_edit', {'id': user.id}),
-        'pathDelete': path('admin_user_delete', {'id': user.id}), 'entityTile': user.email, 'entityId': user.id,
-    } %}
+    {% include 'admin/_embed/_card/_actions.html.twig' with {'entity': user} %}
 {% endblock %}
 
 {% block content %}

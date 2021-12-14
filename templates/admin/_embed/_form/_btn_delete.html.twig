@@ -1,8 +1,10 @@
 <form action="{{ pathDelete }}" id="form{{ entityId }}" method="post" class="d-inline">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entityId) }}">
-    <button type="button" class="btn btn-outline-danger btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete"
-            data-entity-id="{{ entityId }}"
-            data-entity-title="{{ entityTile }}">
+    <button type="button"
+            class="btn btn-outline-danger btn-sm shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalConfirmDelete"
+            data-entity-id="{{ entityId }}">
         <i class="fa fa-trash fa-fw fa-sm"></i>
     </button>
 </form>

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathAdd': path('admin_blog_post_new')} %}
+    {% include 'admin/_embed/_card/_actions.html.twig' %}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,6 @@
             <th>Id</th>
             <th>Category</th>
             <th>Title</th>
-            <th>Tags</th>
             <th>Image</th>
             <th>Is active</th>
             <th>Created at</th>
@@ -28,11 +27,13 @@
         {% for post in posts %}
             <tr>
                 <td>{{ post.id }}</td>
-                <td><small><a href="{{ path('admin_blog_post_index', {'category': post.category.id}) }}">{{ post.category }}</a></small></td>
-                <td>{{ post.title }}</td>
+                <td><a href="{{ path('admin_blog_post_index', {'category': post.category.id}) }}">{{ post.category }}</a></td>
                 <td>
+                    {{ post.title }}
+                    <br>
                     {% for tag in post.tags %}
                         <span class="badge bg-secondary bg-opacity-10 text-dark">
+                            <i class="fa fa-tag fa-fw text-muted"></i>
                             <a href="{{ path('admin_blog_post_index', {'tag': tag.id}) }}">{{ tag.name }}</a>
                         </span>
                     {% endfor %}

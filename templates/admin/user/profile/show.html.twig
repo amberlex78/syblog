@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathEdit': path('admin_user_profile_edit')} %}
+    <a href="{{ path('admin_user_profile_edit') }}" class="btn btn-outline-primary btn-sm shadow-sm">
+        <i class="fa fa-pen fa-fw fa-sm"></i> Edit
+    </a>
 {% endblock %}
 
 {% block content %}

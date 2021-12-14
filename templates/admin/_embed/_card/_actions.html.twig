@@ -1,26 +1,40 @@
-{% if pathSave is defined %}
+{% set _route = app.request.get('_route')|split('_') %}
+{% set action = _route|last %}
+{% set prefix = _route|slice(0,-1)|join('_') ~ '_' %}
+
+{% if (action == 'index') %}
+    <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
+        <i class="fas fa-plus fa-sm fa-fw"></i> Add New
+    </a>
+{% endif %}
+
+{% if (action == 'new') %}
     <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
 {% endif %}
 
-{% if pathAdd is defined %}
-    <a href="{{ pathAdd }}" class="btn btn-outline-success btn-sm shadow-sm">
+{% if (action == 'show') %}
+    <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
         <i class="fas fa-plus fa-sm fa-fw"></i>
     </a>
-{% endif %}
-
-{% if pathShow is defined %}
-    <a href="{{ pathShow }}" class="btn btn-outline-secondary btn-sm shadow-sm">
-        <i class="fa fa-eye fa-fw fa-sm"></i>
-    </a>
-{% endif %}
-
-{% if pathEdit is defined %}
-    <a href="{{ pathEdit }}" class="btn btn-outline-primary btn-sm shadow-sm">
+    <a href="{{ path(prefix ~ 'edit', {'id': entity.id}) }}" class="btn btn-outline-primary btn-sm shadow-sm">
         <i class="fa fa-pen fa-fw fa-sm"></i>
     </a>
+    {% include 'admin/_embed/_form/_btn_delete.html.twig' with {
+        'pathDelete': path(prefix ~ 'delete', {'id': entity.id}), 'entityId': entity.id
+    } %}
+    {% include 'admin/_embed/_modal/_confirm_delete.html.twig' %}
 {% endif %}
 
-{% if pathDelete is defined %}
-    {% include 'admin/_embed/_form/_btn_delete.html.twig' with {'pathDelete': pathDelete, 'entityId': entityId, 'entityTile': entityTile} %}
+{% if (action == 'edit') %}
+    <button class="btn btn-primary btn-sm shadow-sm"><i class="far fa-fw fa-save"></i> Save</button>
+    <a href="{{ path(prefix ~ 'new') }}" class="btn btn-outline-success btn-sm shadow-sm">
+        <i class="fas fa-plus fa-sm fa-fw"></i>
+    </a>
+    <a href="{{ path(prefix ~ 'show', {'id': entity.id}) }}" class="btn btn-outline-secondary btn-sm shadow-sm">
+        <i class="fas fa-eye fa-sm fa-fw"></i>
+    </a>
+    {% include 'admin/_embed/_form/_btn_delete.html.twig' with {
+        'pathDelete': path(prefix ~ 'delete', {'id': entity.id}), 'entityId': entity.id
+    } %}
     {% include 'admin/_embed/_modal/_confirm_delete.html.twig' %}
 {% endif %}

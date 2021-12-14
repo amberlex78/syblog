@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block actions %}
-    {% include 'admin/_embed/_card/_actions.html.twig' with {'pathShow': path('admin_user_profile_show')} %}
+    <a href="{{ path('admin_user_profile_show') }}" class="btn btn-outline-secondary btn-sm shadow-sm">
+        <i class="fas fa-eye fa-sm fa-fw"></i> Show
+    </a>
 {% endblock %}
 
 {% block content %}
