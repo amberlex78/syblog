@@ -5,8 +5,7 @@ namespace App\Controller\Admin\Blog;
 use App\Entity\Blog\Category;
 use App\Form\Admin\Blog\CategoryType;
 use App\Repository\Blog\CategoryRepository;
-use App\Service\Uploader\Blog\CategoryImageUploader;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Blog\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private CategoryImageUploader $uploader,
+        private CategoryService $categoryService
     ) {
     }
 
@@ -35,16 +33,10 @@ class CategoryController extends AbstractController
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($image = $form->get('image')->getData()) {
-                $filename = $this->uploader->uploadImage($image);
-                $category->setImage($filename);
-            }
-            $this->em->persist($category);
-            $this->em->flush();
-
+            $this->categoryService->handleCreate($form, $category);
             $this->addFlash('success', 'Category created!');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
@@ -63,16 +55,10 @@ class CategoryController extends AbstractController
     public function edit(Category $category, Request $request): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($image = $form->get('image')->getData()) {
-                $this->uploader->removeImage($category->getImage());
-                $filename = $this->uploader->uploadImage($image);
-                $category->setImage($filename);
-            }
-            $this->em->flush();
-
+            $this->categoryService->handleEdit($form, $category);
             $this->addFlash('success', 'Changes saved!');
 
             return $this->redirectToRoute('admin_blog_category_index', [], Response::HTTP_SEE_OTHER);
@@ -91,10 +77,7 @@ class CategoryController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
-            $this->uploader->removeImage($category->getImage());
-            $this->em->remove($category);
-            $this->em->flush();
-
+            $this->categoryService->handleDelete($category);
             $this->addFlash('success', 'Category saved!');
         } else {
             $this->addFlash('warning', 'Something went wrong! Try again.');
@@ -106,12 +89,8 @@ class CategoryController extends AbstractController
     #[Route('/image/{id}', name: 'delete_image', methods: ['DELETE'])]
     public function deleteImage(Category $category, Request $request): JsonResponse
     {
-        if ($request->isXmlHttpRequest()
-            && $this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))
-        ) {
-            $this->uploader->removeImage($category->getImage());
-            $category->setImage(null);
-            $this->em->flush();
+        if ($this->isCsrfTokenValid('delete' . $category->getId(), $request->request->get('_token'))) {
+            $this->categoryService->handleDeleteImage($category);
 
             return $this->json(['success' => true]);
         } else {

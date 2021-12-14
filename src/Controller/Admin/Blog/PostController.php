@@ -48,6 +48,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->handleCreate($form, $post);
             $this->addFlash('success', 'Post created!');
+
             return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -70,6 +71,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->postService->handleEdit($form, $post);
             $this->addFlash('success', 'Changes saved!');
+
             return $this->redirectToRoute('admin_blog_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -94,6 +96,7 @@ class PostController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->request->get('_token'))) {
             $this->postService->handleDeleteImage($post);
+
             return $this->json(['success' => true]);
         } else {
             return $this->json(['error' => 'Bad Request!'], 400);
