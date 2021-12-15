@@ -20,8 +20,16 @@ class TagController extends AbstractController
     ) {
     }
 
+    #[Route('/tags', name: 'front_blog_tags', methods: ['GET'])]
+    public function index(TagRepository $tagRepository): Response
+    {
+        $tags = $tagRepository->findAll();
+
+        return $this->render('front/blog/tags.html.twig', compact('tags'));
+    }
+
     #[Route('/tag/{slug}', name: 'front_blog_tag', methods: ['GET'])]
-    public function post(string $slug, Request $request): Response
+    public function show(string $slug, Request $request): Response
     {
         if (!$tag = $this->tagRepository->findOneBySlug($slug)) {
             throw new NotFoundHttpException();
