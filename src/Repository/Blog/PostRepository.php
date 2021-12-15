@@ -46,10 +46,10 @@ class PostRepository extends ServiceEntityRepository
     public function findOneActiveBySlug(string $slug): ?Post
     {
         return $this->createQueryBuilder('p')
-            ->select('p', 'c')
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
             ->leftJoin('p.category', 'c')
+            ->addSelect('c')
             ->andwhere('p.isActive = true')
             ->andWhere('c.isActive = true')
             ->setMaxResults(1)
@@ -60,8 +60,8 @@ class PostRepository extends ServiceEntityRepository
     public function findAllActiveInCategory(Category $category)
     {
         return $this->createQueryBuilder('p')
-            ->select('p', 't')
             ->leftJoin('p.tags', 't')
+            ->addSelect('t')
             ->where('p.category = :category')
             ->setParameter('category', $category)
             ->andWhere('p.isActive = true')
@@ -90,6 +90,7 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin('p.tags', 't')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
+            ->andWhere('p.isActive = true')
             ->getQuery()
             ->getSingleColumnResult();
 
@@ -99,7 +100,6 @@ class PostRepository extends ServiceEntityRepository
                 ->leftJoin('p.tags', 't')->addSelect('t')
                 ->leftJoin('p.user', 'u')->addSelect('u')
                 ->where((new Expr())->in('p.id', $ids))
-                ->andWhere('p.isActive = true')
                 ->andWhere('c.isActive = true')
                 ->orderBy('p.createdAt', 'DESC')
                 ->getQuery()
