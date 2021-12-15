@@ -14,7 +14,11 @@
                         <div class="card shadow-sm">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between my-0">
-                                    {% block breadcrumbs %}{% endblock %}
+                                    <nav class="mt-1" aria-label="breadcrumb">
+                                        <ol class="breadcrumb m-0">
+                                            {% block breadcrumbs %}{% endblock %}
+                                        </ol>
+                                    </nav>
                                     <div class="my-auto">
                                         {% block actions %}{% endblock %}
                                     </div>

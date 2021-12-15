@@ -3,9 +3,8 @@
 {% block title %}Edit Category{% endblock %}
 
 {% block breadcrumbs %}
-    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
-        'indexAction': path('admin_blog_category_index'), 'indexTitle': 'Blog Categories', 'actionTitle': 'Edit'
-    } %}
+    <li class="breadcrumb-item"><a href="{{ path('admin_blog_category_index') }}">Blog Categories</a></li>
+    <li class="breadcrumb-item active">Edit</li>
 {% endblock %}
 
 {% block actions %}

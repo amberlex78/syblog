@@ -3,9 +3,8 @@
 {% block title %}Show Tag{% endblock %}
 
 {% block breadcrumbs %}
-    {% include 'admin/_embed/_card/_breadcrumbs.html.twig' with {
-        'indexAction': path('admin_blog_tag_index'), 'indexTitle': 'Blog Tags', 'actionTitle': 'Show'
-    } %}
+    <li class="breadcrumb-item"><a href="{{ path('admin_blog_tag_index') }}">Blog Tags</a></li>
+    <li class="breadcrumb-item active">Show</li>
 {% endblock %}
 
 {% block actions %}
