@@ -23,7 +23,7 @@ class TagController extends AbstractController
     #[Route('/tags', name: 'front_blog_tags', methods: ['GET'])]
     public function index(TagRepository $tagRepository): Response
     {
-        $tags = $tagRepository->findAll();
+        $tags = $tagRepository->findAllHasPostsOrderedByName();
 
         return $this->render('front/blog/tags.html.twig', compact('tags'));
     }

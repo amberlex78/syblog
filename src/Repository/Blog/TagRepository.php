@@ -37,4 +37,14 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findAllHasPostsOrderedByName()
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.posts', 'p')
+            ->addSelect('p')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }
