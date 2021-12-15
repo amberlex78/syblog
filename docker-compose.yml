@@ -2,7 +2,7 @@ version: "3.8"
 services:
 
   proxy:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:alpine
     restart: always
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro

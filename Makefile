@@ -6,6 +6,16 @@ db-seed:
 	bin/console doctrine:fixtures:load -n
 
 #-----------------------------------------------------------
+# for local
+stop-local-services:
+	sudo systemctl stop apache2
+	sudo systemctl stop mysql
+
+start-local-services:
+	sudo systemctl start apache2
+	sudo systemctl start mysql
+
+#-----------------------------------------------------------
 # docker
 init: docker-pull docker-build docker-up composer-install yarn-install run-dev
 up: docker-up

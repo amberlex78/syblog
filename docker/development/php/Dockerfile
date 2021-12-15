@@ -68,7 +68,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y nodejs
 RUN npm i -g yarn
 
-
 RUN cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 COPY ./conf.d $PHP_INI_DIR/conf.d
 
