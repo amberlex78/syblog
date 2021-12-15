@@ -1,12 +1,5 @@
 #-----------------------------------------------------------
 # for local
-db-seed:
-	bin/console doctrine:schema:drop --full-database --force
-	bin/console doctrine:schema:update --force
-	bin/console doctrine:fixtures:load -n
-
-#-----------------------------------------------------------
-# for local
 stop-local-services:
 	sudo systemctl stop apache2
 	sudo systemctl stop mysql
@@ -14,6 +7,11 @@ stop-local-services:
 start-local-services:
 	sudo systemctl start apache2
 	sudo systemctl start mysql
+
+db-seed:
+	bin/console doctrine:schema:drop --full-database --force
+	bin/console doctrine:schema:update --force
+	bin/console doctrine:fixtures:load -n
 
 #-----------------------------------------------------------
 # docker
