@@ -35,6 +35,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
             ->andWhere('p.isActive = true')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
