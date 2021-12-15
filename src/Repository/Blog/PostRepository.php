@@ -5,6 +5,7 @@ namespace App\Repository\Blog;
 use App\Entity\Blog\Category;
 use App\Entity\Blog\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,10 +24,8 @@ class PostRepository extends ServiceEntityRepository
     public function findAllOrderedByNewest()
     {
         return $this->createQueryBuilder('p')
-            ->leftJoin('p.category', 'c')
-            ->addSelect('c')
-            ->leftJoin('p.tags', 't')
-            ->addSelect('t')
+            ->leftJoin('p.category', 'c')->addSelect('c')
+            ->leftJoin('p.tags', 't')->addSelect('t')
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
@@ -35,10 +34,8 @@ class PostRepository extends ServiceEntityRepository
     public function findAllActiveOrderedByNewest()
     {
         return $this->createQueryBuilder('p')
-            ->leftJoin('p.category', 'c')
-            ->addSelect('c')
-            ->leftJoin('p.tags', 't')
-            ->addSelect('t')
+            ->leftJoin('p.category', 'c')->addSelect('c')
+            ->leftJoin('p.tags', 't')->addSelect('t')
             ->andWhere('p.isActive = true')
             ->andWhere('c.isActive = true')
             ->orderBy('p.createdAt', 'DESC')
@@ -88,15 +85,27 @@ class PostRepository extends ServiceEntityRepository
 
     public function findAllActiveByTag(string $slug)
     {
-        return $this->createQueryBuilder('p')
-            ->join('p.tags', 't')->addSelect('t')
-            ->leftJoin('p.user', 'u')->addSelect('u')
-            ->leftJoin('p.category', 'c')->addSelect('c')
-            ->where('t.slug = :slug')->setParameter('slug', $slug)
-            ->andWhere('p.isActive = true')
-            ->andWhere('c.isActive = true')
-            ->orderBy('p.createdAt', 'DESC')
+        $ids = $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->leftJoin('p.tags', 't')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
             ->getQuery()
-            ->getResult();
+            ->getSingleColumnResult();
+
+        if ($ids) {
+            return $this->createQueryBuilder('p')
+                ->leftJoin('p.category', 'c')->addSelect('c')
+                ->leftJoin('p.tags', 't')->addSelect('t')
+                ->leftJoin('p.user', 'u')->addSelect('u')
+                ->where((new Expr())->in('p.id', $ids))
+                ->andWhere('p.isActive = true')
+                ->andWhere('c.isActive = true')
+                ->orderBy('p.createdAt', 'DESC')
+                ->getQuery()
+                ->getResult();
+        } else {
+            return [];
+        }
     }
 }
