@@ -13,11 +13,13 @@
     <div class="card mb-4">
         <div class="card-body">
             {% for tag in tags %}
-                <span class="badge bg-secondary bg-opacity-10">
-                    <a href="{{ path('front_blog_tag', {'slug': tag.slug}) }}">
-                        <i class="fas fa-hashtag fa-fw text-muted"></i>{{ tag.name }}
-                    </a>
-                </span>
+                <h6 class="d-inline">
+                    <span class="badge bg-light my-1">
+                        <a href="{{ path('front_blog_tag', {'slug': tag.slug}) }}">
+                            <small><i class="fas fa-hashtag fa-fw text-muted"></i></small>{{ tag.name }}
+                        </a><sup class="text-dark">{{ tag.posts|length }}</sup>
+                    </span>
+                </h6>
             {% endfor %}
         </div>
     </div>

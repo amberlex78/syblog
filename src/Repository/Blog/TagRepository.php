@@ -34,7 +34,18 @@ class TagRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findAllHasPostsOrderedByName()
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.posts', 'p')
+            ->addSelect('p')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
