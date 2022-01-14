@@ -44,6 +44,7 @@ class TagRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->join('t.posts', 'p')
             ->addSelect('p')
+            ->where('p.isActive = true')
             ->orderBy('t.name', 'ASC')
             ->getQuery()
             ->getResult();
