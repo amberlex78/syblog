@@ -15,7 +15,7 @@ db-seed:
 
 #-----------------------------------------------------------
 # docker
-init: docker-pull docker-build docker-up composer-install yarn-install run-dev
+init: docker-pull docker-build docker-up
 up: docker-up
 down: docker-down
 restart: down up
@@ -28,6 +28,10 @@ docker-up:
 	docker-compose up -d
 docker-down:
 	docker-compose down --remove-orphans
+
+#-----------------------------------------------------------
+# Setup
+setup: composer-install yarn-install run-dev
 
 #-----------------------------------------------------------
 # composer
@@ -45,7 +49,13 @@ run-dev:
 run-watch:
 	docker-compose exec php yarn encore dev --watch
 
-seed:
+#-----------------------------------------------------------
+# doctrine
+db-dul: db-drop db-update db-load
+
+db-drop:
 	docker-compose exec php bin/console doctrine:schema:drop --full-database --force
+db-update:
 	docker-compose exec php bin/console doctrine:schema:update --force
+db-load:
 	docker-compose exec php bin/console doctrine:fixtures:load -n

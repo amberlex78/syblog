@@ -4,7 +4,7 @@ I started to get familiar with the `Symfony` framework.
 
 As a starting point, I decided to create a simple blog starting from scratch.
 
-I will be using the latest MySQL 8, PHP 8, Symfony 5.4 for now.
+I will be using the latest MySQL 8, PHP 8.1, Symfony 5.4 for now.
 
 ## Approximate plan
 
@@ -33,7 +33,7 @@ You have locally installed: php8, mysql, composer, nodejs, npm, yarn, symfony
 ```
 git clone git@github.com:amberlex78/syBlog.git
 cd syBlog
-cp .env.example .env
+cp .env .env.local
 composer install
 yarn install
 yarn encore dev
@@ -48,28 +48,46 @@ Add to `/etc/hosts` file line `127.0.0.1 syblog.test`
 ```
 git clone git@github.com:amberlex78/syBlog.git
 cd syBlog
-cp .env.example .env
+cp .env .env.local
 ```
+Set `DATABASE_URL` in the `.env.local` file:
+```
+DATABASE_URL="mysql://symfony:symfony@mysql:3306/symfony?serverVersion=8.0"
+```
+See database connection in `docker-compose.yml`
 
-### Up
-Docker up: `docker-compose up -d` or:
+### Init and setup:
 ```
 make init
+make setup
+sudo chown -R $USER:$USER .
 ```
 
-Seeding data:
+### Seeding
+
+Seeding demo data:
 ```
-make seed
+make db-dul
+```
+(schema:drop, schema:update, fixtures:load)
+
+## Docker
+
+### Up
+
+Docker up `docker-compose up -d` or:
+```
+make up
 ```
 
 ### Down
-Docker down: `docker-compose down --remove-orphans` or:
+
+Docker down `docker-compose down --remove-orphans` or:
 ```
 make down
 ```
-See all command in `Makefile` file.
 
-See database connection in `docker-compose.yml` and config in `.env` file.
+See all command in `Makefile` file.
 
 ## Access to site
 
